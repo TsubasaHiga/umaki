@@ -1,0 +1,23 @@
+name: 'Bump Package Version'
+on: # rebuild any PRs
+  pull_request:
+    types:
+      - unlabeled
+      - labeled
+      - synchronize
+      - opened
+      - reopened
+    branches:
+      - main
+jobs:
+  test: # make sure the action works on a clean machine
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'pull_request' }}
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Bump version
+        uses: apomalyn/bump-version-using-labels
+        with:
+          file_path: 'package.json'
