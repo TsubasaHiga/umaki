@@ -6,7 +6,7 @@
   "author": "TsubasaHiga",
   "homepage": "https://github.com/TsubasaHiga/umaki",
   "license": "MIT",
-  "keywords": ["utility", "web"],
+  "keywords": ["utility", "library"],
   "packageManager": "yarn@4.1.1",
   "repository": {
     "type": "git",
