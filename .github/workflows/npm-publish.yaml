@@ -15,6 +15,9 @@ jobs:
           # Defaults to the user or organization that owns the workflow file
           scope: '@octocat'
 
+      - name: Enable corepack 📦
+        run: corepack enable
+
       - name: Install dependencies 🧹
         run: yarn
 
