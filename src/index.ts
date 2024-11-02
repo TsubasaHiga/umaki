@@ -16,6 +16,9 @@ export * from '@libs/remove/'
 // Set functions
 export * from '@libs/set/'
 
+// To functions
+export * from '@libs/to/'
+
 // Transform functions
 export * from '@libs/transform/'
 
