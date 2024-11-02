@@ -1,7 +1,7 @@
 {
   "name": "umaki",
   "private": false,
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "A utility that is often used in web production.",
   "author": "TsubasaHiga",
   "homepage": "https://github.com/TsubasaHiga/umaki",
