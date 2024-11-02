@@ -17,15 +17,15 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
 
       - name: Install dependencies 🧹
-      - run: npm ci
+        run: npm ci
 
       - name: Run tests 🧪
-      - run: npm run test
+        run: npm run test
 
       - name: Build 🔨
         run: npm run build
 
       - name: Publish 🚀
-      - run: npm publish --provenance --access public
+        run: npm publish --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
