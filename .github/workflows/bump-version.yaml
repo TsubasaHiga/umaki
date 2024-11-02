@@ -1,5 +1,5 @@
 name: 'Bump Package Version'
-on: # rebuild any PRs
+on:
   pull_request:
     types:
       - unlabeled
@@ -7,10 +7,8 @@ on: # rebuild any PRs
       - synchronize
       - opened
       - reopened
-    branches:
-      - main
 jobs:
-  test: # make sure the action works on a clean machine
+  test:
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'pull_request' }}
     env:
