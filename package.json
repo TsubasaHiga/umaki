@@ -1,6 +1,6 @@
 {
   "name": "umaki",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "A utility that is often used in web production.",
   "author": "TsubasaHiga",
   "homepage": "https://github.com/TsubasaHiga/umaki",
@@ -14,13 +14,13 @@
   "type": "module",
   "files": ["dist"],
   "sideEffects": false,
-  "main": "./dist/index.umd.cjs",
-  "module": "./dist/index.js",
+  "main": "./dist/index.cjs.js",
+  "module": "./dist/index.es.js",
   "types": "./dist/index.d.ts",
   "exports": {
     "types": "./dist/index.d.ts",
-    "import": "./dist/index.js",
-    "require": "./dist/index.umd.cjs"
+    "import": "./dist/index.es.js",
+    "require": "./dist/index.cjs.js"
   },
   "scripts": {
     "dev": "vite",
