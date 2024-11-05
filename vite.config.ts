@@ -38,17 +38,40 @@ export default defineConfig(({ mode }) => {
       lib: {
         entry: './src/index.ts',
         name: 'umaki',
-        fileName: 'index',
-        formats: ['es']
+        formats: ['es', 'cjs'],
+        fileName: (format) => `index.${format}.js`
       },
       rollupOptions: {
-        output: {
-          preserveModules: true,
-          preserveModulesRoot: 'src',
-          entryFileNames: ({ name: fileName }) => {
-            return `${fileName}.js`
+        output: [
+          {
+            format: 'es',
+            preserveModules: true,
+            preserveModulesRoot: 'src',
+            entryFileNames: ({ name: fileName }) => {
+              return `${fileName}.es.js`
+            },
+            exports: 'named'
+          },
+          {
+            format: 'cjs',
+            preserveModules: true,
+            preserveModulesRoot: 'src',
+            entryFileNames: ({ name: fileName }) => {
+              return `${fileName}.cjs.js`
+            },
+            exports: 'named'
           }
-        },
+        ],
+        external: [
+          'dayjs',
+          'image-size',
+          'is-touch-device',
+          'isomorphic-dompurify',
+          'query-string',
+          'runes2',
+          'store2',
+          'ua-parser-js'
+        ],
         plugins: [
           mode === 'analyze' &&
             visualizer({
