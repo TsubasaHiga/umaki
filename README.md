@@ -592,3 +592,24 @@ import { waitForAllMediaLoaded } from 'umaki'
   console.log(allMediaLoaded) // true または false
 })()
 ```
+
+## Using for framework and tools
+
+フレームワークまたは各種ツール特有の使い方を以下に記載します。
+
+### Astro or Vite
+
+AstroにてSSRする箇所で利用する場合は`vite.ssr.noExternal`に`umaki`を追加してください。
+
+``` ts
+// astro.config.ts
+export default defineConfig(({ mode }) => {
+  return {
+    vite: {
+      ssr: {
+        noExternal: ['umaki']
+      }
+    }
+  }
+})
+```
