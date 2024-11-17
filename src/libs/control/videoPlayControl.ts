@@ -34,7 +34,7 @@ export const videoPlayControl = async (
     }
   }
 
-  if (!state && !videoElement.paused) {
+  if (!state) {
     const isPlaying = toBoolean(videoElement.dataset.playing!)
     if (!isPlaying) return
 
