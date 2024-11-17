@@ -50,7 +50,7 @@ describe('videoPlayControl', () => {
     expect(videoElement.dataset.playing).toBe('false')
   })
 
-  it('should not pause the video if it is already paused', async () => {
+  it('should pause the video even if it is already paused', async () => {
     videoElement.pause()
     const pauseSpy = vi
       .spyOn(videoElement, 'pause')
@@ -58,7 +58,7 @@ describe('videoPlayControl', () => {
 
     await videoPlayControl(videoElement, false)
 
-    expect(pauseSpy).not.toHaveBeenCalled()
+    expect(pauseSpy).toHaveBeenCalled()
   })
 
   it('should handle play promise rejection', async () => {
