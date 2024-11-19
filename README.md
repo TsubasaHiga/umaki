@@ -1,18 +1,22 @@
 # umaki
 
+<p>
+  <img alt="NPM Version" src="https://img.shields.io/npm/v/umaki">
+  <img alt="NPM Type Definitions" src="https://img.shields.io/npm/types/umaki">
+  <img alt="NPM Downloads" src="https://img.shields.io/npm/dy/umaki">
+</p>
+
 ![character](docs/character.jpg)
 
-Web制作で多用するユーティリティーをこれ1つでインポート出来るようにしたパッケージです。
-基本的には私がよく使っているものを中心に追加していきます。
-パッケージの中身や種類のリクエストがあれば、Issueを立ててください。
+A package that allows you to import frequently used utilities for web development in one place. Primarily, it includes utilities that I often use. If you have any requests for the contents or types of utilities, please open an issue.
 
-## 使い方
+## Usage
 
 ``` ts
 import { foo } from 'umaki'
 ```
 
-## ユーティリティー一覧
+## List of Utilities
 
 - [Control](#control)
   - [bgScrollStop](#bgscrollstop)
@@ -71,17 +75,20 @@ import { foo } from 'umaki'
 
 ### bgScrollStop
 
-スクロールを止める関数です。
+A function that stops scrolling.
 
 ``` ts
 import { bgScrollStop } from 'umaki'
 
-bgScrollStop()
+bgScrollStop() // scroll stop
+bgScrollStop(false) // scroll start
 ```
+
+[View file →](src/libs/control/bgScrollStop.ts)
 
 ### pd
 
-デフォルトのイベント動作を防ぐ関数です。
+A function that prevents the default event behavior.
 
 ``` ts
 import { pd } from 'umaki'
@@ -89,36 +96,48 @@ import { pd } from 'umaki'
 document.getElementById('myElement').addEventListener('click', pd)
 ```
 
-### scrollToHash
+[View file →](src/libs/control/pd.ts)
 
-特定のハッシュ位置にスクロールする関数です。
+### scrollToHash (Promise)
+
+A function that scrolls to a specific hash position.
 
 ``` ts
 import { scrollToHash } from 'umaki'
 
-;(async(() => {
+;(async () => {
   await scrollToHash('#target')
-  console.log('スクロール完了')
-}))()
+  console.log('Scrolled!')
+
+  // smooth scroll
+  await scrollToHash('#target', true)
+
+  // smooth scroll + offset
+  await scrollToHash('#target', true, 100)
+})()
 ```
+
+[View file →](src/libs/control/scrollToHash.ts)
 
 ### videoPlayControl
 
-ビデオ要素の再生を制御する関数です。
+A function that controls the playback of a video element.
 
 ``` ts
 import { videoPlayControl } from 'umaki'
 
 const videoElement = document.getElementById('myVideo')
-videoPlayControl(videoElement, true) // 再生
-videoPlayControl(videoElement, false) // 一時停止
+videoPlayControl(videoElement, true) // play
+videoPlayControl(videoElement, false) // pause
 ```
+
+[View file →](src/libs/control/videoPlayControl.ts)
 
 ## Convert
 
 ### changeDateStringToSpecificFormat
 
-日付文字列を特定のフォーマットに変換する関数です。
+A function that converts a date string to a specific format.
 
 ```ts
 import { changeDateStringToSpecificFormat } from 'umaki'
@@ -128,9 +147,11 @@ const formattedDate = changeDateStringToSpecificFormat(date, 'MM/DD/YYYY')
 console.log(formattedDate) // '10/05/2023'
 ```
 
+[View file →](src/libs/convert/changeDateStringToSpecificFormat.ts)
+
 ### jsonStringToJsonObject
 
-JSON文字列をJSONオブジェクトに変換する関数です。
+A function that converts a JSON string to a JSON object.
 
 ```ts
 import { jsonStringToJsonObject } from 'umaki'
@@ -140,11 +161,13 @@ const jsonObject = jsonStringToJsonObject(jsonString)
 console.log(jsonObject) // { name: 'John', age: 30 }
 ```
 
+[View file →](src/libs/convert/jsonStringToJsonObject.ts)
+
 ## Get
 
 ### getAspectRatio
 
-指定された幅と高さのアスペクト比を返す関数です。
+A function that returns the aspect ratio of the specified width and height.
 
 ```ts
 import { getAspectRatio } from 'umaki'
@@ -153,9 +176,11 @@ const aspectRatio = getAspectRatio(1920, 1080)
 console.log(aspectRatio) // { w: 16, h: 9 }
 ```
 
+[View file →](src/libs/get/getAspectRatio.ts)
+
 ### getClassNames
 
-指定されたHTML要素のクラス名を配列として取得する関数です。
+A function that retrieves the class names of the specified HTML element as an array.
 
 ```ts
 import { getClassNames } from 'umaki'
@@ -166,33 +191,39 @@ const classNames = getClassNames(element)
 console.log(classNames) // ['class1', 'class2', 'class3']
 ```
 
+[View file →](src/libs/get/getClassNames.ts)
+
 ### getDocumentHeight
 
-ドキュメントの高さを取得する関数です。
+A function that retrieves the height of the document.
 
 ```ts
 import { getDocumentHeight } from 'umaki'
 
 const height = getDocumentHeight()
-console.log(height) // ドキュメントの高さを表示
+console.log(height)
 ```
+
+[View file →](src/libs/get/getDocumentHeight.ts)
 
 ### getEventPaths
 
-イベントのパスを取得する関数です。
+A function that retrieves the event paths.
 
 ```ts
 import { getEventPaths } from 'umaki'
 
 document.addEventListener('click', (event) => {
   const paths = getEventPaths(event)
-  console.log(paths) // イベントパスを表示
+  console.log(paths)
 })
 ```
 
+[View file →](src/libs/get/getEventPaths.ts)
+
 ### getGcd
 
-2つの数値の最大公約数を計算する関数です。
+A function that calculates the greatest common divisor of two numbers.
 
 ```ts
 import { getGcd } from 'umaki'
@@ -201,43 +232,56 @@ const gcd = getGcd(48, 18)
 console.log(gcd) // 6
 ```
 
+[View file →](src/libs/get/getGcd.ts)
+
 ### getOrientation
 
-デバイスの現在の向きを取得する関数です。
+A function that retrieves the current orientation of the device.
 
 ```ts
 import { getOrientation } from 'umaki'
 
 const orientation = getOrientation()
-console.log(orientation) // 'landscape' または 'portrait'
+console.log(orientation) // 'landscape' or 'portrait'
 ```
+
+[View file →](src/libs/get/getOrientation.ts)
 
 ### getParentList
 
-指定されたHTML要素の親要素を再帰的に取得する関数です。
+A function that recursively retrieves the parent elements of the specified HTML element.
 
 ```ts
 import { getParentList } from 'umaki'
 
 const element = document.createElement('div')
 const parentList = getParentList(element)
-console.log(parentList) // 親要素のリストを表示
+console.log(parentList)
 ```
+
+[View file →](src/libs/get/getParentList.ts)
 
 ### getQueryParams
 
-URLのクエリパラメータを取得する関数です。
+A function that retrieves the query parameters from the URL.
+This is a wrapper around query-string, so you can specify [options](https://github.com/sindresorhus/query-string) in the second argument.
 
 ```ts
 import { getQueryParams } from 'umaki'
 
-const params = getQueryParams('test')
-console.log(params) // クエリパラメータの値を表示
+const params = getQueryParams('test') // https://example.com?test=123
+console.log(params) // 123
+
+// Example of specifying options
+const params = getQueryParams('test', { parseNumbers: false })
+console.log(params) // '123'
 ```
+
+[View file →](src/libs/get/getQueryParams.ts)
 
 ### getRem
 
-ピクセル値をrem単位に変換する関数です。
+A function that converts a pixel value to rem units.
 
 ```ts
 import { getRem } from 'umaki'
@@ -246,31 +290,37 @@ const remValue = getRem(16)
 console.log(remValue) // '1rem'
 ```
 
+[View file →](src/libs/get/getRem.ts)
+
 ### getScrollbarWidth
 
-スクロールバーの幅を取得する関数です。
+A function that retrieves the width of the scrollbar.
 
 ```ts
 import { getScrollbarWidth } from 'umaki'
 
 const scrollbarWidth = getScrollbarWidth()
-console.log(scrollbarWidth) // スクロールバーの幅を表示
+console.log(scrollbarWidth) // 15
 ```
+
+[View file →](src/libs/get/getScrollbarWidth.ts)
 
 ### getSessionStorage
 
-セッションストレージから値を取得する関数です。
+A function that retrieves a value from session storage.
 
 ```ts
 import { getSessionStorage } from 'umaki'
 
 const value = getSessionStorage('testKey')
-console.log(value) // セッションストレージの値を表示
+console.log(value) // 'testValue'
 ```
+
+[View file →](src/libs/get/getSessionStorage.ts)
 
 ### getStringLength
 
-文字列の長さを取得する関数です（Unicode文字を考慮）。
+A function that retrieves the length of a string (considering Unicode characters).
 
 ```ts
 import { getStringLength } from 'umaki'
@@ -279,44 +329,60 @@ const length = getStringLength('こんにちは')
 console.log(length) // 5
 ```
 
+[View file →](src/libs/get/getStringLength.ts)
+
 ### getStylePropertyValue
 
-指定されたCSSカスタムプロパティの値を取得する関数です。
+A function that retrieves the value of the specified CSS custom property.
 
 ```ts
 import { getStylePropertyValue } from 'umaki'
 
 const value = getStylePropertyValue('--custom-property')
-console.log(value) // カスタムプロパティの値を表示
+console.log(value)
 ```
+
+[View file →](src/libs/get/getStylePropertyValue.ts)
 
 ### getStylePropertyValueToNumber
 
-指定されたCSSカスタムプロパティの値を数値として取得する関数です。
+A function that retrieves the value of the specified CSS custom property as a number.
 
 ```ts
 import { getStylePropertyValueToNumber } from 'umaki'
 
 const value = getStylePropertyValueToNumber('--custom-property')
-console.log(value) // カスタムプロパティの数値を表示
+console.log(value)
 ```
+
+[View file →](src/libs/get/getStylePropertyValueToNumber.ts)
 
 ### getUaData
 
-ユーザーエージェント情報を取得する関数です。
+A function that retrieves user agent information.
 
 ```ts
 import { getUaData } from 'umaki'
 
 const uaData = getUaData()
-console.log(uaData) // ユーザーエージェント情報を表示
+console.log(uaData)
+// {
+//   browserName: 'chrome',
+//   browserVersion: '91.0.4472.124',
+//   browserEngine: 'blink',
+//   osName: 'windows',
+//   type: 'desktop',
+//   touchSupport: false
+// }
 ```
+
+[View file →](src/libs/get/getUaData.ts)
 
 ## Is
 
 ### isBetweenDateTime
 
-現在の日付が指定された2つの日付の間にあるかどうかをチェックする関数です。
+A function that checks if the current date is between two specified dates.
 
 ```ts
 import { isBetweenDateTime } from 'umaki'
@@ -324,58 +390,68 @@ import { isBetweenDateTime } from 'umaki'
 const dateA = '2023-10-01'
 const dateB = '2023-10-10'
 const result = isBetweenDateTime(dateA, dateB)
-console.log(result) // true または false
+console.log(result) // true or false
 ```
+
+[View file →](src/libs/is/isBetweenDateTime.ts)
 
 ### isExistAllElements
 
-すべての要素が存在するかどうかをチェックする関数です。
+A function that checks if all elements exist.
 
 ```ts
 import { isExistAllElements } from 'umaki'
 
 const elements = [document.createElement('div'), document.createElement('span')]
 const result = isExistAllElements(elements)
-console.log(result) // true または false
+console.log(result) // true or false
 ```
+
+[View file →](src/libs/is/isExistAllElements.ts)
 
 ### isIpad
 
-デバイスがiPadかどうかをチェックする関数です。
+A function that checks if the device is an iPad.
 
 ```ts
 import { isIpad } from 'umaki'
 
 const result = isIpad()
-console.log(result) // true または false
+console.log(result) // true or false
 ```
+
+[View file →](src/libs/is/isIpad.ts)
 
 ### isKeyExists
 
-オブジェクトに特定のキーが存在するかどうかをチェックする関数です。
+A function that checks if a specific key exists in an object.
 
 ```ts
 import { isKeyExists } from 'umaki'
 
 const obj = { a: 1, b: 2 }
 const result = isKeyExists(obj, 'a')
-console.log(result) // true または false
+console.log(result) // true or false
 ```
+
+[View file →](src/libs/is/isKeyExists.ts)
 
 ### isSafari
 
-ブラウザがSafariかどうかをチェックする関数です。
+A function that checks if the browser is Safari.
 
 ```ts
 import { isSafari } from 'umaki'
 
 const result = isSafari()
-console.log(result) // true または false
+console.log(result) // true or false
 ```
+
+[View file →](src/libs/is/isSafari.ts)
 
 ### isScrollable
 
-要素がスクロール可能かどうかをチェックする関数です。
+A function that checks if an element is scrollable.
 
 ```ts
 import { isScrollable } from 'umaki'
@@ -384,25 +460,29 @@ const element = document.createElement('div')
 element.style.overflow = 'auto'
 element.innerHTML = '<div style="height: 200px;"></div>'
 const result = isScrollable(element)
-console.log(result) // true または false
+console.log(result) // true or false
 ```
+
+[View file →](src/libs/is/isScrollable.ts)
 
 ### isTouchSupport
 
-デバイスがタッチサポートを持っているかどうかをチェックする関数です。
+A function that checks if the device supports touch.
 
 ```ts
 import { isTouchSupport } from 'umaki'
 
 const result = isTouchSupport()
-console.log(result) // true または false
+console.log(result) // true or false
 ```
+
+[View file →](src/libs/is/isTouchSupport.ts)
 
 ## Remove
 
 ### removeAllHtmlTags
 
-文字列からすべてのHTMLタグを削除する関数です。
+A function that removes all HTML tags from a string.
 
 ```ts
 import { removeAllHtmlTags } from 'umaki'
@@ -412,9 +492,11 @@ const output = removeAllHtmlTags(input)
 console.log(output) // 'Hello World!'
 ```
 
+[View file →](src/libs/remove/removeAllHtmlTags.ts)
+
 ### removeAttribute
 
-指定されたHTML要素から属性を削除する関数です。
+A function that removes an attribute from the specified HTML element.
 
 ```ts
 import { removeAttribute } from 'umaki'
@@ -425,9 +507,11 @@ removeAttribute(element, 'data-test')
 console.log(element.hasAttribute('data-test')) // false
 ```
 
+[View file →](src/libs/remove/removeAttribute.ts)
+
 ### removeSessionStorage
 
-セッションストレージから指定されたキーのアイテムを削除する関数です。
+A function that removes an item with the specified key from session storage.
 
 ```ts
 import { removeSessionStorage } from 'umaki'
@@ -437,9 +521,11 @@ removeSessionStorage(key)
 console.log(sessionStorage.getItem(key)) // null
 ```
 
+[View file →](src/libs/remove/removeSessionStorage.ts)
+
 ### removeStylePropertyValue
 
-指定されたCSSカスタムプロパティを削除する関数です。
+A function that removes the specified CSS custom property.
 
 ```ts
 import { removeStylePropertyValue } from 'umaki'
@@ -449,11 +535,13 @@ removeStylePropertyValue(key)
 console.log(getComputedStyle(document.documentElement).getPropertyValue(key)) // ''
 ```
 
+[View file →](src/libs/remove/removeStylePropertyValue.ts)
+
 ## Set
 
 ### set100vh
 
-モバイルデバイスでのビューポート単位の問題を解決するために、CSS変数を100vhに設定する関数です。
+A function that sets a CSS variable to 100vh to address viewport unit issues on mobile devices.
 
 ```ts
 import { set100vh } from 'umaki'
@@ -461,9 +549,11 @@ import { set100vh } from 'umaki'
 set100vh()
 ```
 
+[View file →](src/libs/set/set100vh.ts)
+
 ### set100vw
 
-スクロールバーの幅を除いた100vwの値をCSS変数に設定する関数です。
+A function that sets a CSS variable to 100vw minus the scrollbar width.
 
 ```ts
 import { set100vw } from 'umaki'
@@ -471,9 +561,11 @@ import { set100vw } from 'umaki'
 set100vw()
 ```
 
+[View file →](src/libs/set/set100vw.ts)
+
 ### setAttribute
 
-指定されたHTML要素に属性を設定する関数です。
+A function that sets an attribute on the specified HTML element.
 
 ```ts
 import { setAttribute } from 'umaki'
@@ -483,9 +575,11 @@ setAttribute(element, 'data-test', 'value')
 console.log(element.getAttribute('data-test')) // 'value'
 ```
 
+[View file →](src/libs/set/setAttribute.ts)
+
 ### setScrollPositionToCenter
 
-ルート要素の水平スクロール位置を調整して、ターゲット要素を中央に配置する関数です。
+A function that adjusts the horizontal scroll position of the root element to center the target element.
 
 ```ts
 import { setScrollPositionToCenter } from 'umaki'
@@ -495,9 +589,11 @@ const targetElement = document.getElementById('target')
 setScrollPositionToCenter(rootElement, targetElement)
 ```
 
+[View file →](src/libs/set/setScrollPositionToCenter.ts)
+
 ### setSessionStorage
 
-セッションストレージに値を設定する関数です。
+A function that sets a value in session storage.
 
 ```ts
 import { setSessionStorage } from 'umaki'
@@ -508,9 +604,11 @@ setSessionStorage(key, value)
 console.log(sessionStorage.getItem(key)) // 'testValue'
 ```
 
+[View file →](src/libs/set/setSessionStorage.ts)
+
 ### setStylePropertyValue
 
-ルート要素にCSSカスタムプロパティを設定する関数です。
+A function that sets a CSS custom property on the root element.
 
 ```ts
 import { setStylePropertyValue } from 'umaki'
@@ -521,11 +619,13 @@ setStylePropertyValue(key, value)
 console.log(getComputedStyle(document.documentElement).getPropertyValue(key)) // 'blue'
 ```
 
+[View file →](src/libs/set/setStylePropertyValue.ts)
+
 ## To
 
 ### toBoolean
 
-文字列をブール値に変換する関数です。
+A function that converts a string to a boolean value.
 
 ```ts
 import { toBoolean } from 'umaki'
@@ -535,9 +635,11 @@ console.log(toBoolean('false')) // false
 console.log(toBoolean('random')) // false
 ```
 
+[View file →](src/libs/to/toBoolean.ts)
+
 ### toPositiveNumber
 
-数値を正の数に変換する関数です。負の数の場合は絶対値を返します。
+A function that converts a number to a positive number. Returns the absolute value if the number is negative.
 
 ```ts
 import { toPositiveNumber } from 'umaki'
@@ -549,11 +651,13 @@ console.log(toPositiveNumber(-3.14)) // 3.14
 console.log(toPositiveNumber(3.14)) // 3.14
 ```
 
+[View file →](src/libs/to/toPositiveNumber.ts)
+
 ## Transform
 
 ### wrapTextWithSpans
 
-HTML要素のテキストコンテンツの各文字を個別の<span>要素でラップする関数です。
+A function that wraps each character of the text content of an HTML element with individual `<span>` elements.
 
 ```ts
 import { wrapTextWithSpans } from 'umaki'
@@ -564,42 +668,52 @@ wrapTextWithSpans(element)
 console.log(element.innerHTML) // '<span>h</span><span>e</span><span>l</span><span>l</span><span>o</span>'
 ```
 
+[View file →](src/libs/transform/wrapTextWithSpans.ts)
+
 ## Wait
 
-### sleep
+### sleep (Promise)
 
-指定した時間だけ処理を一時停止する関数です。
+A function that pauses execution for a specified amount of time.
 
 ```ts
 import { sleep } from 'umaki'
 
 ;(async () => {
   console.log('Start')
-  await sleep(1) // 1秒間待機
+  await sleep(1) // 1ms wait
   console.log('End')
 })()
 ```
 
-### waitForAllMediaLoaded
+[View file →](src/libs/wait/sleep.ts)
 
-ドキュメント内のすべての画像とビデオが完全に読み込まれるのを待つ関数です。
+### waitForAllMediaLoaded (Promise)
+
+A function that waits until all images and videos in the document are fully loaded.
 
 ```ts
 import { waitForAllMediaLoaded } from 'umaki'
 
 ;(async () => {
   const allMediaLoaded = await waitForAllMediaLoaded()
-  console.log(allMediaLoaded) // true または false
+  console.log(allMediaLoaded) // true or false
+
+  // first view only
+  const firstViewMediaLoaded = await waitForAllMediaLoaded(true)
+  console.log(firstViewMediaLoaded) // true or false
 })()
 ```
 
+[View file →](src/libs/wait/waitForAllMediaLoaded.ts)
+
 ## Using for framework and tools
 
-フレームワークまたは各種ツール特有の使い方を以下に記載します。
+Specific usage for frameworks or various tools is described below.
 
 ### Astro or Vite
 
-AstroにてSSRする箇所で利用する場合は`vite.ssr.noExternal`に`umaki`を追加してください。
+When using with Astro for SSR, add `umaki` to `vite.ssr.noExternal.`
 
 ``` ts
 // astro.config.ts
