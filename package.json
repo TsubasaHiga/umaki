@@ -1,6 +1,6 @@
 {
   "name": "umaki",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "A utility that is often used in web production.",
   "author": "TsubasaHiga",
   "homepage": "https://github.com/TsubasaHiga/umaki",
@@ -48,6 +48,7 @@
     "@types/ua-parser-js": "^0.7.39",
     "@vitest/coverage-v8": "2.1.4",
     "happy-dom": "^15.7.4",
+    "rollup-plugin-license": "^3.5.3",
     "rollup-plugin-visualizer": "^5.12.0",
     "typescript": "~5.6.3",
     "vite": "^5.4.10",

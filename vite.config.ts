@@ -1,17 +1,42 @@
 /// <reference types="vitest" />
 
 import * as path from 'node:path'
+import license from 'rollup-plugin-license'
 import { visualizer } from 'rollup-plugin-visualizer'
 import { defineConfig } from 'vite'
 import dts from 'vite-plugin-dts'
 import tsconfigPaths from 'vite-tsconfig-paths'
+import packageJson from './package.json'
 
 // isProduction
 const isProduction = process.env.NODE_ENV === 'production'
 
+// banner
+const banner = `/*!
+ * name: ${packageJson.name}
+ * version: v${packageJson.version}
+ * description: ${packageJson.description}
+ * author: ${packageJson.author}
+ * homepage: ${packageJson.homepage}
+ * Released under the ${packageJson.license} License
+ *
+ * This software includes dependencies licensed under MIT, ISC, BSD-3-Clause, and Apache-2.0.
+ * For license information, please see LICENSE.txt
+ */
+`
+
 export default defineConfig(({ mode }) => {
   return {
-    plugins: [dts(), tsconfigPaths()],
+    plugins: [
+      dts(),
+      tsconfigPaths(),
+      license({
+        sourcemap: true,
+        thirdParty: {
+          output: path.join(__dirname, 'dist/LICENSE.txt')
+        }
+      })
+    ],
     test: {
       globals: true,
       environment: 'happy-dom',
@@ -35,10 +60,10 @@ export default defineConfig(({ mode }) => {
         }
       : {},
     build: {
+      minify: false,
       lib: {
         entry: './src/index.ts',
         name: 'umaki',
-        formats: ['es', 'cjs'],
         fileName: (format) => `index.${format}.js`
       },
       rollupOptions: {
@@ -50,7 +75,8 @@ export default defineConfig(({ mode }) => {
             entryFileNames: ({ name: fileName }) => {
               return `${fileName}.es.js`
             },
-            exports: 'named'
+            exports: 'named',
+            banner
           },
           {
             format: 'cjs',
@@ -59,7 +85,8 @@ export default defineConfig(({ mode }) => {
             entryFileNames: ({ name: fileName }) => {
               return `${fileName}.cjs.js`
             },
-            exports: 'named'
+            exports: 'named',
+            banner
           }
         ],
         external: [
