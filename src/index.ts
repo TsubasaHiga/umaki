@@ -4,6 +4,9 @@ export * from '@libs/control/'
 // Convert functions
 export * from '@libs/convert/'
 
+// EventControl functions
+export * from '@libs/eventControl/'
+
 // Get functions
 export * from '@libs/get/'
 
