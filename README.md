@@ -26,6 +26,9 @@ import { foo } from 'umaki'
 - [Convert](#convert)
   - [changeDateStringToSpecificFormat](#changedatestringtospecificformat)
   - [jsonStringToJsonObject](#jsonstringtojsonobject)
+- [EventControl](#eventcontrol)
+  - [debounce](#debounce)
+  - [throttle](#throttle)
 - [Get](#get)
   - [getAspectRatio](#getaspectratio)
   - [getClassNames](#getclassnames)
@@ -162,6 +165,40 @@ console.log(jsonObject) // { name: 'John', age: 30 }
 ```
 
 [View file →](src/libs/convert/jsonStringToJsonObject.ts)
+
+## EventControl
+
+### debounce
+
+A function that limits the number of times a function is called to at most one time over a specified time period.
+
+```ts
+import { debounce } from 'umaki'
+
+const debouncedFunction = debounce(() => {
+  console.log('Debounced!')
+}, 300)
+
+window.addEventListener('resize', debouncedFunction)
+```
+
+[View file →](src/libs/eventControl/debounce.ts)
+
+### throttle
+
+A function that limits the number of times a function is called to a maximum of once in a specified period.
+
+```ts
+import { throttle } from 'umaki'
+
+const throttledFunction = throttle(() => {
+  console.log('Throttled!')
+}, 300)
+
+window.addEventListener('scroll', throttledFunction)
+```
+
+[View file →](src/libs/eventControl/throttle.ts)
 
 ## Get
 
