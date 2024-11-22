@@ -718,7 +718,7 @@ import { sleep } from 'umaki'
 
 ;(async () => {
   console.log('Start')
-  await sleep(1) // 1ms wait
+  await sleep(1) // 1s wait
   console.log('End')
 })()
 ```
