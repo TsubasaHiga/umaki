@@ -26,6 +26,20 @@ describe('videoPlayControl', () => {
     expect(videoElement.dataset.playing).toBe('true')
   })
 
+  it('should play the video and set currentTime when state is true and video is paused', async () => {
+    videoElement.pause()
+    const playSpy = vi
+      .spyOn(videoElement, 'play')
+      .mockImplementation(() => Promise.resolve())
+
+    const testCurrentTime = 10
+    await videoPlayControl(videoElement, true, testCurrentTime)
+
+    expect(playSpy).toHaveBeenCalled()
+    expect(videoElement.currentTime).toBe(testCurrentTime)
+    expect(videoElement.dataset.playing).toBe('true')
+  })
+
   it('should not play the video if it is already playing', async () => {
     videoElement.dataset.playing = 'true'
     const playSpy = vi

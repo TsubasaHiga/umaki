@@ -15,7 +15,8 @@ import { toBoolean } from '@libs/to/toBoolean'
  */
 export const videoPlayControl = async (
   videoElement: HTMLVideoElement,
-  state: boolean
+  state: boolean,
+  currentTime?: number
 ): Promise<void> => {
   if (state && videoElement.paused) {
     const isPlaying = toBoolean(videoElement.dataset.playing!)
@@ -27,7 +28,7 @@ export const videoPlayControl = async (
     try {
       await playPromise
       // console.log('play', videoElement.src)
-      videoElement.currentTime = 0
+      videoElement.currentTime = currentTime || 0
       videoElement.dataset.playing = 'true'
     } catch (error) {
       console.log(error)

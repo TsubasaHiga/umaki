@@ -132,6 +132,9 @@ import { videoPlayControl } from 'umaki'
 const videoElement = document.getElementById('myVideo')
 videoPlayControl(videoElement, true) // play
 videoPlayControl(videoElement, false) // pause
+
+// set currentTime
+videoPlayControl(videoElement, true, 10) // play and set currentTime to 10
 ```
 
 [View file →](src/libs/control/videoPlayControl.ts)
@@ -718,7 +721,7 @@ import { sleep } from 'umaki'
 
 ;(async () => {
   console.log('Start')
-  await sleep(1) // 1ms wait
+  await sleep(1) // 1s wait
   console.log('End')
 })()
 ```
