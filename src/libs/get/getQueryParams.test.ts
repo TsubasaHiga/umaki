@@ -6,14 +6,16 @@ describe('getQueryParams', () => {
   beforeEach(() => {
     originalLocation = window.location
     Object.defineProperty(window, 'location', {
-      writable: true,
-      value: { search: '' } as Location
+      configurable: true,
+      value: { search: '' }
     })
-    window.location = { search: '' } as Location
   })
 
   afterEach(() => {
-    window.location = originalLocation
+    Object.defineProperty(window, 'location', {
+      configurable: true,
+      value: originalLocation
+    })
   })
 
   it('should return null if no query parameters are present', () => {
@@ -30,7 +32,9 @@ describe('getQueryParams', () => {
 
   it('should return the value of the specified query parameter', () => {
     window.location.search = '?test=123'
-    const result = getQueryParams('test', { parseNumbers: false })
+    const result = getQueryParams('test', {
+      parseOptions: { parseNumbers: false }
+    })
     expect(result).toBe('123')
   })
 
@@ -49,9 +53,24 @@ describe('getQueryParams', () => {
   it('should respect custom parse options', () => {
     window.location.search = '?test[]=1|2|3'
     const result = getQueryParams('test', {
-      arrayFormat: 'bracket-separator',
-      arrayFormatSeparator: '|'
+      parseOptions: {
+        arrayFormat: 'bracket-separator',
+        arrayFormatSeparator: '|'
+      }
     })
     expect(result).toEqual([1, 2, 3])
+  })
+
+  it('should work with custom search string', () => {
+    const result = getQueryParams('test', { searchString: '?test=123' })
+    expect(result).toBe(123)
+  })
+
+  it('should work with custom search string and parse options', () => {
+    const result = getQueryParams('test', {
+      searchString: '?test=123',
+      parseOptions: { parseNumbers: false }
+    })
+    expect(result).toBe('123')
   })
 })
