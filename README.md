@@ -12,8 +12,8 @@ A package that allows you to import frequently used utilities for web developmen
 
 ## Usage
 
-``` ts
-import { foo } from 'umaki'
+```ts
+import { foo } from "umaki";
 ```
 
 ## List of Utilities
@@ -80,11 +80,11 @@ import { foo } from 'umaki'
 
 A function that stops scrolling.
 
-``` ts
-import { bgScrollStop } from 'umaki'
+```ts
+import { bgScrollStop } from "umaki";
 
-bgScrollStop() // scroll stop
-bgScrollStop(false) // scroll start
+bgScrollStop(); // scroll stop
+bgScrollStop(false); // scroll start
 ```
 
 [View file →](src/libs/control/bgScrollStop.ts)
@@ -93,10 +93,10 @@ bgScrollStop(false) // scroll start
 
 A function that prevents the default event behavior.
 
-``` ts
-import { pd } from 'umaki'
+```ts
+import { pd } from "umaki";
 
-document.getElementById('myElement').addEventListener('click', pd)
+document.getElementById("myElement").addEventListener("click", pd);
 ```
 
 [View file →](src/libs/control/pd.ts)
@@ -105,19 +105,18 @@ document.getElementById('myElement').addEventListener('click', pd)
 
 A function that scrolls to a specific hash position.
 
-``` ts
-import { scrollToHash } from 'umaki'
-
-;(async () => {
-  await scrollToHash('#target')
-  console.log('Scrolled!')
+```ts
+import { scrollToHash } from "umaki";
+(async () => {
+  await scrollToHash("#target");
+  console.log("Scrolled!");
 
   // smooth scroll
-  await scrollToHash('#target', true)
+  await scrollToHash("#target", true);
 
   // smooth scroll + offset
-  await scrollToHash('#target', true, 100)
-})()
+  await scrollToHash("#target", true, 100);
+})();
 ```
 
 [View file →](src/libs/control/scrollToHash.ts)
@@ -126,15 +125,15 @@ import { scrollToHash } from 'umaki'
 
 A function that controls the playback of a video element.
 
-``` ts
-import { videoPlayControl } from 'umaki'
+```ts
+import { videoPlayControl } from "umaki";
 
-const videoElement = document.getElementById('myVideo')
-videoPlayControl(videoElement, true) // play
-videoPlayControl(videoElement, false) // pause
+const videoElement = document.getElementById("myVideo");
+videoPlayControl(videoElement, true); // play
+videoPlayControl(videoElement, false); // pause
 
 // set currentTime
-videoPlayControl(videoElement, true, 10) // play and set currentTime to 10
+videoPlayControl(videoElement, true, 10); // play and set currentTime to 10
 ```
 
 [View file →](src/libs/control/videoPlayControl.ts)
@@ -146,11 +145,11 @@ videoPlayControl(videoElement, true, 10) // play and set currentTime to 10
 A function that converts a date string to a specific format.
 
 ```ts
-import { changeDateStringToSpecificFormat } from 'umaki'
+import { changeDateStringToSpecificFormat } from "umaki";
 
-const date = '2023-10-05'
-const formattedDate = changeDateStringToSpecificFormat(date, 'MM/DD/YYYY')
-console.log(formattedDate) // '10/05/2023'
+const date = "2023-10-05";
+const formattedDate = changeDateStringToSpecificFormat(date, "MM/DD/YYYY");
+console.log(formattedDate); // '10/05/2023'
 ```
 
 [View file →](src/libs/convert/changeDateStringToSpecificFormat.ts)
@@ -160,11 +159,11 @@ console.log(formattedDate) // '10/05/2023'
 A function that converts a JSON string to a JSON object.
 
 ```ts
-import { jsonStringToJsonObject } from 'umaki'
+import { jsonStringToJsonObject } from "umaki";
 
-const jsonString = '{"name": "John", "age": 30}'
-const jsonObject = jsonStringToJsonObject(jsonString)
-console.log(jsonObject) // { name: 'John', age: 30 }
+const jsonString = '{"name": "John", "age": 30}';
+const jsonObject = jsonStringToJsonObject(jsonString);
+console.log(jsonObject); // { name: 'John', age: 30 }
 ```
 
 [View file →](src/libs/convert/jsonStringToJsonObject.ts)
@@ -176,13 +175,13 @@ console.log(jsonObject) // { name: 'John', age: 30 }
 A function that limits the number of times a function is called to at most one time over a specified time period.
 
 ```ts
-import { debounce } from 'umaki'
+import { debounce } from "umaki";
 
 const debouncedFunction = debounce(() => {
-  console.log('Debounced!')
-}, 300)
+  console.log("Debounced!");
+}, 300);
 
-window.addEventListener('resize', debouncedFunction)
+window.addEventListener("resize", debouncedFunction);
 ```
 
 [View file →](src/libs/eventControl/debounce.ts)
@@ -192,13 +191,13 @@ window.addEventListener('resize', debouncedFunction)
 A function that limits the number of times a function is called to a maximum of once in a specified period.
 
 ```ts
-import { throttle } from 'umaki'
+import { throttle } from "umaki";
 
 const throttledFunction = throttle(() => {
-  console.log('Throttled!')
-}, 300)
+  console.log("Throttled!");
+}, 300);
 
-window.addEventListener('scroll', throttledFunction)
+window.addEventListener("scroll", throttledFunction);
 ```
 
 [View file →](src/libs/eventControl/throttle.ts)
@@ -210,10 +209,10 @@ window.addEventListener('scroll', throttledFunction)
 A function that returns the aspect ratio of the specified width and height.
 
 ```ts
-import { getAspectRatio } from 'umaki'
+import { getAspectRatio } from "umaki";
 
-const aspectRatio = getAspectRatio(1920, 1080)
-console.log(aspectRatio) // { w: 16, h: 9 }
+const aspectRatio = getAspectRatio(1920, 1080);
+console.log(aspectRatio); // { w: 16, h: 9 }
 ```
 
 [View file →](src/libs/get/getAspectRatio.ts)
@@ -223,12 +222,12 @@ console.log(aspectRatio) // { w: 16, h: 9 }
 A function that retrieves the class names of the specified HTML element as an array.
 
 ```ts
-import { getClassNames } from 'umaki'
+import { getClassNames } from "umaki";
 
-const element = document.createElement('div')
-element.className = 'class1 class2 class3'
-const classNames = getClassNames(element)
-console.log(classNames) // ['class1', 'class2', 'class3']
+const element = document.createElement("div");
+element.className = "class1 class2 class3";
+const classNames = getClassNames(element);
+console.log(classNames); // ['class1', 'class2', 'class3']
 ```
 
 [View file →](src/libs/get/getClassNames.ts)
@@ -238,10 +237,10 @@ console.log(classNames) // ['class1', 'class2', 'class3']
 A function that retrieves the height of the document.
 
 ```ts
-import { getDocumentHeight } from 'umaki'
+import { getDocumentHeight } from "umaki";
 
-const height = getDocumentHeight()
-console.log(height)
+const height = getDocumentHeight();
+console.log(height);
 ```
 
 [View file →](src/libs/get/getDocumentHeight.ts)
@@ -251,12 +250,12 @@ console.log(height)
 A function that retrieves the event paths.
 
 ```ts
-import { getEventPaths } from 'umaki'
+import { getEventPaths } from "umaki";
 
-document.addEventListener('click', (event) => {
-  const paths = getEventPaths(event)
-  console.log(paths)
-})
+document.addEventListener("click", (event) => {
+  const paths = getEventPaths(event);
+  console.log(paths);
+});
 ```
 
 [View file →](src/libs/get/getEventPaths.ts)
@@ -266,10 +265,10 @@ document.addEventListener('click', (event) => {
 A function that calculates the greatest common divisor of two numbers.
 
 ```ts
-import { getGcd } from 'umaki'
+import { getGcd } from "umaki";
 
-const gcd = getGcd(48, 18)
-console.log(gcd) // 6
+const gcd = getGcd(48, 18);
+console.log(gcd); // 6
 ```
 
 [View file →](src/libs/get/getGcd.ts)
@@ -279,10 +278,10 @@ console.log(gcd) // 6
 A function that retrieves the current orientation of the device.
 
 ```ts
-import { getOrientation } from 'umaki'
+import { getOrientation } from "umaki";
 
-const orientation = getOrientation()
-console.log(orientation) // 'landscape' or 'portrait'
+const orientation = getOrientation();
+console.log(orientation); // 'landscape' or 'portrait'
 ```
 
 [View file →](src/libs/get/getOrientation.ts)
@@ -292,29 +291,38 @@ console.log(orientation) // 'landscape' or 'portrait'
 A function that recursively retrieves the parent elements of the specified HTML element.
 
 ```ts
-import { getParentList } from 'umaki'
+import { getParentList } from "umaki";
 
-const element = document.createElement('div')
-const parentList = getParentList(element)
-console.log(parentList)
+const element = document.createElement("div");
+const parentList = getParentList(element);
+console.log(parentList);
 ```
 
 [View file →](src/libs/get/getParentList.ts)
 
 ### getQueryParams
 
-A function that retrieves the query parameters from the URL.
-This is a wrapper around query-string, so you can specify [options](https://github.com/sindresorhus/query-string) in the second argument.
+A function that retrieves the value of a specified query parameter from the URL.
 
 ```ts
-import { getQueryParams } from 'umaki'
+import { getQueryParams } from "umaki";
 
-const params = getQueryParams('test') // https://example.com?test=123
-console.log(params) // 123
+// Basic usage
+const param = getQueryParams("id"); // returns value from window.location.search
 
-// Example of specifying options
-const params = getQueryParams('test', { parseNumbers: false })
-console.log(params) // '123'
+// With custom search string
+const customParam = getQueryParams("id", { searchString: "?id=123" });
+
+// With parse options
+const paramWithOptions = getQueryParams("id", {
+  parseOptions: { arrayFormat: "bracket" },
+});
+
+// With both custom search string and parse options
+const customParamWithOptions = getQueryParams("id", {
+  searchString: "?id=123",
+  parseOptions: { arrayFormat: "bracket" },
+});
 ```
 
 [View file →](src/libs/get/getQueryParams.ts)
@@ -324,10 +332,10 @@ console.log(params) // '123'
 A function that converts a pixel value to rem units.
 
 ```ts
-import { getRem } from 'umaki'
+import { getRem } from "umaki";
 
-const remValue = getRem(16)
-console.log(remValue) // '1rem'
+const remValue = getRem(16);
+console.log(remValue); // '1rem'
 ```
 
 [View file →](src/libs/get/getRem.ts)
@@ -337,10 +345,10 @@ console.log(remValue) // '1rem'
 A function that retrieves the width of the scrollbar.
 
 ```ts
-import { getScrollbarWidth } from 'umaki'
+import { getScrollbarWidth } from "umaki";
 
-const scrollbarWidth = getScrollbarWidth()
-console.log(scrollbarWidth) // 15
+const scrollbarWidth = getScrollbarWidth();
+console.log(scrollbarWidth); // 15
 ```
 
 [View file →](src/libs/get/getScrollbarWidth.ts)
@@ -350,10 +358,10 @@ console.log(scrollbarWidth) // 15
 A function that retrieves a value from session storage.
 
 ```ts
-import { getSessionStorage } from 'umaki'
+import { getSessionStorage } from "umaki";
 
-const value = getSessionStorage('testKey')
-console.log(value) // 'testValue'
+const value = getSessionStorage("testKey");
+console.log(value); // 'testValue'
 ```
 
 [View file →](src/libs/get/getSessionStorage.ts)
@@ -363,10 +371,10 @@ console.log(value) // 'testValue'
 A function that retrieves the length of a string (considering Unicode characters).
 
 ```ts
-import { getStringLength } from 'umaki'
+import { getStringLength } from "umaki";
 
-const length = getStringLength('こんにちは')
-console.log(length) // 5
+const length = getStringLength("こんにちは");
+console.log(length); // 5
 ```
 
 [View file →](src/libs/get/getStringLength.ts)
@@ -376,10 +384,10 @@ console.log(length) // 5
 A function that retrieves the value of the specified CSS custom property.
 
 ```ts
-import { getStylePropertyValue } from 'umaki'
+import { getStylePropertyValue } from "umaki";
 
-const value = getStylePropertyValue('--custom-property')
-console.log(value)
+const value = getStylePropertyValue("--custom-property");
+console.log(value);
 ```
 
 [View file →](src/libs/get/getStylePropertyValue.ts)
@@ -389,10 +397,10 @@ console.log(value)
 A function that retrieves the value of the specified CSS custom property as a number.
 
 ```ts
-import { getStylePropertyValueToNumber } from 'umaki'
+import { getStylePropertyValueToNumber } from "umaki";
 
-const value = getStylePropertyValueToNumber('--custom-property')
-console.log(value)
+const value = getStylePropertyValueToNumber("--custom-property");
+console.log(value);
 ```
 
 [View file →](src/libs/get/getStylePropertyValueToNumber.ts)
@@ -402,10 +410,10 @@ console.log(value)
 A function that retrieves user agent information.
 
 ```ts
-import { getUaData } from 'umaki'
+import { getUaData } from "umaki";
 
-const uaData = getUaData()
-console.log(uaData)
+const uaData = getUaData();
+console.log(uaData);
 // {
 //   browserName: 'chrome',
 //   browserVersion: '91.0.4472.124',
@@ -425,12 +433,12 @@ console.log(uaData)
 A function that checks if the current date is between two specified dates.
 
 ```ts
-import { isBetweenDateTime } from 'umaki'
+import { isBetweenDateTime } from "umaki";
 
-const dateA = '2023-10-01'
-const dateB = '2023-10-10'
-const result = isBetweenDateTime(dateA, dateB)
-console.log(result) // true or false
+const dateA = "2023-10-01";
+const dateB = "2023-10-10";
+const result = isBetweenDateTime(dateA, dateB);
+console.log(result); // true or false
 ```
 
 [View file →](src/libs/is/isBetweenDateTime.ts)
@@ -440,11 +448,14 @@ console.log(result) // true or false
 A function that checks if all elements exist.
 
 ```ts
-import { isExistAllElements } from 'umaki'
+import { isExistAllElements } from "umaki";
 
-const elements = [document.createElement('div'), document.createElement('span')]
-const result = isExistAllElements(elements)
-console.log(result) // true or false
+const elements = [
+  document.createElement("div"),
+  document.createElement("span"),
+];
+const result = isExistAllElements(elements);
+console.log(result); // true or false
 ```
 
 [View file →](src/libs/is/isExistAllElements.ts)
@@ -454,10 +465,10 @@ console.log(result) // true or false
 A function that checks if the device is an iPad.
 
 ```ts
-import { isIpad } from 'umaki'
+import { isIpad } from "umaki";
 
-const result = isIpad()
-console.log(result) // true or false
+const result = isIpad();
+console.log(result); // true or false
 ```
 
 [View file →](src/libs/is/isIpad.ts)
@@ -467,11 +478,11 @@ console.log(result) // true or false
 A function that checks if a specific key exists in an object.
 
 ```ts
-import { isKeyExists } from 'umaki'
+import { isKeyExists } from "umaki";
 
-const obj = { a: 1, b: 2 }
-const result = isKeyExists(obj, 'a')
-console.log(result) // true or false
+const obj = { a: 1, b: 2 };
+const result = isKeyExists(obj, "a");
+console.log(result); // true or false
 ```
 
 [View file →](src/libs/is/isKeyExists.ts)
@@ -481,10 +492,10 @@ console.log(result) // true or false
 A function that checks if the browser is Safari.
 
 ```ts
-import { isSafari } from 'umaki'
+import { isSafari } from "umaki";
 
-const result = isSafari()
-console.log(result) // true or false
+const result = isSafari();
+console.log(result); // true or false
 ```
 
 [View file →](src/libs/is/isSafari.ts)
@@ -494,13 +505,13 @@ console.log(result) // true or false
 A function that checks if an element is scrollable.
 
 ```ts
-import { isScrollable } from 'umaki'
+import { isScrollable } from "umaki";
 
-const element = document.createElement('div')
-element.style.overflow = 'auto'
-element.innerHTML = '<div style="height: 200px;"></div>'
-const result = isScrollable(element)
-console.log(result) // true or false
+const element = document.createElement("div");
+element.style.overflow = "auto";
+element.innerHTML = '<div style="height: 200px;"></div>';
+const result = isScrollable(element);
+console.log(result); // true or false
 ```
 
 [View file →](src/libs/is/isScrollable.ts)
@@ -510,10 +521,10 @@ console.log(result) // true or false
 A function that checks if the device supports touch.
 
 ```ts
-import { isTouchSupport } from 'umaki'
+import { isTouchSupport } from "umaki";
 
-const result = isTouchSupport()
-console.log(result) // true or false
+const result = isTouchSupport();
+console.log(result); // true or false
 ```
 
 [View file →](src/libs/is/isTouchSupport.ts)
@@ -525,11 +536,11 @@ console.log(result) // true or false
 A function that removes all HTML tags from a string.
 
 ```ts
-import { removeAllHtmlTags } from 'umaki'
+import { removeAllHtmlTags } from "umaki";
 
-const input = '<p>Hello <strong>World</strong>!</p>'
-const output = removeAllHtmlTags(input)
-console.log(output) // 'Hello World!'
+const input = "<p>Hello <strong>World</strong>!</p>";
+const output = removeAllHtmlTags(input);
+console.log(output); // 'Hello World!'
 ```
 
 [View file →](src/libs/remove/removeAllHtmlTags.ts)
@@ -539,12 +550,12 @@ console.log(output) // 'Hello World!'
 A function that removes an attribute from the specified HTML element.
 
 ```ts
-import { removeAttribute } from 'umaki'
+import { removeAttribute } from "umaki";
 
-const element = document.createElement('div')
-element.setAttribute('data-test', 'value')
-removeAttribute(element, 'data-test')
-console.log(element.hasAttribute('data-test')) // false
+const element = document.createElement("div");
+element.setAttribute("data-test", "value");
+removeAttribute(element, "data-test");
+console.log(element.hasAttribute("data-test")); // false
 ```
 
 [View file →](src/libs/remove/removeAttribute.ts)
@@ -554,11 +565,11 @@ console.log(element.hasAttribute('data-test')) // false
 A function that removes an item with the specified key from session storage.
 
 ```ts
-import { removeSessionStorage } from 'umaki'
+import { removeSessionStorage } from "umaki";
 
-const key = 'testKey'
-removeSessionStorage(key)
-console.log(sessionStorage.getItem(key)) // null
+const key = "testKey";
+removeSessionStorage(key);
+console.log(sessionStorage.getItem(key)); // null
 ```
 
 [View file →](src/libs/remove/removeSessionStorage.ts)
@@ -568,11 +579,11 @@ console.log(sessionStorage.getItem(key)) // null
 A function that removes the specified CSS custom property.
 
 ```ts
-import { removeStylePropertyValue } from 'umaki'
+import { removeStylePropertyValue } from "umaki";
 
-const key = '--custom-property'
-removeStylePropertyValue(key)
-console.log(getComputedStyle(document.documentElement).getPropertyValue(key)) // ''
+const key = "--custom-property";
+removeStylePropertyValue(key);
+console.log(getComputedStyle(document.documentElement).getPropertyValue(key)); // ''
 ```
 
 [View file →](src/libs/remove/removeStylePropertyValue.ts)
@@ -584,9 +595,9 @@ console.log(getComputedStyle(document.documentElement).getPropertyValue(key)) //
 A function that sets a CSS variable to 100vh to address viewport unit issues on mobile devices.
 
 ```ts
-import { set100vh } from 'umaki'
+import { set100vh } from "umaki";
 
-set100vh()
+set100vh();
 ```
 
 [View file →](src/libs/set/set100vh.ts)
@@ -596,9 +607,9 @@ set100vh()
 A function that sets a CSS variable to 100vw minus the scrollbar width.
 
 ```ts
-import { set100vw } from 'umaki'
+import { set100vw } from "umaki";
 
-set100vw()
+set100vw();
 ```
 
 [View file →](src/libs/set/set100vw.ts)
@@ -608,11 +619,11 @@ set100vw()
 A function that sets an attribute on the specified HTML element.
 
 ```ts
-import { setAttribute } from 'umaki'
+import { setAttribute } from "umaki";
 
-const element = document.createElement('div')
-setAttribute(element, 'data-test', 'value')
-console.log(element.getAttribute('data-test')) // 'value'
+const element = document.createElement("div");
+setAttribute(element, "data-test", "value");
+console.log(element.getAttribute("data-test")); // 'value'
 ```
 
 [View file →](src/libs/set/setAttribute.ts)
@@ -622,11 +633,11 @@ console.log(element.getAttribute('data-test')) // 'value'
 A function that adjusts the horizontal scroll position of the root element to center the target element.
 
 ```ts
-import { setScrollPositionToCenter } from 'umaki'
+import { setScrollPositionToCenter } from "umaki";
 
-const rootElement = document.getElementById('root')
-const targetElement = document.getElementById('target')
-setScrollPositionToCenter(rootElement, targetElement)
+const rootElement = document.getElementById("root");
+const targetElement = document.getElementById("target");
+setScrollPositionToCenter(rootElement, targetElement);
 ```
 
 [View file →](src/libs/set/setScrollPositionToCenter.ts)
@@ -636,12 +647,12 @@ setScrollPositionToCenter(rootElement, targetElement)
 A function that sets a value in session storage.
 
 ```ts
-import { setSessionStorage } from 'umaki'
+import { setSessionStorage } from "umaki";
 
-const key = 'testKey'
-const value = 'testValue'
-setSessionStorage(key, value)
-console.log(sessionStorage.getItem(key)) // 'testValue'
+const key = "testKey";
+const value = "testValue";
+setSessionStorage(key, value);
+console.log(sessionStorage.getItem(key)); // 'testValue'
 ```
 
 [View file →](src/libs/set/setSessionStorage.ts)
@@ -651,12 +662,12 @@ console.log(sessionStorage.getItem(key)) // 'testValue'
 A function that sets a CSS custom property on the root element.
 
 ```ts
-import { setStylePropertyValue } from 'umaki'
+import { setStylePropertyValue } from "umaki";
 
-const key = '--custom-color'
-const value = 'blue'
-setStylePropertyValue(key, value)
-console.log(getComputedStyle(document.documentElement).getPropertyValue(key)) // 'blue'
+const key = "--custom-color";
+const value = "blue";
+setStylePropertyValue(key, value);
+console.log(getComputedStyle(document.documentElement).getPropertyValue(key)); // 'blue'
 ```
 
 [View file →](src/libs/set/setStylePropertyValue.ts)
@@ -668,11 +679,11 @@ console.log(getComputedStyle(document.documentElement).getPropertyValue(key)) //
 A function that converts a string to a boolean value.
 
 ```ts
-import { toBoolean } from 'umaki'
+import { toBoolean } from "umaki";
 
-console.log(toBoolean('true')) // true
-console.log(toBoolean('false')) // false
-console.log(toBoolean('random')) // false
+console.log(toBoolean("true")); // true
+console.log(toBoolean("false")); // false
+console.log(toBoolean("random")); // false
 ```
 
 [View file →](src/libs/to/toBoolean.ts)
@@ -682,13 +693,13 @@ console.log(toBoolean('random')) // false
 A function that converts a number to a positive number. Returns the absolute value if the number is negative.
 
 ```ts
-import { toPositiveNumber } from 'umaki'
+import { toPositiveNumber } from "umaki";
 
-console.log(toPositiveNumber(5)) // 5
-console.log(toPositiveNumber(-5)) // 5
-console.log(toPositiveNumber(0)) // 0
-console.log(toPositiveNumber(-3.14)) // 3.14
-console.log(toPositiveNumber(3.14)) // 3.14
+console.log(toPositiveNumber(5)); // 5
+console.log(toPositiveNumber(-5)); // 5
+console.log(toPositiveNumber(0)); // 0
+console.log(toPositiveNumber(-3.14)); // 3.14
+console.log(toPositiveNumber(3.14)); // 3.14
 ```
 
 [View file →](src/libs/to/toPositiveNumber.ts)
@@ -700,12 +711,12 @@ console.log(toPositiveNumber(3.14)) // 3.14
 A function that wraps each character of the text content of an HTML element with individual `<span>` elements.
 
 ```ts
-import { wrapTextWithSpans } from 'umaki'
+import { wrapTextWithSpans } from "umaki";
 
-const element = document.createElement('div')
-element.textContent = 'hello'
-wrapTextWithSpans(element)
-console.log(element.innerHTML) // '<span>h</span><span>e</span><span>l</span><span>l</span><span>o</span>'
+const element = document.createElement("div");
+element.textContent = "hello";
+wrapTextWithSpans(element);
+console.log(element.innerHTML); // '<span>h</span><span>e</span><span>l</span><span>l</span><span>o</span>'
 ```
 
 [View file →](src/libs/transform/wrapTextWithSpans.ts)
@@ -717,13 +728,12 @@ console.log(element.innerHTML) // '<span>h</span><span>e</span><span>l</span><sp
 A function that pauses execution for a specified amount of time.
 
 ```ts
-import { sleep } from 'umaki'
-
-;(async () => {
-  console.log('Start')
-  await sleep(1) // 1s wait
-  console.log('End')
-})()
+import { sleep } from "umaki";
+(async () => {
+  console.log("Start");
+  await sleep(1); // 1s wait
+  console.log("End");
+})();
 ```
 
 [View file →](src/libs/wait/sleep.ts)
@@ -733,16 +743,15 @@ import { sleep } from 'umaki'
 A function that waits until all images and videos in the document are fully loaded.
 
 ```ts
-import { waitForAllMediaLoaded } from 'umaki'
-
-;(async () => {
-  const allMediaLoaded = await waitForAllMediaLoaded()
-  console.log(allMediaLoaded) // true or false
+import { waitForAllMediaLoaded } from "umaki";
+(async () => {
+  const allMediaLoaded = await waitForAllMediaLoaded();
+  console.log(allMediaLoaded); // true or false
 
   // first view only
-  const firstViewMediaLoaded = await waitForAllMediaLoaded(true)
-  console.log(firstViewMediaLoaded) // true or false
-})()
+  const firstViewMediaLoaded = await waitForAllMediaLoaded(true);
+  console.log(firstViewMediaLoaded); // true or false
+})();
 ```
 
 [View file →](src/libs/wait/waitForAllMediaLoaded.ts)
@@ -755,15 +764,15 @@ Specific usage for frameworks or various tools is described below.
 
 When using with Astro for SSR, add `umaki` to `vite.ssr.noExternal.`
 
-``` ts
+```ts
 // astro.config.ts
 export default defineConfig(({ mode }) => {
   return {
     vite: {
       ssr: {
-        noExternal: ['umaki']
-      }
-    }
-  }
-})
+        noExternal: ["umaki"],
+      },
+    },
+  };
+});
 ```
