@@ -16,6 +16,9 @@ export * from '@libs/is/'
 // Remove functions
 export * from '@libs/remove/'
 
+// Security functions
+export * from '@libs/security/'
+
 // Set functions
 export * from '@libs/set/'
 
