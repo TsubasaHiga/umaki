@@ -73,6 +73,8 @@ import { foo } from "umaki";
 - [Wait](#wait)
   - [sleep](#sleep)
   - [waitForAllMediaLoaded](#waitforallmedialoaded)
+- [Security](#security)
+  - [sanitizeHtml](#sanitizehtml)
 
 ## Control
 
@@ -756,27 +758,6 @@ import { waitForAllMediaLoaded } from "umaki";
 
 [View file →](src/libs/wait/waitForAllMediaLoaded.ts)
 
-## Using for framework and tools
-
-Specific usage for frameworks or various tools is described below.
-
-### Astro or Vite
-
-When using with Astro for SSR, add `umaki` to `vite.ssr.noExternal.`
-
-```ts
-// astro.config.ts
-export default defineConfig(({ mode }) => {
-  return {
-    vite: {
-      ssr: {
-        noExternal: ["umaki"],
-      },
-    },
-  };
-});
-```
-
 ## Security
 
 ### sanitizeHtml
@@ -805,3 +786,24 @@ This function uses `isomorphic-dompurify` and has the following features:
 - Can be used on both server-side and client-side
 
 [View file →](src/libs/security/htmlSanitize.ts)
+
+## Using for framework and tools
+
+Specific usage for frameworks or various tools is described below.
+
+### Astro or Vite
+
+When using with Astro for SSR, add `umaki` to `vite.ssr.noExternal.`
+
+```ts
+// astro.config.ts
+export default defineConfig(({ mode }) => {
+  return {
+    vite: {
+      ssr: {
+        noExternal: ["umaki"],
+      },
+    },
+  };
+});
+```
