@@ -776,3 +776,32 @@ export default defineConfig(({ mode }) => {
   };
 });
 ```
+
+## Security
+
+### sanitizeHtml
+
+A function that sanitizes HTML strings to prevent XSS attacks.
+
+```ts
+import { sanitizeHtml } from "umaki";
+
+// Basic usage
+const sanitized = sanitizeHtml(
+  '<script>alert("xss")</script><p>Hello World</p>'
+);
+console.log(sanitized); // '<p>Hello World</p>'
+
+// With custom config
+const config = { ALLOWED_TAGS: ["p"] };
+const sanitizedWithConfig = sanitizeHtml("<p>Hello World</p>", config);
+console.log(sanitizedWithConfig); // '<p>Hello World</p>'
+```
+
+This function uses `isomorphic-dompurify` and has the following features:
+
+- Removes dangerous HTML tags and attributes by default
+- Allows flexible control through custom configuration
+- Can be used on both server-side and client-side
+
+[View file →](src/libs/security/htmlSanitize.ts)
