@@ -7,7 +7,7 @@ import DOMPurify from 'isomorphic-dompurify'
  * @param config - Optional configuration for DOMPurify.
  * @returns The sanitized HTML string.
  */
-export function sanitizeHtml(
+export function htmlSanitize(
   html: string,
   config: Parameters<typeof DOMPurify.sanitize>[1] = {}
 ): string {
