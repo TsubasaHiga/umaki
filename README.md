@@ -154,28 +154,25 @@ const date = "2023-10-05";
 const formattedDate = changeDateStringToSpecificFormat(date, "MM/DD/YYYY");
 console.log(formattedDate); // '10/05/2023'
 
-// With locale
-import "dayjs/locale/ja";
-const dateWithLocale = "2025-04-25T00:00:00.000Z";
-const formattedDateWithLocale = changeDateStringToSpecificFormat(
-  dateWithLocale,
-  "YYYY年MM月DD日 (ddd)",
-  "ja"
+// With timezone
+const dateWithTz = "2025-04-25T00:00:00.000Z";
+const formattedDateWithTz = changeDateStringToSpecificFormat(
+  dateWithTz,
+  "YYYY-MM-DD HH:mm:ss",
+  "Asia/Tokyo"
 );
-console.log(formattedDateWithLocale); // '2025年04月25日 (金)'
+console.log(formattedDateWithTz); // '2025-04-25 09:00:00'
 
-// With different locale
-import "dayjs/locale/en";
-const formattedDateWithEnLocale = changeDateStringToSpecificFormat(
-  dateWithLocale,
-  "YYYY年MM月DD日 (ddd)",
-  "en"
+// With different timezone
+const formattedDateWithDifferentTz = changeDateStringToSpecificFormat(
+  dateWithTz,
+  "YYYY-MM-DD HH:mm:ss",
+  "America/New_York"
 );
-console.log(formattedDateWithEnLocale); // '2025年04月25日 (Fri)'
+console.log(formattedDateWithDifferentTz); // '2025-04-24 20:00:00'
 ```
 
-Note: To use specific locales, you need to import the corresponding locale file in your project.
-Example: `import 'dayjs/locale/ja'`
+Note: This function focuses on timezone handling rather than locale-specific formatting. When a timezone is specified, the date will be converted to that timezone before formatting.
 
 [View file →](src/libs/convert/changeDateStringToSpecificFormat.ts)
 

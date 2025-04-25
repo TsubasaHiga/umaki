@@ -1,6 +1,11 @@
-import 'dayjs/locale/ja'
-import 'dayjs/locale/en'
+import dayjs from 'dayjs'
+import timezone from 'dayjs/plugin/timezone'
+import utc from 'dayjs/plugin/utc'
 import { changeDateStringToSpecificFormat } from './changeDateStringToSpecificFormat'
+
+// プラグインを設定
+dayjs.extend(utc)
+dayjs.extend(timezone)
 
 describe('changeDateStringToSpecificFormat', () => {
   it('should format date string to default format', () => {
@@ -35,45 +40,47 @@ describe('changeDateStringToSpecificFormat', () => {
     expect(formattedDate).toBe('25/04/2025')
   })
 
-  it('should format date string with specified locale', () => {
+  it('should format date string with specified timezone', () => {
     const date = '2025-04-25T00:00:00.000Z'
-    const format = 'YYYY年MM月DD日 (ddd)'
-    const locale = 'ja'
-    const formattedDate = changeDateStringToSpecificFormat(date, format, locale)
-    expect(formattedDate).toBe('2025年04月25日 (金)')
+    const format = 'YYYY-MM-DD HH:mm:ss'
+    const tz = 'Asia/Tokyo'
+    const formattedDate = changeDateStringToSpecificFormat(date, format, tz)
+    // UTC 00:00 is UTC+9 09:00 in Tokyo
+    expect(formattedDate).toBe('2025-04-25 09:00:00')
   })
 
-  it('should format date string with different locale', () => {
+  it('should format date string with different timezone', () => {
     const date = '2025-04-25T00:00:00.000Z'
-    const format = 'YYYY年MM月DD日 (ddd)'
-    const locale = 'en'
-    const formattedDate = changeDateStringToSpecificFormat(date, format, locale)
-    expect(formattedDate).toBe('2025年04月25日 (Fri)')
+    const format = 'YYYY-MM-DD HH:mm:ss'
+    const tz = 'America/New_York'
+    const formattedDate = changeDateStringToSpecificFormat(date, format, tz)
+    // UTC 00:00 is UTC-4 20:00 previous day in New York (considering DST)
+    expect(formattedDate).toBe('2025-04-24 20:00:00')
   })
 
-  it('should not format date string with Japanese locale when English locale is specified', () => {
-    const date = '2025-04-25T00:00:00.000Z'
-    const format = 'YYYY年MM月DD日 (ddd)'
-    const locale = 'en'
-    const formattedDate = changeDateStringToSpecificFormat(date, format, locale)
-    expect(formattedDate).not.toBe('2025年04月25日 (金)')
+  it('should handle DST transitions correctly', () => {
+    // A date during DST
+    const dateDST = '2025-07-15T00:00:00.000Z'
+    const format = 'YYYY-MM-DD HH:mm:ss'
+    const tz = 'America/New_York'
+    const formattedDST = changeDateStringToSpecificFormat(dateDST, format, tz)
+    expect(formattedDST).toBe('2025-07-14 20:00:00')
   })
 
-  it('should not format date string with English locale when Japanese locale is specified', () => {
+  it('should correctly format date using UTC timezone', () => {
     const date = '2025-04-25T00:00:00.000Z'
-    const format = 'YYYY年MM月DD日 (ddd)'
-    const locale = 'ja'
-    const formattedDate = changeDateStringToSpecificFormat(date, format, locale)
-    expect(formattedDate).not.toBe('2025年04月25日 (Fri)')
+    const format = 'YYYY-MM-DD HH:mm:ss'
+    const tz = 'UTC'
+    const formattedDate = changeDateStringToSpecificFormat(date, format, tz)
+    expect(formattedDate).toBe('2025-04-25 00:00:00')
   })
 
-  it('should format date string differently with different locales for month names', () => {
+  it('should add date-specific components properly', () => {
     const date = '2025-04-25T00:00:00.000Z'
-    const format = 'YYYY年MMMMDD日'
-    const jaFormattedDate = changeDateStringToSpecificFormat(date, format, 'ja')
-    const enFormattedDate = changeDateStringToSpecificFormat(date, format, 'en')
-    expect(jaFormattedDate).not.toBe(enFormattedDate)
-    expect(jaFormattedDate).toBe('2025年4月25日')
-    expect(enFormattedDate).toBe('2025年April25日')
+    const format = 'YYYY年MM月DD日(ddd) HH:mm:ss'
+    const tz = 'Asia/Tokyo'
+    const formattedDate = changeDateStringToSpecificFormat(date, format, tz)
+    expect(formattedDate).toContain('2025年04月25日')
+    expect(formattedDate).toContain('09:00:00')
   })
 })
