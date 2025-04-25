@@ -149,10 +149,33 @@ A function that converts a date string to a specific format.
 ```ts
 import { changeDateStringToSpecificFormat } from "umaki";
 
+// Basic usage
 const date = "2023-10-05";
 const formattedDate = changeDateStringToSpecificFormat(date, "MM/DD/YYYY");
 console.log(formattedDate); // '10/05/2023'
+
+// With locale
+import "dayjs/locale/ja";
+const dateWithLocale = "2025-04-25T00:00:00.000Z";
+const formattedDateWithLocale = changeDateStringToSpecificFormat(
+  dateWithLocale,
+  "YYYY年MM月DD日 (ddd)",
+  "ja"
+);
+console.log(formattedDateWithLocale); // '2025年04月25日 (金)'
+
+// With different locale
+import "dayjs/locale/en";
+const formattedDateWithEnLocale = changeDateStringToSpecificFormat(
+  dateWithLocale,
+  "YYYY年MM月DD日 (ddd)",
+  "en"
+);
+console.log(formattedDateWithEnLocale); // '2025年04月25日 (Fri)'
 ```
+
+Note: To use specific locales, you need to import the corresponding locale file in your project.
+Example: `import 'dayjs/locale/ja'`
 
 [View file →](src/libs/convert/changeDateStringToSpecificFormat.ts)
 
