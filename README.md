@@ -46,6 +46,7 @@ import { foo } from "umaki";
   - [getStylePropertyValueToNumber](#getstylepropertyvaluetonumber)
   - [getUaData](#getuadata)
 - [Is](#is)
+  - [isAfterDateTime](#isafterdatetime)
   - [isBetweenDateTime](#isbetweendatetime)
   - [isExistAllElements](#isexistallelements)
   - [isIpad](#isipad)
@@ -449,6 +450,25 @@ console.log(uaData);
 [View file →](src/libs/get/getUaData.ts)
 
 ## Is
+
+### isAfterDateTime
+
+A function that checks if the current date is after a specified date.
+
+```ts
+import { isAfterDateTime } from "umaki";
+
+const targetDate = "2023-10-01";
+const result = isAfterDateTime(targetDate);
+console.log(result); // true or false
+
+// With custom current date
+const customCurrentDate = "2023-11-15";
+const resultWithCustomDate = isAfterDateTime(targetDate, customCurrentDate);
+console.log(resultWithCustomDate); // true
+```
+
+[View file →](src/libs/is/isAfterDateTime.ts)
 
 ### isBetweenDateTime
 
