@@ -2,6 +2,7 @@
  * Is functions
  */
 
+export { isAfterDateTime } from './isAfterDateTime'
 export { isBetweenDateTime } from './isBetweenDateTime'
 export { isExistAllElements } from './isExistAllElements'
 export { isIpad } from './isIpad'
