@@ -463,9 +463,10 @@ const result = isAfterDateTime(targetDate);
 console.log(result); // true or false
 
 // With custom current date
+import dayjs from "dayjs";
+
 const customCurrentDate = "2023-11-15";
-const resultWithCustomDate = isAfterDateTime(targetDate, customCurrentDate);
-console.log(resultWithCustomDate); // true
+const resultWithCustomDate = isAfterDateTime(targetDate, dayjs(customCurrentDate));
 ```
 
 [View file →](src/libs/is/isAfterDateTime.ts)
