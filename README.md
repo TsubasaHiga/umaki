@@ -16,12 +16,46 @@ A package that allows you to import frequently used utilities for web developmen
 import { foo } from "umaki";
 ```
 
+## Configuration
+
+### setConfig
+
+A function to set or update global configuration options for the umaki library.
+
+```ts
+import { setConfig } from "umaki";
+
+// Set a custom breakpoint value
+setConfig({ BREAKPOINT: 1024 });
+
+// You can also add custom configuration properties
+setConfig({ customValue: "example" });
+```
+
+### getConfig
+
+A function to retrieve the entire current configuration object.
+
+```ts
+import { getConfig } from "umaki";
+
+const config = getConfig();
+console.log(config.BREAKPOINT); // e.g. 768 (default) or custom value if set
+```
+
+### getConfigValue
+
+A function to retrieve a specific configuration value by key.
+
+```ts
+import { getConfigValue } from "umaki";
+
+const breakpoint = getConfigValue('BREAKPOINT');
+console.log(breakpoint); // e.g. 768 (default) or custom value if set
+```
+
 ## List of Utilities
 
-- [Configuration](#configuration)
-  - [setConfig](#setconfig)
-  - [getConfig](#getconfig)
-  - [getConfigValue](#getconfigvalue)
 - [Control](#control)
   - [bgScrollStop](#bgscrollstop)
   - [pd](#pd)
@@ -58,6 +92,7 @@ import { foo } from "umaki";
   - [isSafari](#issafari)
   - [isScrollable](#isscrollable)
   - [isTouchSupport](#istouchsupport)
+  - [checkDeviceSize](#checkdevicesize)
 - [Remove](#remove)
   - [removeAllHtmlTags](#removeallhtmltags)
   - [removeAttribute](#removeattribute)
@@ -80,50 +115,6 @@ import { foo } from "umaki";
   - [waitForAllMediaLoaded](#waitforallmedialoaded)
 - [Security](#security)
   - [sanitizeHtml](#sanitizehtml)
-
-## Configuration
-
-### setConfig
-
-A function to set or update global configuration options for the umaki library.
-
-```ts
-import { setConfig } from "umaki";
-
-// Set a custom breakpoint value
-setConfig({ BREAKPOINT: 1024 });
-
-// You can also add custom configuration properties
-setConfig({ customValue: "example" });
-```
-
-[View file →](src/libs/config/setConfig.ts)
-
-### getConfig
-
-A function to retrieve the entire current configuration object.
-
-```ts
-import { getConfig } from "umaki";
-
-const config = getConfig();
-console.log(config.BREAKPOINT); // e.g. 768 (default) or custom value if set
-```
-
-[View file →](src/libs/config/getConfig.ts)
-
-### getConfigValue
-
-A function to retrieve a specific configuration value by key.
-
-```ts
-import { getConfigValue } from "umaki";
-
-const breakpoint = getConfigValue('BREAKPOINT');
-console.log(breakpoint); // e.g. 768 (default) or custom value if set
-```
-
-[View file →](src/libs/config/getConfig.ts)
 
 ## Control
 
@@ -499,25 +490,6 @@ console.log(uaData);
 
 ## Is
 
-### checkDeviceSize
-
-A function that checks the current device size based on window width and the configured breakpoint.
-
-```ts
-import { checkDeviceSize, setConfig } from "umaki";
-
-// Using default breakpoint (768px)
-const deviceSize = checkDeviceSize();
-console.log(deviceSize); // 'md' if window.innerWidth > 768, otherwise 'sm'
-
-// Customize the breakpoint
-setConfig({ BREAKPOINT: 1024 });
-const newDeviceSize = checkDeviceSize();
-console.log(newDeviceSize); // 'md' if window.innerWidth > 1024, otherwise 'sm'
-```
-
-[View file →](src/libs/is/checkDeviceSize.ts)
-
 ### isAfterDateTime
 
 A function that checks if the current date is after a specified date.
@@ -638,6 +610,25 @@ console.log(result); // true or false
 ```
 
 [View file →](src/libs/is/isTouchSupport.ts)
+
+### checkDeviceSize
+
+A function that checks the current device size based on window width and the configured breakpoint.
+
+```ts
+import { checkDeviceSize, setConfig } from "umaki";
+
+// Using default breakpoint (768px)
+const deviceSize = checkDeviceSize();
+console.log(deviceSize); // 'md' if window.innerWidth > 768, otherwise 'sm'
+
+// Customize the breakpoint
+setConfig({ BREAKPOINT: 1024 });
+const newDeviceSize = checkDeviceSize();
+console.log(newDeviceSize); // 'md' if window.innerWidth > 1024, otherwise 'sm'
+```
+
+[View file →](src/libs/is/checkDeviceSize.ts)
 
 ## Remove
 
