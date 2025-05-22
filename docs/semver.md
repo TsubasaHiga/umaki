@@ -36,3 +36,13 @@ When it's not yet ready for a release version.
 ```txt
 Ver1.0.0-beta.x
 ```
+
+## Automated Version Labeling
+
+Pull requests targeting the `main` branch are automatically labeled with the appropriate version bump level:
+
+- **version: Major** - Applied when commits include breaking changes (indicated by "BREAKING CHANGE:" or "!" in the commit message)
+- **version: Minor** - Applied when commits include new features (indicated by "feat:" commit type) without breaking changes
+- **version: Patch** - Applied for all other types of changes (fixes, documentation, etc.)
+
+The package version will be automatically bumped according to the applied label.
