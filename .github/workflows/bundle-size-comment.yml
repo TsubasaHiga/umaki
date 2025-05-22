@@ -1,0 +1,63 @@
+name: Bundle Size Comment
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - main
+
+jobs:
+  bundle-size:
+    # Only run if the PR was merged
+    if: github.event.pull_request.merged == true
+    name: 'Comment Bundle Size'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+
+      - name: Enable corepack
+        run: corepack enable
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build project
+        run: pnpm run build
+
+      - name: Analyze bundle size
+        id: analyze
+        run: |
+          node --experimental-json-modules .github/scripts/analyze-bundle-size.js
+        
+      - name: Comment on PR
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+            const commentPath = '.github/tmp/bundle-size-comment.md';
+            
+            if (fs.existsSync(commentPath)) {
+              const commentBody = fs.readFileSync(commentPath, 'utf8');
+              
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.payload.pull_request.number,
+                body: commentBody
+              });
+              
+              console.log('Bundle size comment posted successfully.');
+            } else {
+              console.error('Bundle size comment file not found!');
+            }
