@@ -92,7 +92,6 @@ export default defineConfig(({ mode }) => {
         external: [
           'dayjs',
           'image-size',
-          'is-touch-device',
           'isomorphic-dompurify',
           'query-string',
           'runes2',
