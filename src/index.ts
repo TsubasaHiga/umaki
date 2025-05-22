@@ -1,3 +1,6 @@
+// Configuration
+export * from '@libs/config/'
+
 // Control functions
 export * from '@libs/control/'
 

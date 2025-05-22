@@ -4,6 +4,7 @@
 
 export { isAfterDateTime } from './isAfterDateTime'
 export { isBetweenDateTime } from './isBetweenDateTime'
+export { checkDeviceSize } from './checkDeviceSize'
 export { isExistAllElements } from './isExistAllElements'
 export { isIpad } from './isIpad'
 export { isKeyExists } from './isKeyExists'
