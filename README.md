@@ -8,7 +8,7 @@
 
 ![character](docs/character.jpg)
 
-A package that allows you to import frequently used utilities for web development in one place. Primarily, it includes utilities that I often use. If you have any requests for the contents or types of utilities, please open an issue.
+Umaki is your one-stop solution for web development utilities, bringing together a carefully curated collection of powerful tools in a single, easy-to-use package. Crafted from real-world development experience, these utilities solve common challenges and streamline your workflow. Have a utility in mind that would make your development easier? Feel free to open an issue—I'm actively expanding this collection!
 
 ## Usage
 
