@@ -31,3 +31,6 @@ coverage
 
 # Analyze
 analyze
+
+# GitHub Action temporary files
+.github/tmp
