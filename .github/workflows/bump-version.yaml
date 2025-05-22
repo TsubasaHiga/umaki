@@ -1,3 +1,4 @@
+---
 name: 'Bump Package Version'
 on:
   pull_request:
@@ -21,7 +22,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          
+      
       - name: Check for version labels
         id: check-labels
         run: |
@@ -109,10 +110,11 @@ jobs:
           git config --local user.name "github-actions[bot]"
           
           # Check if the tag already exists
-          if ! git rev-parse "v${{ steps.version-bump.outputs.version }}" >/dev/null 2>&1; then
-            git tag v${{ steps.version-bump.outputs.version }}
-            git push origin v${{ steps.version-bump.outputs.version }}
-            echo "Tag v${{ steps.version-bump.outputs.version }} created and pushed"
+          TAG_VERSION="${{ steps.version-bump.outputs.version }}"
+          if ! git rev-parse "v$TAG_VERSION" >/dev/null 2>&1; then
+            git tag "v$TAG_VERSION"
+            git push origin "v$TAG_VERSION"
+            echo "Tag v$TAG_VERSION created and pushed"
           else
-            echo "Tag v${{ steps.version-bump.outputs.version }} already exists, skipping tag creation"
+            echo "Tag v$TAG_VERSION already exists, skipping tag creation"
           fi
