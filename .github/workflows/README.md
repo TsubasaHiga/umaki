@@ -26,6 +26,17 @@ The workflow runs when a PR is opened, reopened, synchronized, labeled, or unlab
 
 This workflow publishes the package to npm when a new release is created.
 
+## Bundle Size Comment (`bundle-size-comment.yml`)
+
+This workflow comments bundle size information on pull requests that are merged to the main branch.
+
+- Runs when a PR is merged to the `main` branch
+- Builds the project and analyzes the bundle sizes
+- Posts a comment to the merged PR with detailed information about:
+  - Main bundle file sizes (ES and CJS formats)
+  - Top 5 largest library files 
+  - Total bundle size (raw and gzipped)
+
 ## Workflow Integration
 
 The workflows are designed to work together in sequence:
@@ -33,4 +44,5 @@ The workflows are designed to work together in sequence:
 1. When a PR is created or updated, the `version-management.yaml` workflow:
    - First analyzes the commits and applies the appropriate version label
    - Then updates the package version in `package.json` based on the applied label
-2. When the PR is merged and a release is created, `npm-publish.yaml` publishes the package to npm
+2. When the PR is merged, the `bundle-size-comment.yml` workflow comments with bundle size information
+3. When a release is created, `npm-publish.yaml` publishes the package to npm

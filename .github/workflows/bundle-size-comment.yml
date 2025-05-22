@@ -37,6 +37,15 @@ jobs:
       - name: Analyze bundle size
         id: analyze
         run: |
+          # Create tmp directory if it doesn't exist
+          mkdir -p .github/tmp
+          
+          # Export PR information for the script
+          export PR_TITLE="${{ github.event.pull_request.title }}"
+          export PR_NUMBER="${{ github.event.pull_request.number }}"
+          export PR_AUTHOR="${{ github.event.pull_request.user.login }}"
+          
+          # Run the analysis script
           node --experimental-json-modules .github/scripts/analyze-bundle-size.js
         
       - name: Comment on PR
