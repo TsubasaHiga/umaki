@@ -20,7 +20,7 @@ jobs:
         run: corepack enable
 
       - name: Install dependencies 🧹
-        run: yarn install --frozen-lockfile
+        run: yarn
 
       - name: Run tests 🧪
         run: yarn run test
