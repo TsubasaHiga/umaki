@@ -34,3 +34,9 @@ analyze
 
 # GitHub Action temporary files
 .github/tmp
+
+# Playwright
+test-results/
+playwright-report/
+blob-report/
+.cache/ms-playwright

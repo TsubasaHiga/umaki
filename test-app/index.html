@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Umaki E2E Test App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        .result {
+            background: #f5f5f5;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .element-to-wrap {
+            margin: 10px 0;
+            font-size: 18px;
+        }
+        .test-container {
+            height: 200px;
+            overflow: auto;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+        .scroll-content {
+            height: 400px;
+            background: linear-gradient(to bottom, #f0f0f0, #e0e0e0);
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Umaki E2E Test Application</h1>
+        <p>This application demonstrates various utilities from the Umaki library.</p>
+
+        <!-- Get Functions Test -->
+        <div class="test-section">
+            <h2>Get Functions</h2>
+            <button id="test-get-orientation" data-testid="test-get-orientation">Test Get Orientation</button>
+            <button id="test-get-classnames" data-testid="test-get-classnames">Test Get ClassNames</button>
+            <button id="test-get-document-height" data-testid="test-get-document-height">Test Get Document Height</button>
+            <div id="get-results" class="result" data-testid="get-results"></div>
+        </div>
+
+        <!-- Transform Functions Test -->
+        <div class="test-section">
+            <h2>Transform Functions</h2>
+            <div class="element-to-wrap" id="wrap-target" data-testid="wrap-target">
+                This text will be wrapped with spans
+            </div>
+            <button id="test-wrap-text" data-testid="test-wrap-text">Wrap Text with Spans</button>
+            <div id="transform-results" class="result" data-testid="transform-results"></div>
+        </div>
+
+        <!-- Is Functions Test -->
+        <div class="test-section">
+            <h2>Is Functions</h2>
+            <button id="test-is-touch" data-testid="test-is-touch">Test Is Touch Support</button>
+            <button id="test-device-size" data-testid="test-device-size">Test Device Size</button>
+            <div id="is-results" class="result" data-testid="is-results"></div>
+        </div>
+
+        <!-- Convert Functions Test -->
+        <div class="test-section">
+            <h2>Convert Functions</h2>
+            <button id="test-to-boolean" data-testid="test-to-boolean">Test To Boolean</button>
+            <button id="test-json-convert" data-testid="test-json-convert">Test JSON Convert</button>
+            <div id="convert-results" class="result" data-testid="convert-results"></div>
+        </div>
+
+        <!-- Config Test -->
+        <div class="test-section">
+            <h2>Configuration</h2>
+            <button id="test-config" data-testid="test-config">Test Config Functions</button>
+            <div id="config-results" class="result" data-testid="config-results"></div>
+        </div>
+
+        <!-- Scroll Test -->
+        <div class="test-section">
+            <h2>Scroll Functions</h2>
+            <div class="test-container" id="scroll-container" data-testid="scroll-container">
+                <div class="scroll-content">
+                    <p>Scrollable content...</p>
+                    <p>More content...</p>
+                    <p>Even more content...</p>
+                    <p id="scroll-target" data-testid="scroll-target">Target element for scroll testing</p>
+                </div>
+            </div>
+            <button id="test-scrollable" data-testid="test-scrollable">Test Is Scrollable</button>
+            <button id="test-scroll-center" data-testid="test-scroll-center">Test Scroll to Center</button>
+            <div id="scroll-results" class="result" data-testid="scroll-results"></div>
+        </div>
+    </div>
+
+    <!-- Import the built library -->
+    <script type="module">
+        // Import all functions from the library
+        import * as umaki from '../dist/index.es.js';
+        
+        // Make umaki available globally for testing
+        window.umaki = umaki;
+        
+        console.log('Umaki library loaded:', Object.keys(umaki));
+    </script>
+    
+    <script type="module">
+        // Test Get Functions
+        document.getElementById('test-get-orientation').addEventListener('click', () => {
+            const orientation = window.umaki?.getOrientation?.() || 'Function not available';
+            document.getElementById('get-results').innerHTML += `<p>Orientation: ${orientation}</p>`;
+        });
+
+        document.getElementById('test-get-classnames').addEventListener('click', () => {
+            const classNames = window.umaki?.getClassNames?.(['test', 'class', null, 'names']) || 'Function not available';
+            document.getElementById('get-results').innerHTML += `<p>ClassNames: ${classNames}</p>`;
+        });
+
+        document.getElementById('test-get-document-height').addEventListener('click', () => {
+            const height = window.umaki?.getDocumentHeight?.() || 'Function not available';
+            document.getElementById('get-results').innerHTML += `<p>Document Height: ${height}px</p>`;
+        });
+
+        // Test Transform Functions
+        document.getElementById('test-wrap-text').addEventListener('click', () => {
+            const element = document.getElementById('wrap-target');
+            if (window.umaki?.wrapTextWithSpans && element) {
+                window.umaki.wrapTextWithSpans(element);
+                document.getElementById('transform-results').innerHTML = '<p>Text wrapped with spans (check element inspection)</p>';
+            } else {
+                document.getElementById('transform-results').innerHTML = '<p>Function not available</p>';
+            }
+        });
+
+        // Test Is Functions
+        document.getElementById('test-is-touch').addEventListener('click', () => {
+            const isTouch = window.umaki?.isTouchSupport?.() || 'Function not available';
+            document.getElementById('is-results').innerHTML += `<p>Touch Support: ${isTouch}</p>`;
+        });
+
+        document.getElementById('test-device-size').addEventListener('click', () => {
+            const deviceSize = window.umaki?.checkDeviceSize?.() || 'Function not available';
+            document.getElementById('is-results').innerHTML += `<p>Device Size: ${deviceSize}</p>`;
+        });
+
+        // Test Convert Functions
+        document.getElementById('test-to-boolean').addEventListener('click', () => {
+            const testValues = ['true', 'false', '1', '0', 'yes', 'no'];
+            let results = '<p>Boolean conversions:</p>';
+            testValues.forEach(val => {
+                const converted = window.umaki?.toBoolean?.(val) ?? 'Function not available';
+                results += `<p>${val} → ${converted}</p>`;
+            });
+            document.getElementById('convert-results').innerHTML += results;
+        });
+
+        document.getElementById('test-json-convert').addEventListener('click', () => {
+            const jsonString = '{"test": "value", "number": 42}';
+            const converted = window.umaki?.jsonStringToJsonObject?.(jsonString) || 'Function not available';
+            document.getElementById('convert-results').innerHTML += `<p>JSON Convert: ${JSON.stringify(converted)}</p>`;
+        });
+
+        // Test Config Functions
+        document.getElementById('test-config').addEventListener('click', () => {
+            if (window.umaki?.getConfig && window.umaki?.setConfig) {
+                const originalConfig = window.umaki.getConfig();
+                window.umaki.setConfig({ BREAKPOINT: 1024 });
+                const newConfig = window.umaki.getConfig();
+                document.getElementById('config-results').innerHTML = 
+                    `<p>Original Breakpoint: ${originalConfig.BREAKPOINT}</p>
+                     <p>New Breakpoint: ${newConfig.BREAKPOINT}</p>`;
+            } else {
+                document.getElementById('config-results').innerHTML = '<p>Config functions not available</p>';
+            }
+        });
+
+        // Test Scroll Functions
+        document.getElementById('test-scrollable').addEventListener('click', () => {
+            const container = document.getElementById('scroll-container');
+            const isScrollable = window.umaki?.isScrollable?.(container) || 'Function not available';
+            document.getElementById('scroll-results').innerHTML += `<p>Container is scrollable: ${isScrollable}</p>`;
+        });
+
+        document.getElementById('test-scroll-center').addEventListener('click', () => {
+            const target = document.getElementById('scroll-target');
+            const container = document.getElementById('scroll-container');
+            if (window.umaki?.setScrollPositionToCenter && target && container) {
+                window.umaki.setScrollPositionToCenter(target, container);
+                document.getElementById('scroll-results').innerHTML += '<p>Scrolled to center</p>';
+            } else {
+                document.getElementById('scroll-results').innerHTML += '<p>Scroll function not available</p>';
+            }
+        });
+
+        // Initialize page
+        window.addEventListener('load', () => {
+            console.log('Umaki test app loaded');
+            console.log('Available umaki functions:', Object.keys(window.umaki || {}));
+        });
+    </script>
+</body>
+</html>
