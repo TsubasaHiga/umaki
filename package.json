@@ -32,6 +32,8 @@
     "build": "tsc && vite build",
     "analyze": "tsc && vite build --mode analyze",
     "test": "vitest",
+    "test:run": "vitest run",
+    "test:coverage": "vitest run --coverage",
     "coverage": "vitest run --coverage",
     "lint": "biome lint",
     "format": "biome format"
