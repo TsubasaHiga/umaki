@@ -1,0 +1,253 @@
+name: Build and E2E Tests
+
+on:
+  schedule:
+    # Run weekly on Sunday at midnight (JST)
+    - cron: '0 15 * * 0'  # 00:00 JST (UTC+9) = 15:00 UTC
+  workflow_dispatch:
+    # Allow manual execution
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+  pages: write
+  id-token: write
+  deployments: write
+
+jobs:
+  test:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3, 4]
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Install pnpm
+      uses: pnpm/action-setup@v4
+      with:
+        version: 10.11.0
+    
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 20
+    
+    - name: Cache pnpm store
+      uses: actions/cache@v4
+      with:
+        path: ~/.pnpm-store
+        key: ${{ runner.os }}-pnpm-store-${{ hashFiles('pnpm-lock.yaml') }}
+        restore-keys: |
+          ${{ runner.os }}-pnpm-store-
+    
+    - name: Install dependencies
+      run: pnpm install --frozen-lockfile
+    
+    - name: Build application
+      run: pnpm run build
+    
+    - name: Cache Playwright browsers
+      uses: actions/cache@v4
+      id: playwright-cache
+      with:
+        path: ~/.cache/ms-playwright
+        key: ${{ runner.os }}-playwright-${{ hashFiles('pnpm-lock.yaml', 'playwright.config.ts') }}
+        restore-keys: |
+          ${{ runner.os }}-playwright-
+    
+    - name: Install Playwright Browsers
+      if: steps.playwright-cache.outputs.cache-hit != 'true'
+      run: pnpm exec playwright install --with-deps
+      env:
+        PLAYWRIGHT_BROWSERS_PATH: ~/.cache/ms-playwright
+    
+    - name: Run Playwright tests
+      run: pnpm run test:e2e --shard=${{ matrix.shard }}/4
+      env:
+        PLAYWRIGHT_BROWSERS_PATH: ~/.cache/ms-playwright
+    
+    - uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: playwright-report-${{ matrix.shard }}
+        path: playwright-report/
+        retention-days: 30
+    
+    - uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: playwright-blob-report-${{ matrix.shard }}
+        path: blob-report/
+        retention-days: 30
+
+  merge-reports:
+    # Merge reports from all shards into a single report
+    if: always()
+    needs: [test]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Install pnpm
+      uses: pnpm/action-setup@v4
+      with:
+        version: 10.11.0
+    
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 20
+    
+    - name: Install dependencies
+      run: pnpm install --frozen-lockfile
+    
+    - name: Download blob reports from all shards
+      uses: actions/download-artifact@v4
+      with:
+        path: downloads
+        pattern: playwright-blob-report-*
+        merge-multiple: true
+    
+    - name: List downloaded files for debugging
+      run: |
+        echo "Contents of downloads directory:"
+        ls -la downloads/ || echo "Downloads directory not found"
+        if [ -d downloads ]; then
+          find downloads -type f -name "*.jsonl" | head -10
+        fi
+    
+    - name: Merge into HTML Report
+      run: pnpm exec playwright merge-reports --reporter html ./downloads
+    
+    - name: Extract Test Results Summary
+      id: test-summary
+      run: |
+        # Extract test results from the HTML report
+        if [ -f "playwright-report/index.html" ]; then
+          # Extract basic stats using grep and sed
+          TOTAL_TESTS=$(grep -o '[0-9]\+ passed' playwright-report/index.html | head -1 | grep -o '[0-9]\+' || echo "0")
+          FAILED_TESTS=$(grep -o '[0-9]\+ failed' playwright-report/index.html | head -1 | grep -o '[0-9]\+' || echo "0")
+          SKIPPED_TESTS=$(grep -o '[0-9]\+ skipped' playwright-report/index.html | head -1 | grep -o '[0-9]\+' || echo "0")
+          
+          # If we can't extract from HTML, try to get from blob reports
+          if [ "$TOTAL_TESTS" = "0" ] && [ -d "downloads" ]; then
+            # Count test results from blob reports
+            TOTAL_TESTS=$(find downloads -name "*.jsonl" -exec grep -h '"type":"test"' {} \; | wc -l || echo "0")
+            FAILED_TESTS=$(find downloads -name "*.jsonl" -exec grep -h '"status":"failed"' {} \; | wc -l || echo "0")
+            PASSED_TESTS=$(find downloads -name "*.jsonl" -exec grep -h '"status":"passed"' {} \; | wc -l || echo "0")
+          else
+            PASSED_TESTS=$TOTAL_TESTS
+          fi
+          
+          echo "total-tests=$TOTAL_TESTS" >> $GITHUB_OUTPUT
+          echo "passed-tests=$PASSED_TESTS" >> $GITHUB_OUTPUT
+          echo "failed-tests=$FAILED_TESTS" >> $GITHUB_OUTPUT
+          echo "skipped-tests=$SKIPPED_TESTS" >> $GITHUB_OUTPUT
+          
+          # Create job summary
+          echo "## 🎭 Playwright Test Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Status | Count |" >> $GITHUB_STEP_SUMMARY
+          echo "|--------|-------|" >> $GITHUB_STEP_SUMMARY
+          echo "| ✅ Passed | $PASSED_TESTS |" >> $GITHUB_STEP_SUMMARY
+          echo "| ❌ Failed | $FAILED_TESTS |" >> $GITHUB_STEP_SUMMARY
+          echo "| ⏭️ Skipped | $SKIPPED_TESTS |" >> $GITHUB_STEP_SUMMARY
+          echo "| 📊 Total | $TOTAL_TESTS |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "📁 [Download Full HTML Report](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts)" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "❌ HTML report not found" >> $GITHUB_STEP_SUMMARY
+        fi
+    
+    - name: Upload HTML report
+      uses: actions/upload-artifact@v4
+      with:
+        name: playwright-report-merged
+        path: playwright-report/
+        retention-days: 30
+    
+    - name: Setup Pages
+      if: github.event_name == 'pull_request'
+      uses: actions/configure-pages@v4
+
+    - name: Upload Pages artifact
+      if: github.event_name == 'pull_request'
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: playwright-report/
+
+    - name: Deploy to GitHub Pages  
+      if: github.event_name == 'pull_request'
+      id: deployment
+      uses: actions/deploy-pages@v4
+    
+    - name: Comment PR with Test Results
+      if: github.event_name == 'pull_request'
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const fs = require('fs');
+          const totalTests = '${{ steps.test-summary.outputs.total-tests }}';
+          const passedTests = '${{ steps.test-summary.outputs.passed-tests }}';
+          const failedTests = '${{ steps.test-summary.outputs.failed-tests }}';
+          const skippedTests = '${{ steps.test-summary.outputs.skipped-tests }}';
+          
+          const runUrl = `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+          const pagesUrl = `https://${context.repo.owner}.github.io/${context.repo.repo}/`;
+          const deploymentUrl = '${{ steps.deployment.outputs.page_url }}' || pagesUrl;
+          
+          let status = '✅ All tests passed!';
+          if (parseInt(failedTests) > 0) {
+            status = `❌ ${failedTests} test(s) failed`;
+          }
+          
+          const body = `## 🎭 E2E Test Results
+          
+          ${status}
+          
+          | Status | Count |
+          |--------|-------|
+          | ✅ Passed | ${passedTests} |
+          | ❌ Failed | ${failedTests} |
+          | ⏭️ Skipped | ${skippedTests} |
+          | 📊 Total | ${totalTests} |
+          
+          🌐 **[View Live HTML Report](${deploymentUrl})** | 📊 **[Download Report](${runUrl}/artifacts)** | 🔍 **[View Action Run](${runUrl})**
+          
+          <details>
+          <summary>ℹ️ About this report</summary>
+          
+          - Tests run across 4 parallel shards with ${passedTests || totalTests} total test cases
+          - Report includes results from all browser combinations (Chromium, Firefox, WebKit, Mobile Chrome)
+          - Full HTML report with screenshots and traces available in artifacts
+          </details>`;
+          
+          // Try to find existing comment to update
+          const { data: comments } = await github.rest.issues.listComments({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            issue_number: context.issue.number,
+          });
+          
+          const existingComment = comments.find(comment => 
+            comment.user.login === 'github-actions[bot]' && 
+            comment.body.includes('🎭 E2E Test Results')
+          );
+          
+          if (existingComment) {
+            await github.rest.issues.updateComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              comment_id: existingComment.id,
+              body: body
+            });
+          } else {
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: body
+            });
+          }

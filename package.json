@@ -34,6 +34,8 @@
     "test": "vitest",
     "test:run": "vitest run",
     "test:coverage": "vitest run --coverage",
+    "test:e2e": "playwright test",
+    "test-app:serve": "node test-app/server.mjs",
     "coverage": "vitest run --coverage",
     "lint": "biome lint",
     "format": "biome format"
@@ -49,9 +51,11 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
+    "@playwright/test": "^1.52.0",
     "@types/node": "^22.8.6",
     "@types/ua-parser-js": "^0.7.39",
     "@vitest/coverage-v8": "2.1.4",
+    "express": "^5.1.0",
     "happy-dom": "^15.7.4",
     "jsdom": "^26.1.0",
     "rollup-plugin-license": "^3.5.3",
