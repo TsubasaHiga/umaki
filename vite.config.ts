@@ -93,6 +93,7 @@ export default defineConfig(({ mode }) => {
           'dayjs',
           'image-size',
           'isomorphic-dompurify',
+          'md5',
           'query-string',
           'runes2',
           'store2',
