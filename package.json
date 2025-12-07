@@ -1,18 +1,23 @@
 {
   "name": "umaki",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "description": "A utility that is often used in web production.",
   "author": "TsubasaHiga",
   "homepage": "https://github.com/TsubasaHiga/umaki",
   "license": "MIT",
-  "keywords": ["utility", "library"],
+  "keywords": [
+    "utility",
+    "library"
+  ],
   "packageManager": "pnpm@10.11.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/TsubasaHiga/umaki"
   },
   "type": "module",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "sideEffects": false,
   "main": "./dist/index.cjs.js",
   "module": "./dist/index.es.js",
