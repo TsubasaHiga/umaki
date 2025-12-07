@@ -6,9 +6,14 @@
   <img alt="NPM Downloads" src="https://img.shields.io/npm/dy/umaki">
 </p>
 
+<br>
+
 <p align="center">
   <img alt="umaki chan - umaki official character" src="docs/character.png" width="285" height="221" />
+  <em>Umaki-chan - Official Character</em>
 </p>
+
+<br>
 
 Umaki is your one-stop solution for web development utilities, bringing together a carefully curated collection of powerful tools in a single, easy-to-use package. Crafted from real-world development experience, these utilities solve common challenges and streamline your workflow. Have a utility in mind that would make your development easier? Feel free to open an issue—I'm actively expanding this collection!
 
