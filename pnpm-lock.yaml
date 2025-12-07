@@ -9,10 +9,10 @@ importers:
   .:
     dependencies:
       '@types/md5':
-        specifier: ^2.3.5
+        specifier: ^2.3.6
         version: 2.3.6
       dayjs:
-        specifier: ^1.11.13
+        specifier: ^1.11.19
         version: 1.11.19
       image-size:
         specifier: ^1.1.1
@@ -24,13 +24,13 @@ importers:
         specifier: ^2.3.0
         version: 2.3.0
       query-string:
-        specifier: ^9.1.1
+        specifier: ^9.1.2
         version: 9.3.1
       runes2:
         specifier: ^1.1.4
         version: 1.1.4
       store2:
-        specifier: ^2.14.3
+        specifier: ^2.14.4
         version: 2.14.4
       ua-parser-js:
         specifier: ^1.0.39
@@ -40,14 +40,14 @@ importers:
         specifier: 1.9.4
         version: 1.9.4
       '@types/node':
-        specifier: ^22.8.6
+        specifier: ^22.8.7
         version: 22.19.1
       '@types/ua-parser-js':
         specifier: ^0.7.39
         version: 0.7.39
       '@vitest/coverage-v8':
-        specifier: 2.1.4
-        version: 2.1.4(vitest@2.1.9(@types/node@22.19.1)(happy-dom@15.11.7)(jsdom@26.1.0))
+        specifier: 2.1.9
+        version: 2.1.9(vitest@2.1.9(@types/node@22.19.1)(happy-dom@15.11.7)(jsdom@26.1.0))
       happy-dom:
         specifier: ^15.7.4
         version: 15.11.7
@@ -64,7 +64,7 @@ importers:
         specifier: ~5.6.3
         version: 5.6.3
       vite:
-        specifier: ^5.4.10
+        specifier: ^5.4.21
         version: 5.4.21(@types/node@22.19.1)
       vite-plugin-dts:
         specifier: ^4.3.0
@@ -73,7 +73,7 @@ importers:
         specifier: ^5.0.1
         version: 5.1.4(typescript@5.6.3)(vite@5.4.21(@types/node@22.19.1))
       vitest:
-        specifier: ^2.1.4
+        specifier: ^2.1.9
         version: 2.1.9(@types/node@22.19.1)(happy-dom@15.11.7)(jsdom@26.1.0)
 
 packages:
@@ -553,11 +553,11 @@ packages:
   '@types/ua-parser-js@0.7.39':
     resolution: {integrity: sha512-P/oDfpofrdtF5xw433SPALpdSchtJmY7nsJItf8h3KXqOslkbySh8zq4dSWXH2oTjRvJ5PczVEoCZPow6GicLg==}
 
-  '@vitest/coverage-v8@2.1.4':
-    resolution: {integrity: sha512-FPKQuJfR6VTfcNMcGpqInmtJuVXFSCd9HQltYncfR01AzXhLucMEtQ5SinPdZxsT5x/5BK7I5qFJ5/ApGCmyTQ==}
+  '@vitest/coverage-v8@2.1.9':
+    resolution: {integrity: sha512-Z2cOr0ksM00MpEfyVE8KXIYPEcBFxdbLSs56L8PO0QQMxt/6bDj45uQfxoc96v05KW3clk7vvgP0qfDit9DmfQ==}
     peerDependencies:
-      '@vitest/browser': 2.1.4
-      vitest: 2.1.4
+      '@vitest/browser': 2.1.9
+      vitest: 2.1.9
     peerDependenciesMeta:
       '@vitest/browser':
         optional: true
@@ -1938,7 +1938,7 @@ snapshots:
 
   '@types/ua-parser-js@0.7.39': {}
 
-  '@vitest/coverage-v8@2.1.4(vitest@2.1.9(@types/node@22.19.1)(happy-dom@15.11.7)(jsdom@26.1.0))':
+  '@vitest/coverage-v8@2.1.9(vitest@2.1.9(@types/node@22.19.1)(happy-dom@15.11.7)(jsdom@26.1.0))':
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@bcoe/v8-coverage': 0.2.3
