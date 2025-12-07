@@ -7,12 +7,12 @@ import { getConfigValue } from '../config'
 export const checkDeviceSize = (): 'md' | 'sm' => {
   // Use the global BREAKPOINT configuration value
   const breakpoint = getConfigValue('BREAKPOINT')
-  
+
   // Check if we're in a browser environment
   if (typeof window !== 'undefined') {
     return window.innerWidth > breakpoint ? 'md' : 'sm'
   }
-  
+
   // Default to 'md' if not in browser environment
   return 'md'
 }
