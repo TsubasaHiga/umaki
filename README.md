@@ -6,7 +6,9 @@
   <img alt="NPM Downloads" src="https://img.shields.io/npm/dy/umaki">
 </p>
 
-![character](docs/character.jpg)
+<center>
+  <img alt="umaki chan - umaki official character" src="docs/character.png" width="570" height="442" />
+</center>
 
 Umaki is your one-stop solution for web development utilities, bringing together a carefully curated collection of powerful tools in a single, easy-to-use package. Crafted from real-world development experience, these utilities solve common challenges and streamline your workflow. Have a utility in mind that would make your development easier? Feel free to open an issue—I'm actively expanding this collection!
 
@@ -344,7 +346,7 @@ A function that generates a Gravatar avatar image URL from an email address and 
 import { getGravatarUrl } from "umaki";
 
 const avatarUrl = getGravatarUrl('user@example.com', 80);
-console.log(avatarUrl); 
+console.log(avatarUrl);
 // 'https://www.gravatar.com/avatar/b58996c504c5638798eb6b511e6f49af?s=80&d=404'
 
 // Different size
