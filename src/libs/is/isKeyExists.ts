@@ -14,5 +14,5 @@ export const isKeyExists = <
   obj: T,
   key: U
 ): obj is T & Record<U, unknown> => {
-  return !!obj && Object.prototype.hasOwnProperty.call(obj, key)
+  return !!obj && Object.hasOwn(obj, key)
 }

@@ -1,6 +1,5 @@
-import UAParser from 'ua-parser-js'
-
 import { isTouchSupport } from '@libs/is/isTouchSupport'
+import UAParser from 'ua-parser-js'
 
 export type UaType = {
   browserName?: string

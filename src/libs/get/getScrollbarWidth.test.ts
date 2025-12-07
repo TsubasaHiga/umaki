@@ -6,9 +6,6 @@ describe('getScrollbarWidth', () => {
     window.innerWidth = 1024
     document.body.style.width = '100px'
 
-    // Append the body to the document
-    document.appendChild(document.body)
-
     // Calculate the expected scrollbar width
     const expectedScrollbarWidth = window.innerWidth - document.body.clientWidth
 
