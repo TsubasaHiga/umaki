@@ -1,0 +1,113 @@
+# Release Drafter Configuration
+# https://github.com/release-drafter/release-drafter
+
+name-template: 'v$RESOLVED_VERSION'
+tag-template: 'v$RESOLVED_VERSION'
+
+# Categories for release notes
+categories:
+  - title: '✨ New Features'
+    labels:
+      - 'enhancement'
+      - 'feature'
+      - 'version: Minor'
+  - title: '🐛 Bug Fixes'
+    labels:
+      - 'bug'
+      - 'fix'
+  - title: '💥 Breaking Changes'
+    labels:
+      - 'breaking-change'
+      - 'version: Major'
+  - title: '📦 Dependencies'
+    labels:
+      - 'dependencies'
+  - title: '🔧 Maintenance'
+    labels:
+      - 'chore'
+      - 'maintenance'
+      - 'version: Patch'
+  - title: '📝 Documentation'
+    labels:
+      - 'documentation'
+      - 'docs'
+  - title: '🧪 Tests'
+    labels:
+      - 'test'
+      - 'tests'
+  - title: '🎨 Styling'
+    labels:
+      - 'style'
+  - title: '♻️ Refactoring'
+    labels:
+      - 'refactor'
+  - title: '⚡ Performance'
+    labels:
+      - 'performance'
+      - 'perf'
+
+# Exclude certain labels from release notes
+exclude-labels:
+  - 'skip-changelog'
+  - 'no-changelog'
+
+# Version resolver based on labels
+version-resolver:
+  major:
+    labels:
+      - 'version: Major'
+      - 'breaking-change'
+  minor:
+    labels:
+      - 'version: Minor'
+      - 'enhancement'
+      - 'feature'
+  patch:
+    labels:
+      - 'version: Patch'
+      - 'bug'
+      - 'fix'
+      - 'chore'
+      - 'dependencies'
+      - 'documentation'
+  default: patch
+
+# Template for release notes
+template: |
+  ## What's Changed
+
+  $CHANGES
+
+  ---
+
+  **Full Changelog**: https://github.com/$OWNER/$REPOSITORY/compare/$PREVIOUS_TAG...v$RESOLVED_VERSION
+
+# Autolabeler for PRs based on title/branch
+autolabeler:
+  - label: 'enhancement'
+    title:
+      - '/^feat(\(.+\))?:/i'
+  - label: 'bug'
+    title:
+      - '/^fix(\(.+\))?:/i'
+  - label: 'documentation'
+    title:
+      - '/^docs(\(.+\))?:/i'
+  - label: 'chore'
+    title:
+      - '/^chore(\(.+\))?:/i'
+  - label: 'refactor'
+    title:
+      - '/^refactor(\(.+\))?:/i'
+  - label: 'test'
+    title:
+      - '/^test(\(.+\))?:/i'
+  - label: 'style'
+    title:
+      - '/^style(\(.+\))?:/i'
+  - label: 'performance'
+    title:
+      - '/^perf(\(.+\))?:/i'
+  - label: 'breaking-change'
+    title:
+      - '/^.+!:/i'
