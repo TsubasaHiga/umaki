@@ -9,7 +9,7 @@
 <br>
 
 <p align="center">
-  <img alt="umaki chan - umaki official character" src="docs/character.png" width="285" height="221" />
+  <img alt="umaki chan - umaki official character" src="docs/character-2.png" width="285" height="221" />
   <br>
   <em>Umaki-chan - Official Character</em>
 </p>
