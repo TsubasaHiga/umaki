@@ -18,13 +18,13 @@ importers:
         specifier: ^1.1.1
         version: 1.2.1
       isomorphic-dompurify:
-        specifier: ^2.23.0
+        specifier: ^2.33.0
         version: 2.33.0
       md5:
         specifier: ^2.3.0
         version: 2.3.0
       query-string:
-        specifier: ^9.1.2
+        specifier: ^9.3.1
         version: 9.3.1
       runes2:
         specifier: ^1.1.4
@@ -40,7 +40,7 @@ importers:
         specifier: 1.9.4
         version: 1.9.4
       '@types/node':
-        specifier: ^22.8.7
+        specifier: ^22.19.1
         version: 22.19.1
       '@types/ua-parser-js':
         specifier: ^0.7.39
@@ -49,29 +49,29 @@ importers:
         specifier: 2.1.9
         version: 2.1.9(vitest@2.1.9(@types/node@22.19.1)(happy-dom@15.11.7)(jsdom@26.1.0))
       happy-dom:
-        specifier: ^15.7.4
+        specifier: ^15.11.7
         version: 15.11.7
       jsdom:
         specifier: ^26.1.0
         version: 26.1.0
       rollup-plugin-license:
-        specifier: ^3.5.3
+        specifier: ^3.6.0
         version: 3.6.0(picomatch@4.0.3)(rollup@4.53.3)
       rollup-plugin-visualizer:
-        specifier: ^5.12.0
+        specifier: ^5.14.0
         version: 5.14.0(rollup@4.53.3)
       typescript:
-        specifier: ~5.6.3
-        version: 5.6.3
+        specifier: ~5.9.3
+        version: 5.9.3
       vite:
         specifier: ^5.4.21
         version: 5.4.21(@types/node@22.19.1)
       vite-plugin-dts:
-        specifier: ^4.3.0
-        version: 4.5.4(@types/node@22.19.1)(rollup@4.53.3)(typescript@5.6.3)(vite@5.4.21(@types/node@22.19.1))
+        specifier: ^4.5.4
+        version: 4.5.4(@types/node@22.19.1)(rollup@4.53.3)(typescript@5.9.3)(vite@5.4.21(@types/node@22.19.1))
       vite-tsconfig-paths:
-        specifier: ^5.0.1
-        version: 5.1.4(typescript@5.6.3)(vite@5.4.21(@types/node@22.19.1))
+        specifier: ^5.1.4
+        version: 5.1.4(typescript@5.9.3)(vite@5.4.21(@types/node@22.19.1))
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@22.19.1)(happy-dom@15.11.7)(jsdom@26.1.0)
@@ -1372,13 +1372,13 @@ packages:
       typescript:
         optional: true
 
-  typescript@5.6.3:
-    resolution: {integrity: sha512-hjcS1mhfuyi4WW8IWtjP7brDrG2cuDZukyrYrSauoXGNgx0S7zceP07adYkJycEr56BOUTNPzbInooiN3fn1qw==}
+  typescript@5.8.2:
+    resolution: {integrity: sha512-aJn6wq13/afZp/jT9QZmwEjDqqvSGp1VT5GVg+f/t6/oVyrgXM6BY1h9BRh/O5p3PlUPAe+WuiEZOmb/49RqoQ==}
     engines: {node: '>=14.17'}
     hasBin: true
 
-  typescript@5.8.2:
-    resolution: {integrity: sha512-aJn6wq13/afZp/jT9QZmwEjDqqvSGp1VT5GVg+f/t6/oVyrgXM6BY1h9BRh/O5p3PlUPAe+WuiEZOmb/49RqoQ==}
+  typescript@5.9.3:
+    resolution: {integrity: sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw==}
     engines: {node: '>=14.17'}
     hasBin: true
 
@@ -2026,7 +2026,7 @@ snapshots:
       de-indent: 1.0.2
       he: 1.2.0
 
-  '@vue/language-core@2.2.0(typescript@5.6.3)':
+  '@vue/language-core@2.2.0(typescript@5.9.3)':
     dependencies:
       '@volar/language-core': 2.4.26
       '@vue/compiler-dom': 3.5.25
@@ -2037,7 +2037,7 @@ snapshots:
       muggle-string: 0.4.1
       path-browserify: 1.0.1
     optionalDependencies:
-      typescript: 5.6.3
+      typescript: 5.9.3
 
   '@vue/shared@3.5.25': {}
 
@@ -2791,13 +2791,13 @@ snapshots:
     dependencies:
       punycode: 2.3.1
 
-  tsconfck@3.1.6(typescript@5.6.3):
+  tsconfck@3.1.6(typescript@5.9.3):
     optionalDependencies:
-      typescript: 5.6.3
-
-  typescript@5.6.3: {}
+      typescript: 5.9.3
 
   typescript@5.8.2: {}
+
+  typescript@5.9.3: {}
 
   ua-parser-js@1.0.41: {}
 
@@ -2829,18 +2829,18 @@ snapshots:
       - supports-color
       - terser
 
-  vite-plugin-dts@4.5.4(@types/node@22.19.1)(rollup@4.53.3)(typescript@5.6.3)(vite@5.4.21(@types/node@22.19.1)):
+  vite-plugin-dts@4.5.4(@types/node@22.19.1)(rollup@4.53.3)(typescript@5.9.3)(vite@5.4.21(@types/node@22.19.1)):
     dependencies:
       '@microsoft/api-extractor': 7.55.2(@types/node@22.19.1)
       '@rollup/pluginutils': 5.3.0(rollup@4.53.3)
       '@volar/typescript': 2.4.26
-      '@vue/language-core': 2.2.0(typescript@5.6.3)
+      '@vue/language-core': 2.2.0(typescript@5.9.3)
       compare-versions: 6.1.1
       debug: 4.4.3
       kolorist: 1.8.0
       local-pkg: 1.1.2
       magic-string: 0.30.21
-      typescript: 5.6.3
+      typescript: 5.9.3
     optionalDependencies:
       vite: 5.4.21(@types/node@22.19.1)
     transitivePeerDependencies:
@@ -2848,11 +2848,11 @@ snapshots:
       - rollup
       - supports-color
 
-  vite-tsconfig-paths@5.1.4(typescript@5.6.3)(vite@5.4.21(@types/node@22.19.1)):
+  vite-tsconfig-paths@5.1.4(typescript@5.9.3)(vite@5.4.21(@types/node@22.19.1)):
     dependencies:
       debug: 4.4.3
       globrex: 0.1.2
-      tsconfck: 3.1.6(typescript@5.6.3)
+      tsconfck: 3.1.6(typescript@5.9.3)
     optionalDependencies:
       vite: 5.4.21(@types/node@22.19.1)
     transitivePeerDependencies:
