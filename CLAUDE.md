@@ -369,6 +369,71 @@ mcp__github__create_pull_request({
 
 **チェックボックスのいずれかがチェックされていない場合、PRを作成しない。まず問題を修正する。**
 
+### GitHub リリース作成ガイドライン
+
+**⚠️ 重要: リリースはタグが作成された後に実行する**
+
+#### リリースの作成手順
+
+1. **前回のバージョンからの変更を確認:**
+
+```bash
+git fetch --tags
+git log v0.6.3..v0.7.0 --oneline
+```
+
+2. **`gh release create`を使用してリリースを作成:**
+
+```bash
+gh release create v0.7.0 --title "v0.7.0" --notes "$(cat <<'EOF'
+## ✨ New Features
+
+### 機能名 (#Issue番号)
+機能の説明
+
+**Before (v0.x.x)**
+```ts
+// 変更前のコード例
+```
+
+**After (v0.y.0)**
+```ts
+// 変更後のコード例
+```
+
+## 📦 Dependencies
+
+- 依存関係の更新内容
+
+## 🔧 Maintenance
+
+- メンテナンス関連の変更
+
+---
+
+**Full Changelog**: https://github.com/TsubasaHiga/umaki/compare/v0.6.3...v0.7.0
+EOF
+)"
+```
+
+#### リリースノートのセクション
+
+状況に応じて以下のセクションを使用:
+
+- `## ✨ New Features` - 新機能
+- `## 🐛 Bug Fixes` - バグ修正
+- `## 💥 Breaking Changes` - 破壊的変更
+- `## 📦 Dependencies` - 依存関係の更新
+- `## 🔧 Maintenance` - メンテナンス・設定変更
+- `## 📝 Documentation` - ドキュメント更新
+
+#### リリースノートのベストプラクティス
+
+- 主要な変更には **Before/After** のコード例を含める
+- Issue番号を `(#123)` 形式でリンクする
+- `**Full Changelog**` リンクを末尾に含める
+- ユーザーに影響のある変更を優先的に記載する
+
 ## コミット前チェックリスト
 
 **変更をコミットする前に全項目を完了すること:**
