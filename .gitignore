@@ -34,3 +34,11 @@ analyze
 
 # GitHub Action temporary files
 .github/tmp
+
+# Playwright
+blob-report
+playwright-report
+test-results
+
+# MCP
+.mcp.json

@@ -17,7 +17,9 @@ export const getConfig = (): UmakiConfig => {
  * @param key - The configuration key to retrieve
  * @returns The value for the specified key, or undefined if the key doesn't exist
  */
-export const getConfigValue = <K extends keyof UmakiConfig>(key: K): UmakiConfig[K] => {
+export const getConfigValue = <K extends keyof UmakiConfig>(
+  key: K
+): UmakiConfig[K] => {
   return currentConfig[key]
 }
 

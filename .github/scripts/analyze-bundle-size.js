@@ -1,139 +1,138 @@
-import fs from 'fs';
-import path from 'path';
-import zlib from 'zlib';
-import { execSync } from 'child_process';
-import { fileURLToPath } from 'url';
+import { execSync } from 'node:child_process'
+import fs from 'node:fs'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
+import zlib from 'node:zlib'
 
 // Get the directory name
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 // Create directory for temporary files
-const tmpDir = path.join(__dirname, '../tmp');
+const tmpDir = path.join(__dirname, '../tmp')
 if (!fs.existsSync(tmpDir)) {
-  fs.mkdirSync(tmpDir, { recursive: true });
+  fs.mkdirSync(tmpDir, { recursive: true })
 }
 
 // Function to get file size in KB with format
 function getFileSizeInKB(filePath) {
   try {
-    const stats = fs.statSync(filePath);
-    return (stats.size / 1024).toFixed(2);
+    const stats = fs.statSync(filePath)
+    return (stats.size / 1024).toFixed(2)
   } catch (error) {
-    console.error(`Error getting file size for ${filePath}:`, error);
-    return '0.00';
+    console.error(`Error getting file size for ${filePath}:`, error)
+    return '0.00'
   }
 }
 
 // Function to get gzipped size in KB with format
 function getGzippedSizeInKB(filePath) {
   try {
-    const fileBuffer = fs.readFileSync(filePath);
-    const gzippedBuffer = zlib.gzipSync(fileBuffer);
-    return (gzippedBuffer.length / 1024).toFixed(2);
+    const fileBuffer = fs.readFileSync(filePath)
+    const gzippedBuffer = zlib.gzipSync(fileBuffer)
+    return (gzippedBuffer.length / 1024).toFixed(2)
   } catch (error) {
-    console.error(`Error getting gzipped size for ${filePath}:`, error);
-    return '0.00';
+    console.error(`Error getting gzipped size for ${filePath}:`, error)
+    return '0.00'
   }
 }
 
 // Main dist folder
-const distDir = path.join(process.cwd(), 'dist');
+const distDir = path.join(process.cwd(), 'dist')
 
 // Check if dist directory exists
 if (!fs.existsSync(distDir)) {
-  console.error('Error: dist directory does not exist. Make sure the build was successful.');
-  process.exit(1);
+  console.error(
+    'Error: dist directory does not exist. Make sure the build was successful.'
+  )
+  process.exit(1)
 }
 
 // Get package info
-const packageJsonPath = path.join(process.cwd(), 'package.json');
-const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
+const packageJsonPath = path.join(process.cwd(), 'package.json')
+const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'))
 
 // Key files to analyze
-const mainFiles = [
-  'index.es.js',
-  'index.cjs.js'
-];
+const mainFiles = ['index.es.js', 'index.cjs.js']
 
 // Also collect information about top 5 largest individual lib files
 function getTopLibraryFiles(dirPath, extension, limit = 5) {
-  const files = [];
-  
+  const files = []
+
   function scanDir(currentPath) {
-    const entries = fs.readdirSync(currentPath, { withFileTypes: true });
-    
+    const entries = fs.readdirSync(currentPath, { withFileTypes: true })
+
     for (const entry of entries) {
-      const entryPath = path.join(currentPath, entry.name);
-      
+      const entryPath = path.join(currentPath, entry.name)
+
       if (entry.isDirectory()) {
-        scanDir(entryPath);
+        scanDir(entryPath)
       } else if (entry.name.endsWith(extension)) {
-        const sizeKB = getFileSizeInKB(entryPath);
-        const gzipSizeKB = getGzippedSizeInKB(entryPath);
-        
+        const sizeKB = getFileSizeInKB(entryPath)
+        const gzipSizeKB = getGzippedSizeInKB(entryPath)
+
         files.push({
           path: path.relative(distDir, entryPath),
           sizeKB: parseFloat(sizeKB),
           gzipSizeKB: parseFloat(gzipSizeKB)
-        });
+        })
       }
     }
   }
-  
-  scanDir(path.join(dirPath, 'libs'));
-  
+
+  scanDir(path.join(dirPath, 'libs'))
+
   return files
     .sort((a, b) => b.sizeKB - a.sizeKB)
     .slice(0, limit)
-    .map(file => ({
+    .map((file) => ({
       file: file.path,
       size: `${file.sizeKB.toFixed(2)} KB`,
       gzipSize: `${file.gzipSizeKB.toFixed(2)} KB`
-    }));
+    }))
 }
 
 // Get PR information from environment variables
-const prTitle = process.env.PR_TITLE || 'Unknown PR';
-const prNumber = process.env.PR_NUMBER || '0';
-const prAuthor = process.env.PR_AUTHOR || 'Unknown';
+const prTitle = process.env.PR_TITLE || 'Unknown PR'
+const prNumber = process.env.PR_NUMBER || '0'
+const prAuthor = process.env.PR_AUTHOR || 'Unknown'
 
 // Get git commit information
-const commitHash = execSync('git rev-parse HEAD').toString().trim();
-const shortCommitHash = commitHash.substring(0, 7);
+const commitHash = execSync('git rev-parse HEAD').toString().trim()
+const shortCommitHash = commitHash.substring(0, 7)
 
 // Collect file sizes
-const fileSizes = [];
-let totalSize = 0;
-let totalGzipSize = 0;
+const fileSizes = []
+let totalSize = 0
+let totalGzipSize = 0
 
 // Calculate sizes for key files
-mainFiles.forEach(file => {
-  const filePath = path.join(distDir, file);
+mainFiles.forEach((file) => {
+  const filePath = path.join(distDir, file)
   if (fs.existsSync(filePath)) {
-    const sizeKB = getFileSizeInKB(filePath);
-    const gzipSizeKB = getGzippedSizeInKB(filePath);
-    
+    const sizeKB = getFileSizeInKB(filePath)
+    const gzipSizeKB = getGzippedSizeInKB(filePath)
+
     fileSizes.push({
       file,
       size: `${sizeKB} KB`,
       gzipSize: `${gzipSizeKB} KB`
-    });
-    
-    totalSize += parseFloat(sizeKB);
-    totalGzipSize += parseFloat(gzipSizeKB);
+    })
+
+    totalSize += parseFloat(sizeKB)
+    totalGzipSize += parseFloat(gzipSizeKB)
   }
-});
+})
 
 // Add total sizes
 fileSizes.push({
   file: '**Total**',
   size: `**${totalSize.toFixed(2)} KB**`,
   gzipSize: `**${totalGzipSize.toFixed(2)} KB**`
-});
+})
 
 // Get top 5 largest library files
-const topLibFiles = getTopLibraryFiles(distDir, '.es.js');
+const topLibFiles = getTopLibraryFiles(distDir, '.es.js')
 
 // Generate comment markdown
 const commentLines = [
@@ -145,31 +144,33 @@ const commentLines = [
   '',
   '| File | Size | Gzipped |',
   '| ---- | ---- | ------- |'
-];
+]
 
 fileSizes.forEach(({ file, size, gzipSize }) => {
-  commentLines.push(`| ${file} | ${size} | ${gzipSize} |`);
-});
+  commentLines.push(`| ${file} | ${size} | ${gzipSize} |`)
+})
 
 // Add top 5 largest library files
 if (topLibFiles.length > 0) {
-  commentLines.push('');
-  commentLines.push('### Top 5 Largest Library Files');
-  commentLines.push('');
-  commentLines.push('| File | Size | Gzipped |');
-  commentLines.push('| ---- | ---- | ------- |');
-  
+  commentLines.push('')
+  commentLines.push('### Top 5 Largest Library Files')
+  commentLines.push('')
+  commentLines.push('| File | Size | Gzipped |')
+  commentLines.push('| ---- | ---- | ------- |')
+
   topLibFiles.forEach(({ file, size, gzipSize }) => {
-    commentLines.push(`| ${file} | ${size} | ${gzipSize} |`);
-  });
+    commentLines.push(`| ${file} | ${size} | ${gzipSize} |`)
+  })
 }
 
-commentLines.push('');
-commentLines.push('> This comment was automatically generated by GitHub Actions 🤖');
-commentLines.push(`> PR by @${prAuthor} | Commit: ${shortCommitHash}`);
+commentLines.push('')
+commentLines.push(
+  '> This comment was automatically generated by GitHub Actions 🤖'
+)
+commentLines.push(`> PR by @${prAuthor} | Commit: ${shortCommitHash}`)
 
 // Write comment to file for the next step
-const commentPath = path.join(tmpDir, 'bundle-size-comment.md');
-fs.writeFileSync(commentPath, commentLines.join('\n'));
+const commentPath = path.join(tmpDir, 'bundle-size-comment.md')
+fs.writeFileSync(commentPath, commentLines.join('\n'))
 
-console.log('Bundle size analysis completed');
+console.log('Bundle size analysis completed')

@@ -2,7 +2,9 @@ import UAParser from 'ua-parser-js'
 import type { Mock } from 'vitest'
 import { getUaData } from './getUaData'
 
-vi.mock('ua-parser-js')
+vi.mock('ua-parser-js', () => ({
+  default: vi.fn()
+}))
 
 describe('getUaData', () => {
   it('should return correct UA data with all fields populated', () => {
@@ -12,9 +14,10 @@ describe('getUaData', () => {
       os: { name: 'Windows' },
       device: { type: 'desktop' }
     }
-    ;(UAParser as unknown as Mock).mockImplementation(() => ({
-      getResult: () => mockResult
-    }))
+    // biome-ignore lint/complexity/useArrowFunction: Vitest requires function/class for constructor mocks
+    ;(UAParser as unknown as Mock).mockImplementation(function () {
+      return { getResult: () => mockResult }
+    })
 
     const uaData = getUaData()
 
@@ -35,9 +38,10 @@ describe('getUaData', () => {
       os: { name: undefined },
       device: { type: undefined }
     }
-    ;(UAParser as unknown as Mock).mockImplementation(() => ({
-      getResult: () => mockResult
-    }))
+    // biome-ignore lint/complexity/useArrowFunction: Vitest requires function/class for constructor mocks
+    ;(UAParser as unknown as Mock).mockImplementation(function () {
+      return { getResult: () => mockResult }
+    })
 
     const uaData = getUaData()
 
