@@ -1,0 +1,3 @@
+{
+  "reject": ["image-size", "ua-parser-js", "@types/ua-parser-js"]
+}
