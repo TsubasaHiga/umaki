@@ -73,6 +73,7 @@ console.log(breakpoint); // e.g. 768 (default) or custom value if set
   - [getDocumentHeight](#getdocumentheight)
   - [getEventPaths](#geteventpaths)
   - [getGcd](#getgcd)
+  - [getGravatarUrl](#getgravatarurl)
   - [getOrientation](#getorientation)
   - [getParentList](#getparentlist)
   - [getQueryParams](#getqueryparams)
@@ -334,6 +335,27 @@ console.log(gcd); // 6
 ```
 
 [View file →](src/libs/get/getGcd.ts)
+
+### getGravatarUrl
+
+A function that generates a Gravatar avatar image URL from an email address and size parameter.
+
+```ts
+import { getGravatarUrl } from "umaki";
+
+const avatarUrl = getGravatarUrl('user@example.com', 80);
+console.log(avatarUrl); 
+// 'https://www.gravatar.com/avatar/b58996c504c5638798eb6b511e6f49af?s=80&d=404'
+
+// Different size
+const largeAvatar = getGravatarUrl('user@example.com', 200);
+
+// Email with uppercase and whitespace (automatically normalized)
+const normalizedAvatar = getGravatarUrl(' USER@EXAMPLE.COM ', 80);
+// Same result as above due to normalization
+```
+
+[View file →](src/libs/get/getGravatarUrl.ts)
 
 ### getOrientation
 
