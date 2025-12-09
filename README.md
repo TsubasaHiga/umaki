@@ -18,6 +18,18 @@
 
 Umaki is your one-stop solution for web development utilities, bringing together a carefully curated collection of powerful tools in a single, easy-to-use package. Crafted from real-world development experience, these utilities solve common challenges and streamline your workflow. Have a utility in mind that would make your development easier? Feel free to open an issue—I'm actively expanding this collection!
 
+**👨‍💻 Related Projects**
+
+| Project                                           | Description                                   | Use Case                      |
+| ------------------------------------------------- | --------------------------------------------- | ----------------------------- |
+| [piiiQcy](https://github.com/TsubasaHiga/piiiqcy) | WordPress theme development boilerplate       | WordPress site development    |
+| [Acty](https://github.com/TsubasaHiga/acty)       | Static site boilerplate                       | Static HTML/CSS site creation |
+| [Quicint](https://github.com/TsubasaHiga/Quicint) | EJS-based static HTML5 boilerplate            | Mass-production static pages  |
+| [vnl](https://github.com/TsubasaHiga/vnl)         | Vite-based npm library development boilerplate | npm package development       |
+| [umaki](https://github.com/TsubasaHiga/umaki)     | Web development utility library               | Common utility functions      |
+
+---
+
 ## Usage
 
 ```ts
