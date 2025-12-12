@@ -76,6 +76,9 @@ console.log(breakpoint); // e.g. 768 (default) or custom value if set
 
 ## List of Utilities
 
+- [Callback](#callback)
+  - [tap](#tap)
+  - [tapAsync](#tapasync)
 - [Control](#control)
   - [bgScrollStop](#bgscrollstop)
   - [pd](#pd)
@@ -136,6 +139,69 @@ console.log(breakpoint); // e.g. 768 (default) or custom value if set
   - [waitForAllMediaLoaded](#waitforallmedialoaded)
 - [Security](#security)
   - [sanitizeHtml](#sanitizehtml)
+- [Advanced Usage](#advanced-usage)
+  - [Using tap / tapAsync with umaki functions](#using-tap--tapasync-with-umaki-functions)
+
+## Callback
+
+### tap
+
+A function that executes a callback with the given value and returns the original value unchanged. Useful for performing side effects (logging, caching, analytics, etc.) without modifying the value.
+
+**Note:** This function does not accept Promise values. For async operations, use `tapAsync` instead.
+
+```ts
+import { tap, removeAllHtmlTags } from "umaki";
+
+const input = "<p>Hello <strong>World</strong>!</p>";
+const output = tap(removeAllHtmlTags(input), (result) => {
+  console.log("Sanitized:", result);
+});
+// Logs: 'Sanitized: Hello World!'
+// output = 'Hello World!'
+
+// Caching example
+const data = tap(processData(raw), (result) => {
+  cache.set("processed", result);
+});
+
+// Works with higher-order functions
+const debouncedFn = tap(debounce(handler, 100), () => {
+  console.log("Debounced function created");
+});
+```
+
+[View file →](src/libs/callback/tap.ts)
+
+### tapAsync (Promise)
+
+A function that awaits a Promise, executes a callback with the resolved value, and returns the original value. Useful for performing side effects on async values without modifying them.
+
+```ts
+import { tapAsync } from "umaki";
+
+// Logging async results
+const data = await tapAsync(fetchData(), (result) => {
+  console.log("Fetched:", result);
+});
+
+// Caching async results
+const getData = () =>
+  tapAsync(fetchFromServer(), (data) => cache.set("data", data));
+
+// Parallel execution with individual completion tracking
+await Promise.all([
+  tapAsync(fetchUserData(), (user) => console.log("user loaded")),
+  tapAsync(fetchProductData(), (products) => console.log("products loaded")),
+  tapAsync(fetchOrderData(), (orders) => console.log("orders loaded")),
+]);
+
+// Event emission on async completion
+const loadUser = () =>
+  tapAsync(fetchUser(), (user) => eventEmitter.emit("userLoaded", user));
+```
+
+[View file →](src/libs/callback/tap-async.ts)
 
 ## Control
 
@@ -927,6 +993,144 @@ This function uses `isomorphic-dompurify` and has the following features:
 - Can be used on both server-side and client-side
 
 [View file →](src/libs/security/htmlSanitize.ts)
+
+## Advanced Usage
+
+This section provides tips and patterns for getting the most out of umaki utilities.
+
+### Using `tap` / `tapAsync` with umaki functions
+
+The `tap` and `tapAsync` functions allow you to add callbacks to any umaki function without modifying its behavior. This is useful for logging, analytics, caching, and more.
+
+#### Basic Pattern
+
+| Function Type | Use | Example |
+|---------------|-----|---------|
+| Sync (returns value) | `tap` | `tap(removeAllHtmlTags(input), callback)` |
+| Sync (returns void) | `tap` | `tap(set100vh(), callback)` |
+| Async (returns Promise) | `tapAsync` | `tapAsync(sleep(1), callback)` |
+
+> [!TIP]
+> `tap` prevents Promise values at the type level. If you accidentally pass a Promise, TypeScript will show an error.
+
+#### Examples with umaki functions
+
+<details>
+<summary><strong>📝 Logging & Debugging</strong></summary>
+
+```ts
+import { tap, removeAllHtmlTags, getUaData } from "umaki";
+
+// Log sanitized HTML output
+const clean = tap(removeAllHtmlTags(dirtyHtml), (result) => {
+  console.log("[DEBUG] Sanitized HTML:", result);
+});
+
+// Log user agent data
+const ua = tap(getUaData(), (data) => {
+  console.log("[DEBUG] UA:", data.browserName, data.osName);
+});
+```
+
+</details>
+
+<details>
+<summary><strong>📊 Analytics & Tracking</strong></summary>
+
+```ts
+import { tap, tapAsync, getUaData, waitForAllMediaLoaded } from "umaki";
+
+// Track device information
+const uaData = tap(getUaData(), (data) => {
+  analytics.track("device_detected", {
+    browser: data.browserName,
+    os: data.osName,
+    type: data.type,
+  });
+});
+
+// Track media load completion
+await tapAsync(waitForAllMediaLoaded(), (success) => {
+  analytics.track("media_loaded", { success, timestamp: Date.now() });
+});
+```
+
+</details>
+
+<details>
+<summary><strong>💾 Caching</strong></summary>
+
+```ts
+import { tap, tapAsync, getScrollbarWidth } from "umaki";
+
+// Cache scrollbar width (useful for repeated access)
+const scrollbarWidth = tap(getScrollbarWidth(), (width) => {
+  sessionStorage.setItem("scrollbarWidth", String(width));
+});
+
+// Cache async fetch results
+const getData = () =>
+  tapAsync(fetchFromAPI(), (data) => {
+    localStorage.setItem("cachedData", JSON.stringify(data));
+  });
+```
+
+</details>
+
+<details>
+<summary><strong>🎯 Event Emission</strong></summary>
+
+```ts
+import { tap, tapAsync, checkDeviceSize, waitForAllMediaLoaded } from "umaki";
+
+// Emit event on device size check
+const deviceSize = tap(checkDeviceSize(), (size) => {
+  window.dispatchEvent(new CustomEvent("deviceSizeChecked", { detail: size }));
+});
+
+// Emit event when all media is loaded
+await tapAsync(waitForAllMediaLoaded(true), () => {
+  window.dispatchEvent(new CustomEvent("firstViewMediaReady"));
+});
+```
+
+</details>
+
+<details>
+<summary><strong>⚡ Parallel Async Operations</strong></summary>
+
+```ts
+import { tapAsync, sleep, waitForAllMediaLoaded } from "umaki";
+
+// Track multiple async operations independently
+const [_, mediaLoaded] = await Promise.all([
+  tapAsync(sleep(1), () => console.log("⏱️ 1 second elapsed")),
+  tapAsync(waitForAllMediaLoaded(), (ok) => console.log("🖼️ Media:", ok ? "ready" : "failed")),
+]);
+```
+
+</details>
+
+#### Working with void functions
+
+> [!NOTE]
+> When using `tap` with functions that return `void` (like `set100vh`, `bgScrollStop`), the callback receives `undefined`. This is still useful for completion notifications.
+
+```ts
+import { tap, set100vh, bgScrollStop } from "umaki";
+
+// Notification when viewport units are set
+tap(set100vh(), () => {
+  console.log("✅ 100vh CSS variable has been set");
+});
+
+// Notification when scroll is stopped
+tap(bgScrollStop(true), () => {
+  console.log("🔒 Background scroll locked");
+});
+```
+
+---
 
 ## Using for framework and tools
 

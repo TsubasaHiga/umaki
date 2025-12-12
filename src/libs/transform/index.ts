@@ -2,4 +2,4 @@
  * Transform functions
  */
 
-export { wrapTextWithSpans } from './wrapTextWithSpans'
+export { wrapTextWithSpans } from './wrap-text-with-spans'
