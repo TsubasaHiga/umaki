@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it } from 'vitest'
-import { defaultConfig } from './defaultConfig'
+import { defaultConfig } from './default-config'
 import { getConfig, getConfigValue, setConfig } from './index'
 
 describe('config', () => {
