@@ -2,7 +2,7 @@
  * Remove functions
  */
 
-export { removeAllHtmlTags } from './removeAllHtmlTags'
-export { removeAttribute } from './removeAttribute'
-export { removeSessionStorage } from './removeSessionStorage'
-export { removeStylePropertyValue } from './removeStylePropertyValue'
+export { removeAllHtmlTags } from './remove-all-html-tags'
+export { removeAttribute } from './remove-attribute'
+export { removeSessionStorage } from './remove-session-storage'
+export { removeStylePropertyValue } from './remove-style-property-value'

@@ -2,7 +2,7 @@
  * Control functions
  */
 
-export { bgScrollStop } from './bgScrollStop'
+export { bgScrollStop } from './bg-scroll-stop'
 export { pd } from './pd'
-export { scrollToHash } from './scrollToHash'
-export { videoPlayControl } from './videoPlayControl'
+export { scrollToHash } from './scroll-to-hash'
+export { videoPlayControl } from './video-play-control'

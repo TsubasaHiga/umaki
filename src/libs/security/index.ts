@@ -2,4 +2,4 @@
  * Security functions
  */
 
-export { htmlSanitize } from './htmlSanitize'
+export { htmlSanitize } from './html-sanitize'
