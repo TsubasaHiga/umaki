@@ -3,4 +3,4 @@
  */
 
 export { sleep } from './sleep'
-export { waitForAllMediaLoaded } from './waitForAllMediaLoaded'
+export { waitForAllMediaLoaded } from './wait-for-all-media-loaded'
