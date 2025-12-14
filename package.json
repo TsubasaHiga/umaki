@@ -1,6 +1,6 @@
 {
   "name": "umaki",
-  "version": "0.8.1",
+  "version": "0.9.0",
   "description": "A utility that is often used in web production.",
   "author": "TsubasaHiga",
   "homepage": "https://github.com/TsubasaHiga/umaki",
@@ -23,9 +23,76 @@
   "module": "./dist/index.es.js",
   "types": "./dist/index.d.ts",
   "exports": {
-    "types": "./dist/index.d.ts",
-    "import": "./dist/index.es.js",
-    "require": "./dist/index.cjs.js"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.es.js",
+      "require": "./dist/index.cjs.js"
+    },
+    "./callback": {
+      "types": "./dist/libs/callback/index.d.ts",
+      "import": "./dist/libs/callback/index.es.js",
+      "require": "./dist/libs/callback/index.cjs.js"
+    },
+    "./config": {
+      "types": "./dist/libs/config/index.d.ts",
+      "import": "./dist/libs/config/index.es.js",
+      "require": "./dist/libs/config/index.cjs.js"
+    },
+    "./control": {
+      "types": "./dist/libs/control/index.d.ts",
+      "import": "./dist/libs/control/index.es.js",
+      "require": "./dist/libs/control/index.cjs.js"
+    },
+    "./convert": {
+      "types": "./dist/libs/convert/index.d.ts",
+      "import": "./dist/libs/convert/index.es.js",
+      "require": "./dist/libs/convert/index.cjs.js"
+    },
+    "./eventControl": {
+      "types": "./dist/libs/eventControl/index.d.ts",
+      "import": "./dist/libs/eventControl/index.es.js",
+      "require": "./dist/libs/eventControl/index.cjs.js"
+    },
+    "./get": {
+      "types": "./dist/libs/get/index.d.ts",
+      "import": "./dist/libs/get/index.es.js",
+      "require": "./dist/libs/get/index.cjs.js"
+    },
+    "./is": {
+      "types": "./dist/libs/is/index.d.ts",
+      "import": "./dist/libs/is/index.es.js",
+      "require": "./dist/libs/is/index.cjs.js"
+    },
+    "./remove": {
+      "types": "./dist/libs/remove/index.d.ts",
+      "import": "./dist/libs/remove/index.es.js",
+      "require": "./dist/libs/remove/index.cjs.js"
+    },
+    "./security": {
+      "types": "./dist/libs/security/index.d.ts",
+      "import": "./dist/libs/security/index.es.js",
+      "require": "./dist/libs/security/index.cjs.js"
+    },
+    "./set": {
+      "types": "./dist/libs/set/index.d.ts",
+      "import": "./dist/libs/set/index.es.js",
+      "require": "./dist/libs/set/index.cjs.js"
+    },
+    "./to": {
+      "types": "./dist/libs/to/index.d.ts",
+      "import": "./dist/libs/to/index.es.js",
+      "require": "./dist/libs/to/index.cjs.js"
+    },
+    "./transform": {
+      "types": "./dist/libs/transform/index.d.ts",
+      "import": "./dist/libs/transform/index.es.js",
+      "require": "./dist/libs/transform/index.cjs.js"
+    },
+    "./wait": {
+      "types": "./dist/libs/wait/index.d.ts",
+      "import": "./dist/libs/wait/index.es.js",
+      "require": "./dist/libs/wait/index.cjs.js"
+    }
   },
   "scripts": {
     "dev": "vite",

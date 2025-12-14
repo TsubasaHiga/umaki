@@ -1136,6 +1136,42 @@ tap(bgScrollStop(true), () => {
 
 Specific usage for frameworks or various tools is described below.
 
+### Subpath Exports (Selective Module Imports)
+
+Umaki supports subpath exports, allowing you to import only the modules you need. This is particularly useful for avoiding unnecessary dependencies and reducing bundle size.
+
+```ts
+// Import only the 'get' module (does not load isomorphic-dompurify)
+import { getUaData, getScrollbarWidth } from "umaki/get";
+
+// Import only the 'is' module
+import { isIpad, isSafari } from "umaki/is";
+
+// Import only the 'security' module (loads isomorphic-dompurify)
+import { sanitizeHtml } from "umaki/security";
+
+// Traditional import (loads all modules)
+import { getUaData, sanitizeHtml } from "umaki";
+```
+
+#### Available Subpath Exports
+
+| Path | Description |
+|------|-------------|
+| `umaki/callback` | Callback utilities (tap, tapAsync) |
+| `umaki/config` | Configuration (setConfig, getConfig) |
+| `umaki/control` | Scroll control, video playback, etc. |
+| `umaki/convert` | Data conversion (dates, JSON) |
+| `umaki/eventControl` | debounce, throttle |
+| `umaki/get` | Value retrieval (DOM, UA, etc.) |
+| `umaki/is` | Boolean checks (device detection, etc.) |
+| `umaki/remove` | DOM/storage removal utilities |
+| `umaki/security` | HTML sanitization |
+| `umaki/set` | DOM/storage setters |
+| `umaki/to` | Type conversions |
+| `umaki/transform` | DOM transformations |
+| `umaki/wait` | Async utilities (sleep, media loading) |
+
 ### Astro or Vite
 
 When using with Astro for SSR, add `umaki` to `vite.ssr.noExternal.`
@@ -1152,3 +1188,20 @@ export default defineConfig(({ mode }) => {
   };
 });
 ```
+
+### Next.js
+
+When using umaki with Next.js, you may encounter ESM compatibility issues during SSR if you import from the main entry point. This is because `isomorphic-dompurify` (used by the security module) has dependencies that can cause issues in SSR environments.
+
+**Recommended: Use subpath exports to import only the modules you need:**
+
+```ts
+// ✅ Safe for Next.js SSR (does not load isomorphic-dompurify)
+import { getUaData } from "umaki/get";
+import { debounce } from "umaki/eventControl";
+
+// ⚠️ Only import security module if you need HTML sanitization
+import { sanitizeHtml } from "umaki/security";
+```
+
+This approach avoids loading `isomorphic-dompurify` and its dependencies unless you specifically need the `sanitizeHtml` function.
