@@ -216,7 +216,7 @@ bgScrollStop(); // scroll stop
 bgScrollStop(false); // scroll start
 ```
 
-[View file →](src/libs/control/bgScrollStop.ts)
+[View file →](src/libs/control/bg-scroll-stop.ts)
 
 ### pd
 
@@ -248,7 +248,7 @@ import { scrollToHash } from "umaki";
 })();
 ```
 
-[View file →](src/libs/control/scrollToHash.ts)
+[View file →](src/libs/control/scroll-to-hash.ts)
 
 ### videoPlayControl
 
@@ -265,7 +265,7 @@ videoPlayControl(videoElement, false); // pause
 videoPlayControl(videoElement, true, 10); // play and set currentTime to 10
 ```
 
-[View file →](src/libs/control/videoPlayControl.ts)
+[View file →](src/libs/control/video-play-control.ts)
 
 ## Convert
 
@@ -301,7 +301,7 @@ console.log(formattedDateWithDifferentTz); // '2025-04-24 20:00:00'
 
 Note: This function focuses on timezone handling rather than locale-specific formatting. When a timezone is specified, the date will be converted to that timezone before formatting.
 
-[View file →](src/libs/convert/changeDateStringToSpecificFormat.ts)
+[View file →](src/libs/convert/change-date-string-to-specific-format.ts)
 
 ### jsonStringToJsonObject
 
@@ -315,7 +315,7 @@ const jsonObject = jsonStringToJsonObject(jsonString);
 console.log(jsonObject); // { name: 'John', age: 30 }
 ```
 
-[View file →](src/libs/convert/jsonStringToJsonObject.ts)
+[View file →](src/libs/convert/json-string-to-json-object.ts)
 
 ## EventControl
 
@@ -364,7 +364,7 @@ const aspectRatio = getAspectRatio(1920, 1080);
 console.log(aspectRatio); // { w: 16, h: 9 }
 ```
 
-[View file →](src/libs/get/getAspectRatio.ts)
+[View file →](src/libs/get/get-aspect-ratio.ts)
 
 ### getClassNames
 
@@ -379,7 +379,7 @@ const classNames = getClassNames(element);
 console.log(classNames); // ['class1', 'class2', 'class3']
 ```
 
-[View file →](src/libs/get/getClassNames.ts)
+[View file →](src/libs/get/get-class-names.ts)
 
 ### getDocumentHeight
 
@@ -392,7 +392,7 @@ const height = getDocumentHeight();
 console.log(height);
 ```
 
-[View file →](src/libs/get/getDocumentHeight.ts)
+[View file →](src/libs/get/get-document-height.ts)
 
 ### getEventPaths
 
@@ -407,7 +407,7 @@ document.addEventListener("click", (event) => {
 });
 ```
 
-[View file →](src/libs/get/getEventPaths.ts)
+[View file →](src/libs/get/get-event-paths.ts)
 
 ### getGcd
 
@@ -420,7 +420,7 @@ const gcd = getGcd(48, 18);
 console.log(gcd); // 6
 ```
 
-[View file →](src/libs/get/getGcd.ts)
+[View file →](src/libs/get/get-gcd.ts)
 
 ### getGravatarUrl
 
@@ -441,7 +441,7 @@ const normalizedAvatar = getGravatarUrl(' USER@EXAMPLE.COM ', 80);
 // Same result as above due to normalization
 ```
 
-[View file →](src/libs/get/getGravatarUrl.ts)
+[View file →](src/libs/get/get-gravatar-url.ts)
 
 ### getOrientation
 
@@ -454,7 +454,7 @@ const orientation = getOrientation();
 console.log(orientation); // 'landscape' or 'portrait'
 ```
 
-[View file →](src/libs/get/getOrientation.ts)
+[View file →](src/libs/get/get-orientation.ts)
 
 ### getParentList
 
@@ -468,7 +468,7 @@ const parentList = getParentList(element);
 console.log(parentList);
 ```
 
-[View file →](src/libs/get/getParentList.ts)
+[View file →](src/libs/get/get-parent-list.ts)
 
 ### getQueryParams
 
@@ -495,7 +495,7 @@ const customParamWithOptions = getQueryParams("id", {
 });
 ```
 
-[View file →](src/libs/get/getQueryParams.ts)
+[View file →](src/libs/get/get-query-params.ts)
 
 ### getRem
 
@@ -508,7 +508,7 @@ const remValue = getRem(16);
 console.log(remValue); // '1rem'
 ```
 
-[View file →](src/libs/get/getRem.ts)
+[View file →](src/libs/get/get-rem.ts)
 
 ### getScrollbarWidth
 
@@ -521,7 +521,7 @@ const scrollbarWidth = getScrollbarWidth();
 console.log(scrollbarWidth); // 15
 ```
 
-[View file →](src/libs/get/getScrollbarWidth.ts)
+[View file →](src/libs/get/get-scrollbar-width.ts)
 
 ### getSessionStorage
 
@@ -534,7 +534,7 @@ const value = getSessionStorage("testKey");
 console.log(value); // 'testValue'
 ```
 
-[View file →](src/libs/get/getSessionStorage.ts)
+[View file →](src/libs/get/get-session-storage.ts)
 
 ### getStringLength
 
@@ -547,7 +547,7 @@ const length = getStringLength("こんにちは");
 console.log(length); // 5
 ```
 
-[View file →](src/libs/get/getStringLength.ts)
+[View file →](src/libs/get/get-string-length.ts)
 
 ### getStylePropertyValue
 
@@ -560,7 +560,7 @@ const value = getStylePropertyValue("--custom-property");
 console.log(value);
 ```
 
-[View file →](src/libs/get/getStylePropertyValue.ts)
+[View file →](src/libs/get/get-style-property-value.ts)
 
 ### getStylePropertyValueToNumber
 
@@ -573,7 +573,7 @@ const value = getStylePropertyValueToNumber("--custom-property");
 console.log(value);
 ```
 
-[View file →](src/libs/get/getStylePropertyValueToNumber.ts)
+[View file →](src/libs/get/get-style-property-value-to-number.ts)
 
 ### getUaData
 
@@ -594,7 +594,7 @@ console.log(uaData);
 // }
 ```
 
-[View file →](src/libs/get/getUaData.ts)
+[View file →](src/libs/get/get-ua-data.ts)
 
 ## Is
 
@@ -616,7 +616,7 @@ const customCurrentDate = "2023-11-15";
 const resultWithCustomDate = isAfterDateTime(targetDate, dayjs(customCurrentDate));
 ```
 
-[View file →](src/libs/is/isAfterDateTime.ts)
+[View file →](src/libs/is/is-after-date-time.ts)
 
 ### isBetweenDateTime
 
@@ -631,7 +631,7 @@ const result = isBetweenDateTime(dateA, dateB);
 console.log(result); // true or false
 ```
 
-[View file →](src/libs/is/isBetweenDateTime.ts)
+[View file →](src/libs/is/is-between-date-time.ts)
 
 ### isExistAllElements
 
@@ -648,7 +648,7 @@ const result = isExistAllElements(elements);
 console.log(result); // true or false
 ```
 
-[View file →](src/libs/is/isExistAllElements.ts)
+[View file →](src/libs/is/is-exist-all-elements.ts)
 
 ### isIpad
 
@@ -661,7 +661,7 @@ const result = isIpad();
 console.log(result); // true or false
 ```
 
-[View file →](src/libs/is/isIpad.ts)
+[View file →](src/libs/is/is-ipad.ts)
 
 ### isKeyExists
 
@@ -675,7 +675,7 @@ const result = isKeyExists(obj, "a");
 console.log(result); // true or false
 ```
 
-[View file →](src/libs/is/isKeyExists.ts)
+[View file →](src/libs/is/is-key-exists.ts)
 
 ### isSafari
 
@@ -688,7 +688,7 @@ const result = isSafari();
 console.log(result); // true or false
 ```
 
-[View file →](src/libs/is/isSafari.ts)
+[View file →](src/libs/is/is-safari.ts)
 
 ### isScrollable
 
@@ -704,7 +704,7 @@ const result = isScrollable(element);
 console.log(result); // true or false
 ```
 
-[View file →](src/libs/is/isScrollable.ts)
+[View file →](src/libs/is/is-scrollable.ts)
 
 ### isTouchSupport
 
@@ -717,7 +717,7 @@ const result = isTouchSupport();
 console.log(result); // true or false
 ```
 
-[View file →](src/libs/is/isTouchSupport.ts)
+[View file →](src/libs/is/is-touch-support.ts)
 
 ### checkDeviceSize
 
@@ -736,7 +736,7 @@ const newDeviceSize = checkDeviceSize();
 console.log(newDeviceSize); // 'md' if window.innerWidth > 1024, otherwise 'sm'
 ```
 
-[View file →](src/libs/is/checkDeviceSize.ts)
+[View file →](src/libs/is/check-device-size.ts)
 
 ## Remove
 
@@ -752,7 +752,7 @@ const output = removeAllHtmlTags(input);
 console.log(output); // 'Hello World!'
 ```
 
-[View file →](src/libs/remove/removeAllHtmlTags.ts)
+[View file →](src/libs/remove/remove-all-html-tags.ts)
 
 ### removeAttribute
 
@@ -767,7 +767,7 @@ removeAttribute(element, "data-test");
 console.log(element.hasAttribute("data-test")); // false
 ```
 
-[View file →](src/libs/remove/removeAttribute.ts)
+[View file →](src/libs/remove/remove-attribute.ts)
 
 ### removeSessionStorage
 
@@ -781,7 +781,7 @@ removeSessionStorage(key);
 console.log(sessionStorage.getItem(key)); // null
 ```
 
-[View file →](src/libs/remove/removeSessionStorage.ts)
+[View file →](src/libs/remove/remove-session-storage.ts)
 
 ### removeStylePropertyValue
 
@@ -795,7 +795,7 @@ removeStylePropertyValue(key);
 console.log(getComputedStyle(document.documentElement).getPropertyValue(key)); // ''
 ```
 
-[View file →](src/libs/remove/removeStylePropertyValue.ts)
+[View file →](src/libs/remove/remove-style-property-value.ts)
 
 ## Set
 
@@ -809,7 +809,7 @@ import { set100vh } from "umaki";
 set100vh();
 ```
 
-[View file →](src/libs/set/set100vh.ts)
+[View file →](src/libs/set/set-100vh.ts)
 
 ### set100vw
 
@@ -821,7 +821,7 @@ import { set100vw } from "umaki";
 set100vw();
 ```
 
-[View file →](src/libs/set/set100vw.ts)
+[View file →](src/libs/set/set-100vw.ts)
 
 ### setAttribute
 
@@ -835,7 +835,7 @@ setAttribute(element, "data-test", "value");
 console.log(element.getAttribute("data-test")); // 'value'
 ```
 
-[View file →](src/libs/set/setAttribute.ts)
+[View file →](src/libs/set/set-attribute.ts)
 
 ### setScrollPositionToCenter
 
@@ -849,7 +849,7 @@ const targetElement = document.getElementById("target");
 setScrollPositionToCenter(rootElement, targetElement);
 ```
 
-[View file →](src/libs/set/setScrollPositionToCenter.ts)
+[View file →](src/libs/set/set-scroll-position-to-center.ts)
 
 ### setSessionStorage
 
@@ -864,7 +864,7 @@ setSessionStorage(key, value);
 console.log(sessionStorage.getItem(key)); // 'testValue'
 ```
 
-[View file →](src/libs/set/setSessionStorage.ts)
+[View file →](src/libs/set/set-session-storage.ts)
 
 ### setStylePropertyValue
 
@@ -879,7 +879,7 @@ setStylePropertyValue(key, value);
 console.log(getComputedStyle(document.documentElement).getPropertyValue(key)); // 'blue'
 ```
 
-[View file →](src/libs/set/setStylePropertyValue.ts)
+[View file →](src/libs/set/set-style-property-value.ts)
 
 ## To
 
@@ -895,7 +895,7 @@ console.log(toBoolean("false")); // false
 console.log(toBoolean("random")); // false
 ```
 
-[View file →](src/libs/to/toBoolean.ts)
+[View file →](src/libs/to/to-boolean.ts)
 
 ### toPositiveNumber
 
@@ -911,7 +911,7 @@ console.log(toPositiveNumber(-3.14)); // 3.14
 console.log(toPositiveNumber(3.14)); // 3.14
 ```
 
-[View file →](src/libs/to/toPositiveNumber.ts)
+[View file →](src/libs/to/to-positive-number.ts)
 
 ## Transform
 
@@ -928,7 +928,7 @@ wrapTextWithSpans(element);
 console.log(element.innerHTML); // '<span>h</span><span>e</span><span>l</span><span>l</span><span>o</span>'
 ```
 
-[View file →](src/libs/transform/wrapTextWithSpans.ts)
+[View file →](src/libs/transform/wrap-text-with-spans.ts)
 
 ## Wait
 
@@ -963,7 +963,7 @@ import { waitForAllMediaLoaded } from "umaki";
 })();
 ```
 
-[View file →](src/libs/wait/waitForAllMediaLoaded.ts)
+[View file →](src/libs/wait/wait-for-all-media-loaded.ts)
 
 ## Security
 
@@ -992,7 +992,7 @@ This function uses `isomorphic-dompurify` and has the following features:
 - Allows flexible control through custom configuration
 - Can be used on both server-side and client-side
 
-[View file →](src/libs/security/htmlSanitize.ts)
+[View file →](src/libs/security/html-sanitize.ts)
 
 ## Advanced Usage
 
