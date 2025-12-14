@@ -1,5 +1,6 @@
 /// <reference types="vitest" />
 
+import * as fs from 'node:fs'
 import * as path from 'node:path'
 import license from 'rollup-plugin-license'
 import { visualizer } from 'rollup-plugin-visualizer'
@@ -7,6 +8,21 @@ import { defineConfig } from 'vite'
 import dts from 'vite-plugin-dts'
 import tsconfigPaths from 'vite-tsconfig-paths'
 import packageJson from './package.json'
+
+// Get all library category directories
+const libsDir = path.resolve(__dirname, 'src/libs')
+const categoryDirs = fs
+  .readdirSync(libsDir, { withFileTypes: true })
+  .filter((dirent) => dirent.isDirectory())
+  .map((dirent) => dirent.name)
+
+// Build entry points for each category
+const categoryEntries = Object.fromEntries(
+  categoryDirs.map((category) => [
+    `libs/${category}/index`,
+    path.resolve(libsDir, category, 'index.ts')
+  ])
+)
 
 // isProduction
 const isProduction = process.env.NODE_ENV === 'production'
@@ -62,7 +78,10 @@ export default defineConfig(({ mode }) => {
     build: {
       minify: false,
       lib: {
-        entry: './src/index.ts',
+        entry: {
+          index: './src/index.ts',
+          ...categoryEntries
+        },
         name: 'umaki',
         fileName: (format) => `index.${format}.js`
       },
