@@ -2,7 +2,7 @@
  * Configuration functions
  */
 
-export { defaultConfig } from './default-config'
-export { getConfig, getConfigValue } from './get-config'
-export { setConfig } from './set-config'
-export type { UmakiConfig } from './types'
+export * from './default-config'
+export * from './get-config'
+export * from './set-config'
+export * from './types'
