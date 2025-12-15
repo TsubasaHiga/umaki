@@ -36,7 +36,6 @@ export const scrollToHash = async (
     }, 1000)
 
     const scrollHandler = () => {
-      console.log(window.scrollY, posY)
       if (window.scrollY !== posY) return
 
       window.removeEventListener('scroll', scrollHandler)

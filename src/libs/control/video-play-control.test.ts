@@ -75,16 +75,17 @@ describe('videoPlayControl', () => {
     expect(pauseSpy).toHaveBeenCalled()
   })
 
-  it('should handle play promise rejection', async () => {
+  it('should handle play promise rejection gracefully', async () => {
     videoElement.pause()
     const playSpy = vi
       .spyOn(videoElement, 'play')
-      .mockImplementation(() => Promise.reject('error'))
-    const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {})
+      .mockImplementation(() => Promise.reject(new Error('AbortError')))
 
-    await videoPlayControl(videoElement, true)
+    // Should not throw even when play() is rejected
+    await expect(videoPlayControl(videoElement, true)).resolves.toBeUndefined()
 
     expect(playSpy).toHaveBeenCalled()
-    expect(consoleSpy).toHaveBeenCalledWith('error')
+    // data-playing should remain unchanged since play failed
+    expect(videoElement.dataset.playing).toBe('false')
   })
 })
