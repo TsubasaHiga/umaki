@@ -4,10 +4,10 @@
  * @param string - The JSON string to be parsed.
  * @returns The parsed JSON object, or undefined if parsing fails.
  */
-export const jsonStringToJsonObject = (string: string) => {
+export const jsonStringToJsonObject = (string: string): unknown => {
   try {
     return JSON.parse(string)
-  } catch (error) {
-    new Error(`Failed to parse JSON string: ${error}`)
+  } catch {
+    return undefined
   }
 }
