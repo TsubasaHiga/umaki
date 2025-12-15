@@ -2,6 +2,10 @@ import dayjs from 'dayjs'
 import timezone from 'dayjs/plugin/timezone'
 import utc from 'dayjs/plugin/utc'
 
+// Extend dayjs with timezone plugins at module level
+dayjs.extend(utc)
+dayjs.extend(timezone)
+
 /**
  * Converts a date string to a specific format using the dayjs library.
  *
@@ -17,10 +21,7 @@ export const changeDateStringToSpecificFormat = (
   format = 'YYYY年MM月DD日',
   tz?: string | null
 ): string => {
-  // Setup timezone plugins if timezone is specified
   if (tz) {
-    dayjs.extend(utc)
-    dayjs.extend(timezone)
     return dayjs(date).tz(tz).format(format)
   }
 

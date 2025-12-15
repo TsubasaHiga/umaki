@@ -5,5 +5,5 @@
  * @returns A promise that resolves after the specified time.
  */
 export const sleep = (time: number): Promise<void> => {
-  return new Promise((resolve) => setTimeout(resolve, time * 1000, 'foo'))
+  return new Promise((resolve) => setTimeout(resolve, time * 1000))
 }

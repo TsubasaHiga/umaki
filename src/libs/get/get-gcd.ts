@@ -11,8 +11,8 @@ import { toPositiveNumber } from '@libs/to/to-positive-number'
  * @returns The greatest common divisor of the two numbers.
  */
 export const getGcd = (a: number, b: number): number => {
-  const positiveA = toPositiveNumber(Math.abs(a))
-  const positiveB = toPositiveNumber(Math.abs(b))
+  const positiveA = toPositiveNumber(a)
+  const positiveB = toPositiveNumber(b)
 
   if (positiveB === 0) return positiveA
   return getGcd(positiveB, positiveA % positiveB)

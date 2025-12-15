@@ -9,6 +9,6 @@ export const setAttribute = (
   element: HTMLElement,
   attribute: string,
   value: string
-) => {
+): void => {
   element.setAttribute(attribute, value)
 }
