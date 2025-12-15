@@ -2,5 +2,5 @@
  * To functions
  */
 
-export { toBoolean } from './to-boolean'
-export { toPositiveNumber } from './to-positive-number'
+export * from './to-boolean'
+export * from './to-positive-number'

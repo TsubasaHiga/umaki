@@ -2,9 +2,9 @@
  * Set functions
  */
 
-export { set100vh } from './set-100vh'
-export { set100vw } from './set-100vw'
-export { setAttribute } from './set-attribute'
-export { setScrollPositionToCenter } from './set-scroll-position-to-center'
-export { setSessionStorage } from './set-session-storage'
-export { setStylePropertyValue } from './set-style-property-value'
+export * from './set-100vh'
+export * from './set-100vw'
+export * from './set-attribute'
+export * from './set-scroll-position-to-center'
+export * from './set-session-storage'
+export * from './set-style-property-value'
