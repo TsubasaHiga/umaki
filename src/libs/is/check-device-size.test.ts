@@ -47,6 +47,16 @@ describe('checkDeviceSize', () => {
     expect(checkDeviceSize()).toBe('sm')
   })
 
+  it('should return "sm" for window width equal to breakpoint', () => {
+    Object.defineProperty(window, 'innerWidth', {
+      writable: true,
+      configurable: true,
+      value: 768 // Equal to default breakpoint
+    })
+
+    expect(checkDeviceSize()).toBe('sm')
+  })
+
   it('should use custom breakpoint value when configuration is updated', () => {
     // Set a custom breakpoint
     setConfig({ BREAKPOINT: 1200 })
@@ -60,5 +70,17 @@ describe('checkDeviceSize', () => {
 
     // Should now be 'sm' since we're below the new breakpoint
     expect(checkDeviceSize()).toBe('sm')
+  })
+
+  it('should return "md" for window width larger than custom breakpoint', () => {
+    setConfig({ BREAKPOINT: 1200 })
+
+    Object.defineProperty(window, 'innerWidth', {
+      writable: true,
+      configurable: true,
+      value: 1400 // Larger than custom breakpoint (1200)
+    })
+
+    expect(checkDeviceSize()).toBe('md')
   })
 })

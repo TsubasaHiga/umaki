@@ -27,16 +27,14 @@ export const videoPlayControl = async (
 
     try {
       await playPromise
-      // console.log('play', videoElement.src)
       videoElement.currentTime = currentTime || 0
       videoElement.dataset.playing = 'true'
-    } catch (error) {
-      console.log(error)
+    } catch {
+      // Video play was interrupted (e.g., by user interaction or another play request)
     }
   }
 
   if (!state) {
-    // console.log('pause', videoElement.src)
     videoElement.pause()
     videoElement.dataset.playing = 'false'
   }
