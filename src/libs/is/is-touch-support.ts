@@ -23,8 +23,8 @@ export const isTouchSupport = (): boolean => {
     // We need to use type assertion since msMaxTouchPoints is not in standard Navigator type
     typeof (navigator as Navigator & { msMaxTouchPoints?: number })
       .msMaxTouchPoints === 'number' &&
-    (navigator as Navigator & { msMaxTouchPoints?: number }).msMaxTouchPoints! >
-      0
+    ((navigator as Navigator & { msMaxTouchPoints?: number })
+      .msMaxTouchPoints ?? 0) > 0
 
   return hasTouchStart || hasTouchPoints || hasMsTouchPoints
 }
