@@ -2,5 +2,5 @@
  * Convert functions
  */
 
-export { changeDateStringToSpecificFormat } from './change-date-string-to-specific-format'
-export { jsonStringToJsonObject } from './json-string-to-json-object'
+export * from './change-date-string-to-specific-format'
+export * from './json-string-to-json-object'
