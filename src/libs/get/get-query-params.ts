@@ -39,7 +39,5 @@ export const getQueryParams = (
   const params = queryParsed[query]
   if (params === null || params === undefined) return null
 
-  // console.log({ queryParsed, params })
-
   return params
 }
