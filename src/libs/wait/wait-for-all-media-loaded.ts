@@ -7,9 +7,9 @@
 export const waitForAllMediaLoaded = async (
   firstViewOnly = false
 ): Promise<boolean> => {
-  if (!document.images) return Promise.resolve(true)
+  if (!document.images) return true
 
-  if (document.images.length === 0) return Promise.resolve(true)
+  if (document.images.length === 0) return true
 
   const images = Array.from(document.images).filter(
     (img) => img.getAttribute('loading') !== 'lazy'
@@ -32,7 +32,7 @@ export const waitForAllMediaLoaded = async (
     })
   }
 
-  if (mediaElements.length === 0) return Promise.resolve(true)
+  if (mediaElements.length === 0) return true
 
   await Promise.all(
     mediaElements.map((media) => {
