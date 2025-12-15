@@ -16,12 +16,5 @@ import { getScrollbarWidth } from '@libs/get/get-scrollbar-width'
  */
 export const bgScrollStop = (isStop = true): void => {
   document.body.style.paddingRight = isStop ? `${getScrollbarWidth()}px` : ''
-
-  if (isStop) {
-    document.body.style.overflow = 'hidden'
-  }
-
-  if (!isStop) {
-    document.body.style.overflow = ''
-  }
+  document.body.style.overflow = isStop ? 'hidden' : ''
 }

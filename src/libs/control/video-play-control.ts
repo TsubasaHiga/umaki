@@ -19,7 +19,7 @@ export const videoPlayControl = async (
   currentTime?: number
 ): Promise<void> => {
   if (state && videoElement.paused) {
-    const isPlaying = toBoolean(videoElement.dataset.playing!)
+    const isPlaying = toBoolean(videoElement.dataset.playing ?? '')
     if (isPlaying) return
 
     const playPromise = videoElement.play()
