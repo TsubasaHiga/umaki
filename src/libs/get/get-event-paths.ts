@@ -7,7 +7,7 @@ export const getEventPaths = (evt: Event): (Node | Window)[] => {
   let path = evt.composedPath?.() || null
   const target = evt.target as Node
 
-  if (path != null) {
+  if (path !== null) {
     // Safari doesn't include Window, and it should.
     path = path.indexOf(window) < 0 ? path.concat([window]) : path
     return path as (Node | Window)[]
