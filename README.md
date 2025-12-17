@@ -81,6 +81,7 @@ console.log(breakpoint); // e.g. 768 (default) or custom value if set
   - [tapAsync](#tapasync)
 - [Control](#control)
   - [bgScrollStop](#bgscrollstop)
+  - [copyToClipboard](#copytoclipboard)
   - [pd](#pd)
   - [scrollToHash](#scrolltohash)
   - [videoPlayControl](#videoplaycontrol)
@@ -100,6 +101,8 @@ console.log(breakpoint); // e.g. 768 (default) or custom value if set
   - [getOrientation](#getorientation)
   - [getParentList](#getparentlist)
   - [getQueryParams](#getqueryparams)
+  - [getRandomInt](#getrandomint)
+  - [getRelativeTime](#getrelativetime)
   - [getRem](#getrem)
   - [getScrollbarWidth](#getscrollbarwidth)
   - [getSessionStorage](#getsessionstorage)
@@ -111,8 +114,10 @@ console.log(breakpoint); // e.g. 768 (default) or custom value if set
   - [isAfterDateTime](#isafterdatetime)
   - [isBetweenDateTime](#isbetweendatetime)
   - [isExistAllElements](#isexistallelements)
+  - [isInViewport](#isinviewport)
   - [isIpad](#isipad)
   - [isKeyExists](#iskeyexists)
+  - [isOnline](#isonline)
   - [isSafari](#issafari)
   - [isScrollable](#isscrollable)
   - [isTouchSupport](#istouchsupport)
@@ -217,6 +222,30 @@ bgScrollStop(false); // scroll start
 ```
 
 [View file →](src/libs/control/bg-scroll-stop.ts)
+
+### copyToClipboard (Promise)
+
+A function that copies text to the clipboard using the modern Clipboard API.
+
+```ts
+import { copyToClipboard } from "umaki";
+
+// Basic usage
+const success = await copyToClipboard("Hello, World!");
+if (success) {
+  console.log("Copied to clipboard!");
+} else {
+  console.log("Failed to copy");
+}
+
+// Use in click handler
+button.addEventListener("click", async () => {
+  const copied = await copyToClipboard(textToCopy);
+  showToast(copied ? "Copied!" : "Copy failed");
+});
+```
+
+[View file →](src/libs/control/copy-to-clipboard.ts)
 
 ### pd
 
@@ -497,6 +526,53 @@ const customParamWithOptions = getQueryParams("id", {
 
 [View file →](src/libs/get/get-query-params.ts)
 
+### getRandomInt
+
+A function that returns a random integer between min (inclusive) and max (inclusive).
+
+```ts
+import { getRandomInt } from "umaki";
+
+// Basic usage
+const random = getRandomInt(1, 10);
+console.log(random); // Random integer from 1 to 10
+
+// Use for array index
+const items = ["apple", "banana", "orange"];
+const randomItem = items[getRandomInt(0, items.length - 1)];
+
+// Generate random delay
+const delay = getRandomInt(100, 500);
+await sleep(delay / 1000);
+```
+
+[View file →](src/libs/get/get-random-int.ts)
+
+### getRelativeTime
+
+A function that returns a human-readable relative time string (e.g., "3 minutes ago", "2 days ago") using the Intl.RelativeTimeFormat API.
+
+```ts
+import { getRelativeTime } from "umaki";
+
+// Basic usage (Japanese locale by default)
+const pastDate = new Date(Date.now() - 5 * 60 * 1000);
+console.log(getRelativeTime(pastDate)); // "5 分前"
+
+// English locale
+console.log(getRelativeTime(pastDate, "en")); // "5 minutes ago"
+
+// Future dates
+const futureDate = new Date(Date.now() + 2 * 24 * 60 * 60 * 1000);
+console.log(getRelativeTime(futureDate)); // "2 日後"
+
+// With timestamp or ISO string
+console.log(getRelativeTime(1702800000000, "en")); // relative to now
+console.log(getRelativeTime("2024-01-15T12:00:00Z", "en"));
+```
+
+[View file →](src/libs/get/get-relative-time.ts)
+
 ### getRem
 
 A function that converts a pixel value to rem units.
@@ -650,6 +726,31 @@ console.log(result); // true or false
 
 [View file →](src/libs/is/is-exist-all-elements.ts)
 
+### isInViewport
+
+A function that checks if an element is currently visible within the viewport.
+
+```ts
+import { isInViewport } from "umaki";
+
+const element = document.getElementById("target");
+
+// Check if any part of the element is visible
+const isVisible = isInViewport(element);
+console.log(isVisible); // true or false
+
+// Check if the entire element is visible
+const isFullyVisible = isInViewport(element, { threshold: 1 });
+
+// Check if at least 50% of the element is visible
+const isHalfVisible = isInViewport(element, { threshold: 0.5 });
+
+// With expanded viewport bounds (trigger 100px before element enters viewport)
+const isNearViewport = isInViewport(element, { rootMargin: "100px" });
+```
+
+[View file →](src/libs/is/is-in-viewport.ts)
+
 ### isIpad
 
 A function that checks if the device is an iPad.
@@ -676,6 +777,32 @@ console.log(result); // true or false
 ```
 
 [View file →](src/libs/is/is-key-exists.ts)
+
+### isOnline
+
+A function that checks if the browser is currently online using the Navigator.onLine API.
+
+```ts
+import { isOnline } from "umaki";
+
+// Basic usage
+if (isOnline()) {
+  // Perform network request
+  fetchData();
+} else {
+  // Show offline message
+  showOfflineMessage();
+}
+
+// Use with event listeners for online/offline detection
+window.addEventListener("online", () => {
+  if (isOnline()) {
+    console.log("Back online!");
+  }
+});
+```
+
+[View file →](src/libs/is/is-online.ts)
 
 ### isSafari
 
