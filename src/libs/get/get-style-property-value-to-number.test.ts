@@ -28,4 +28,22 @@ describe('getStylePropertyValueToNumber', () => {
     const result = getStylePropertyValueToNumber('--custom-property')
     expect(result).toBe(0)
   })
+
+  it('should return decimal values correctly', () => {
+    ;(getStylePropertyValue as Mock).mockReturnValue('1.5')
+    const result = getStylePropertyValueToNumber('--custom-property')
+    expect(result).toBe(1.5)
+  })
+
+  it('should return decimal values from values with units (e.g., px)', () => {
+    ;(getStylePropertyValue as Mock).mockReturnValue('2.75px')
+    const result = getStylePropertyValueToNumber('--custom-property')
+    expect(result).toBe(2.75)
+  })
+
+  it('should return decimal values from values with units (e.g., rem)', () => {
+    ;(getStylePropertyValue as Mock).mockReturnValue('3.14rem')
+    const result = getStylePropertyValueToNumber('--custom-property')
+    expect(result).toBe(3.14)
+  })
 })
