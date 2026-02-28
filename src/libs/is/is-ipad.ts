@@ -8,8 +8,14 @@ type Orientation = 'portrait' | 'landscape'
  *
  * @param orientation - The desired screen orientation ('portrait' or 'landscape'). Defaults to 'portrait'.
  * @returns `true` if the device is an iPad with the specified orientation, otherwise `false`.
+ * Returns `false` in SSR environments where window/navigator is undefined.
  */
 export const isIpad = (orientation: Orientation = 'portrait'): boolean => {
+  // SSR guard: return false if window or navigator is not available
+  if (typeof window === 'undefined' || typeof navigator === 'undefined') {
+    return false
+  }
+
   const clientData = getUaData()
 
   if (!clientData.touchSupport) return false

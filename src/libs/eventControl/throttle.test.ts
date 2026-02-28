@@ -40,4 +40,32 @@ describe('throttle', () => {
     throttledFn(1, 2, 3)
     expect(fn).toHaveBeenCalledWith(1, 2, 3)
   })
+
+  it('should throw error for zero wait', () => {
+    const fn = vi.fn()
+    expect(() => throttle(fn, 0)).toThrow(
+      'wait must be a positive finite number'
+    )
+  })
+
+  it('should throw error for negative wait', () => {
+    const fn = vi.fn()
+    expect(() => throttle(fn, -100)).toThrow(
+      'wait must be a positive finite number'
+    )
+  })
+
+  it('should throw error for NaN wait', () => {
+    const fn = vi.fn()
+    expect(() => throttle(fn, NaN)).toThrow(
+      'wait must be a positive finite number'
+    )
+  })
+
+  it('should throw error for Infinity wait', () => {
+    const fn = vi.fn()
+    expect(() => throttle(fn, Infinity)).toThrow(
+      'wait must be a positive finite number'
+    )
+  })
 })

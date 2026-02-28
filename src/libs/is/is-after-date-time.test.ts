@@ -52,11 +52,17 @@ describe('isAfterDateTime', () => {
     vi.stubGlobal('dayjs', originalDayjs)
   })
 
-  it('should handle invalid date strings', () => {
+  it('should throw error for invalid date strings', () => {
     const now = dayjs('2023-01-01T12:00:00Z')
 
-    // Invalid dates in dayjs are treated as "Invalid Date"
-    // Check implementation-specific behavior
-    expect(isAfterDateTime('not a date', now)).toBe(false)
+    expect(() => isAfterDateTime('not a date', now)).toThrow(
+      'dateA is not a valid date'
+    )
+  })
+
+  it('should throw error for empty string', () => {
+    const now = dayjs('2023-01-01T12:00:00Z')
+
+    expect(() => isAfterDateTime('', now)).toThrow('dateA is not a valid date')
   })
 })

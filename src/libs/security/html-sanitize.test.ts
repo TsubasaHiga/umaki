@@ -1,7 +1,7 @@
 /**
  * @vitest-environment jsdom
  */
-import { htmlSanitize } from './html-sanitize'
+import { htmlSanitize, sanitizeHtml } from './html-sanitize'
 
 describe('htmlSanitize', () => {
   it('should sanitize HTML string', () => {
@@ -27,5 +27,17 @@ describe('htmlSanitize', () => {
     const html = '<p class="test" onclick="alert(1)">Hello World</p>'
     const sanitized = htmlSanitize(html)
     expect(sanitized).toBe('<p class="test">Hello World</p>')
+  })
+})
+
+describe('sanitizeHtml (alias)', () => {
+  it('should be an alias for htmlSanitize', () => {
+    expect(sanitizeHtml).toBe(htmlSanitize)
+  })
+
+  it('should sanitize HTML string', () => {
+    const html = '<script>alert("xss")</script><p>Hello World</p>'
+    const sanitized = sanitizeHtml(html)
+    expect(sanitized).toBe('<p>Hello World</p>')
   })
 })
