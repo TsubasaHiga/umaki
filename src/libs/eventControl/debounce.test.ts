@@ -50,31 +50,32 @@ describe('debounce', () => {
     expect(fn).toHaveBeenCalledTimes(1)
   })
 
-  it('should throw error for zero delay', () => {
+  it('should accept zero delay', () => {
     const fn = vi.fn()
-    expect(() => debounce(fn, 0)).toThrow(
-      'delay must be a positive finite number'
-    )
+    const debouncedFn = debounce(fn, 0)
+    debouncedFn()
+    vi.advanceTimersByTime(0)
+    expect(fn).toHaveBeenCalledTimes(1)
   })
 
   it('should throw error for negative delay', () => {
     const fn = vi.fn()
     expect(() => debounce(fn, -100)).toThrow(
-      'delay must be a positive finite number'
+      'delay must be a non-negative finite number'
     )
   })
 
   it('should throw error for NaN delay', () => {
     const fn = vi.fn()
     expect(() => debounce(fn, NaN)).toThrow(
-      'delay must be a positive finite number'
+      'delay must be a non-negative finite number'
     )
   })
 
   it('should throw error for Infinity delay', () => {
     const fn = vi.fn()
     expect(() => debounce(fn, Infinity)).toThrow(
-      'delay must be a positive finite number'
+      'delay must be a non-negative finite number'
     )
   })
 })
