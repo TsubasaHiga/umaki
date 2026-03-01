@@ -22,10 +22,14 @@ interface Margins {
 
 /**
  * Parses a CSS-like margin string into margin values.
+ * For percentage values:
+ * - top/bottom use window.innerHeight as the base
+ * - left/right use window.innerWidth as the base
  */
 const parseRootMargin = (rootMargin: string): Margins => {
   const parts = rootMargin.trim().split(/\s+/)
-  const parseValue = (value: string): number => {
+
+  const parseVerticalValue = (value: string): number => {
     if (value.endsWith('%')) {
       const percent = Number.parseFloat(value) / 100
       return window.innerHeight * percent
@@ -33,13 +37,28 @@ const parseRootMargin = (rootMargin: string): Margins => {
     return Number.parseFloat(value) || 0
   }
 
+  const parseHorizontalValue = (value: string): number => {
+    if (value.endsWith('%')) {
+      const percent = Number.parseFloat(value) / 100
+      return window.innerWidth * percent
+    }
+    return Number.parseFloat(value) || 0
+  }
+
   if (parts.length === 1) {
-    const value = parseValue(parts[0])
-    return { top: value, right: value, bottom: value, left: value }
+    // Same value for all sides - use vertical for top/bottom, horizontal for left/right
+    const verticalValue = parseVerticalValue(parts[0])
+    const horizontalValue = parseHorizontalValue(parts[0])
+    return {
+      top: verticalValue,
+      right: horizontalValue,
+      bottom: verticalValue,
+      left: horizontalValue
+    }
   }
   if (parts.length === 2) {
-    const vertical = parseValue(parts[0])
-    const horizontal = parseValue(parts[1])
+    const vertical = parseVerticalValue(parts[0])
+    const horizontal = parseHorizontalValue(parts[1])
     return {
       top: vertical,
       right: horizontal,
@@ -49,17 +68,17 @@ const parseRootMargin = (rootMargin: string): Margins => {
   }
   if (parts.length === 3) {
     return {
-      top: parseValue(parts[0]),
-      right: parseValue(parts[1]),
-      bottom: parseValue(parts[2]),
-      left: parseValue(parts[1])
+      top: parseVerticalValue(parts[0]),
+      right: parseHorizontalValue(parts[1]),
+      bottom: parseVerticalValue(parts[2]),
+      left: parseHorizontalValue(parts[1])
     }
   }
   return {
-    top: parseValue(parts[0]),
-    right: parseValue(parts[1]),
-    bottom: parseValue(parts[2]),
-    left: parseValue(parts[3])
+    top: parseVerticalValue(parts[0]),
+    right: parseHorizontalValue(parts[1]),
+    bottom: parseVerticalValue(parts[2]),
+    left: parseHorizontalValue(parts[3])
   }
 }
 
