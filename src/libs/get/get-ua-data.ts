@@ -36,15 +36,17 @@ export const getUaData = (): UaType => {
   const type = result.device.type
 
   const uaString = {
-    browserName: browserName ? browserName.toLowerCase().replace(' ', '-') : '',
+    browserName: browserName
+      ? browserName.toLowerCase().replace(/ /g, '-')
+      : '',
     browserVersion: browserVersion ? browserVersion : '',
     browserEngine: browserEngine
-      ? browserEngine.toLowerCase().replace(' ', '-')
+      ? browserEngine.toLowerCase().replace(/ /g, '-')
       : '',
-    osName: osName ? osName.toLowerCase().replace(' ', '-') : '',
+    osName: osName ? osName.toLowerCase().replace(/ /g, '-') : '',
     type:
       typeof type !== 'undefined'
-        ? type.toLowerCase().replace(' ', '-')
+        ? type.toLowerCase().replace(/ /g, '-')
         : 'laptop',
     touchSupport: isTouchSupport()
   }
