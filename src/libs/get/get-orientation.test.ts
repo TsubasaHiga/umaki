@@ -32,4 +32,14 @@ describe('getOrientation', () => {
 
     expect(getOrientation()).toBe('portrait')
   })
+
+  it('should return "portrait" in SSR environment (window undefined)', () => {
+    const originalWindow = global.window
+    // @ts-expect-error - Simulating SSR environment
+    delete global.window
+
+    expect(getOrientation()).toBe('portrait')
+
+    global.window = originalWindow
+  })
 })
