@@ -226,12 +226,13 @@ describe('isInViewport', () => {
     })
   })
 
-  describe('rootMargin percentage calculation', () => {
-    it('should use innerHeight for vertical percentage and innerWidth for horizontal percentage', () => {
-      // window.innerHeight = 768, window.innerWidth = 1024 (set in beforeEach)
-      // rootMargin: "10% 20%" means:
-      // - top/bottom: 768 * 0.1 = 76.8px
-      // - left/right: 1024 * 0.2 = 204.8px
+  describe('rootMargin percentage calculation (IntersectionObserver spec)', () => {
+    // Per W3C spec, percentage values use root width (innerWidth) for all directions
+    // @see https://www.w3.org/TR/intersection-observer/#parse-a-margin
+
+    it('should use innerWidth for vertical percentage per IntersectionObserver spec', () => {
+      // window.innerWidth = 1024 (set in beforeEach)
+      // rootMargin: "10%" means all directions use 1024 * 0.1 = 102.4px
 
       // Element is 100px above viewport
       vi.spyOn(element, 'getBoundingClientRect').mockReturnValue({
@@ -249,8 +250,8 @@ describe('isInViewport', () => {
       // Without margin: not visible (top: -100, bottom: -50, viewport top: 0)
       expect(isInViewport(element)).toBe(false)
 
-      // With 10% vertical margin (76.8px), viewport top becomes -76.8
-      // Element bottom (-50) > viewport top (-76.8), so visible
+      // With 10% margin (102.4px based on innerWidth), viewport top becomes -102.4
+      // Element bottom (-50) > viewport top (-102.4), so visible
       expect(isInViewport(element, { rootMargin: '10%' })).toBe(true)
     })
 
