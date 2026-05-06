@@ -54,4 +54,28 @@ describe('getUaData', () => {
       touchSupport: false
     })
   })
+
+  it('should replace multiple spaces with hyphens', () => {
+    const mockResult = {
+      browser: { name: 'Mobile Safari UI', version: '15.0' },
+      engine: { name: 'WebKit Core' },
+      os: { name: 'Mac OS X' },
+      device: { type: 'mobile device' }
+    }
+    // biome-ignore lint/complexity/useArrowFunction: Vitest requires function/class for constructor mocks
+    ;(UAParser as unknown as Mock).mockImplementation(function () {
+      return { getResult: () => mockResult }
+    })
+
+    const uaData = getUaData()
+
+    expect(uaData).toEqual({
+      browserName: 'mobile-safari-ui',
+      browserVersion: '15.0',
+      browserEngine: 'webkit-core',
+      osName: 'mac-os-x',
+      type: 'mobile-device',
+      touchSupport: false
+    })
+  })
 })
