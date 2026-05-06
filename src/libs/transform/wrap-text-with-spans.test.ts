@@ -140,9 +140,54 @@ describe('wrapTextWithSpans', () => {
     div.textContent = '👍🎉'
     wrapTextWithSpans(div)
 
-    // Emoji are handled as characters by for...of
+    // Emoji are handled as grapheme clusters
     expect(div.childNodes.length).toBe(2)
     expect(div.childNodes[0].textContent).toBe('👍')
     expect(div.childNodes[1].textContent).toBe('🎉')
+  })
+
+  it('should handle composite emojis (family emoji)', () => {
+    const div = document.createElement('div')
+    div.textContent = '👨‍👩‍👧‍👦'
+    wrapTextWithSpans(div)
+
+    // Family emoji should be treated as a single grapheme cluster
+    expect(div.childNodes.length).toBe(1)
+    expect(div.childNodes[0].textContent).toBe('👨‍👩‍👧‍👦')
+  })
+
+  it('should handle skin tone emojis', () => {
+    const div = document.createElement('div')
+    div.textContent = '👍🏻👍🏿'
+    wrapTextWithSpans(div)
+
+    // Each skin tone emoji should be treated as a single grapheme cluster
+    expect(div.childNodes.length).toBe(2)
+    expect(div.childNodes[0].textContent).toBe('👍🏻')
+    expect(div.childNodes[1].textContent).toBe('👍🏿')
+  })
+
+  it('should handle flag emojis', () => {
+    const div = document.createElement('div')
+    div.textContent = '🇯🇵🇺🇸'
+    wrapTextWithSpans(div)
+
+    // Each flag should be treated as a single grapheme cluster
+    expect(div.childNodes.length).toBe(2)
+    expect(div.childNodes[0].textContent).toBe('🇯🇵')
+    expect(div.childNodes[1].textContent).toBe('🇺🇸')
+  })
+
+  it('should handle mixed text and composite emojis', () => {
+    const div = document.createElement('div')
+    div.textContent = 'Hi👨‍👩‍👧‍👦!'
+    wrapTextWithSpans(div)
+
+    // 'H', 'i', family emoji, '!'
+    expect(div.childNodes.length).toBe(4)
+    expect(div.childNodes[0].textContent).toBe('H')
+    expect(div.childNodes[1].textContent).toBe('i')
+    expect(div.childNodes[2].textContent).toBe('👨‍👩‍👧‍👦')
+    expect(div.childNodes[3].textContent).toBe('!')
   })
 })
