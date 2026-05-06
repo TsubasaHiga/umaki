@@ -71,17 +71,17 @@ jobs:
           
           # Determine the appropriate version bump based on commit types
           if [ "$HAS_BREAKING_CHANGE" = "true" ]; then
-            VERSION_TYPE="Major"
+            VERSION_TYPE="major"
           elif [ "$HAS_FEAT" = "true" ]; then
-            VERSION_TYPE="Minor"
+            VERSION_TYPE="minor"
           else
-            VERSION_TYPE="Patch"
+            VERSION_TYPE="patch"
           fi
           
           echo "Determined version bump: $VERSION_TYPE"
           echo "version_type=$VERSION_TYPE" >> $GITHUB_OUTPUT
           
-      - name: Remove existing version labels
+      - name: Remove existing release labels
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
@@ -92,33 +92,33 @@ jobs:
             "https://api.github.com/repos/$REPO/issues/$PR_NUMBER/labels" | \
             jq -r '.[].name')
           
-          # Remove any existing version labels
-          if echo "$LABELS" | grep -q "version: Major"; then
+          # Remove any existing release labels
+          if echo "$LABELS" | grep -q "release:major"; then
             curl -X DELETE -H "Authorization: token $GITHUB_TOKEN" \
-              "https://api.github.com/repos/$REPO/issues/$PR_NUMBER/labels/version%3A%20Major"
-            echo "Removed version: Major label"
+              "https://api.github.com/repos/$REPO/issues/$PR_NUMBER/labels/release%3Amajor"
+            echo "Removed release:major label"
           fi
-          
-          if echo "$LABELS" | grep -q "version: Minor"; then
+
+          if echo "$LABELS" | grep -q "release:minor"; then
             curl -X DELETE -H "Authorization: token $GITHUB_TOKEN" \
-              "https://api.github.com/repos/$REPO/issues/$PR_NUMBER/labels/version%3A%20Minor"
-            echo "Removed version: Minor label"
+              "https://api.github.com/repos/$REPO/issues/$PR_NUMBER/labels/release%3Aminor"
+            echo "Removed release:minor label"
           fi
-          
-          if echo "$LABELS" | grep -q "version: Patch"; then
+
+          if echo "$LABELS" | grep -q "release:patch"; then
             curl -X DELETE -H "Authorization: token $GITHUB_TOKEN" \
-              "https://api.github.com/repos/$REPO/issues/$PR_NUMBER/labels/version%3A%20Patch"
-            echo "Removed version: Patch label"
+              "https://api.github.com/repos/$REPO/issues/$PR_NUMBER/labels/release%3Apatch"
+            echo "Removed release:patch label"
           fi
       
-      - name: Apply version label
+      - name: Apply release label
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
           REPO: ${{ github.repository }}
         run: |
           VERSION_TYPE="${{ steps.analyze-commits.outputs.version_type }}"
-          LABEL="version: $VERSION_TYPE"
+          LABEL="release:$VERSION_TYPE"
           
           # Apply the new label
           curl -X POST -H "Authorization: token $GITHUB_TOKEN" \
@@ -157,13 +157,13 @@ jobs:
             "https://api.github.com/repos/$REPO/issues/$PR_NUMBER/labels" | \
             jq -r '.[].name')
           
-          # Check for version labels
+          # Check for release labels
           VERSION_TYPE=""
-          if echo "$LABELS" | grep -q "version: Major"; then
+          if echo "$LABELS" | grep -q "release:major"; then
             VERSION_TYPE="major"
-          elif echo "$LABELS" | grep -q "version: Minor"; then
+          elif echo "$LABELS" | grep -q "release:minor"; then
             VERSION_TYPE="minor"
-          elif echo "$LABELS" | grep -q "version: Patch"; then
+          elif echo "$LABELS" | grep -q "release:patch"; then
             VERSION_TYPE="patch"
           fi
           

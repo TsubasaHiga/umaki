@@ -42,3 +42,12 @@ test-results
 
 # MCP
 .mcp.json
+
+# AI assistant local config (Claude Code, Serena, etc.)
+CLAUDE.md
+AGENTS.md
+GEMINI.md
+.claude/
+.serena/
+docs/shared-guidelines.md
+docs/plans/
