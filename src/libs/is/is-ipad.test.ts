@@ -51,4 +51,24 @@ describe('isIpad', () => {
 
     expect(isIpad('portrait')).toBe(false)
   })
+
+  it('should return false in SSR environment (window undefined)', () => {
+    const originalWindow = global.window
+    // @ts-expect-error - Simulating SSR environment
+    delete global.window
+
+    expect(isIpad()).toBe(false)
+
+    global.window = originalWindow
+  })
+
+  it('should return false in SSR environment (navigator undefined)', () => {
+    const originalNavigator = global.navigator
+    // @ts-expect-error - Simulating SSR environment
+    delete global.navigator
+
+    expect(isIpad()).toBe(false)
+
+    global.navigator = originalNavigator
+  })
 })
