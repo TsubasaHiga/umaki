@@ -87,6 +87,7 @@ console.log(breakpoint); // e.g. 768 (default) or custom value if set
   - [videoPlayControl](#videoplaycontrol)
 - [Convert](#convert)
   - [changeDateStringToSpecificFormat](#changedatestringtospecificformat)
+  - [hexToRgb](#hextorgb)
   - [jsonStringToJsonObject](#jsonstringtojsonobject)
 - [EventControl](#eventcontrol)
   - [debounce](#debounce)
@@ -331,6 +332,21 @@ console.log(formattedDateWithDifferentTz); // '2025-04-24 20:00:00'
 Note: This function focuses on timezone handling rather than locale-specific formatting. When a timezone is specified, the date will be converted to that timezone before formatting.
 
 [View file →](src/libs/convert/change-date-string-to-specific-format.ts)
+
+### hexToRgb
+
+A function that converts a hex color string to an RGB color object. Supports `#RGB` / `#RRGGBB` and the same forms without the leading `#`. Returns `undefined` for invalid input.
+
+```ts
+import { hexToRgb } from "umaki";
+
+hexToRgb("#ff0000"); // { r: 255, g: 0, b: 0 }
+hexToRgb("#fff"); // { r: 255, g: 255, b: 255 }
+hexToRgb("abc"); // { r: 170, g: 187, b: 204 }
+hexToRgb("#invalid"); // undefined
+```
+
+[View file →](src/libs/convert/hex-to-rgb.ts)
 
 ### jsonStringToJsonObject
 
@@ -1288,7 +1304,7 @@ import { getUaData, sanitizeHtml } from "umaki";
 | `umaki/callback` | Callback utilities (tap, tapAsync) |
 | `umaki/config` | Configuration (setConfig, getConfig) |
 | `umaki/control` | Scroll control, video playback, etc. |
-| `umaki/convert` | Data conversion (dates, JSON) |
+| `umaki/convert` | Data conversion (dates, JSON, colors) |
 | `umaki/eventControl` | debounce, throttle |
 | `umaki/get` | Value retrieval (DOM, UA, etc.) |
 | `umaki/is` | Boolean checks (device detection, etc.) |
