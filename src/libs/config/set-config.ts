@@ -1,4 +1,4 @@
-import { currentConfig } from './get-config'
+import { currentConfig } from './_internal'
 import type { UmakiConfig } from './types'
 
 /**
