@@ -5,13 +5,18 @@ type DebounceProcedure = (...args: unknown[]) => void
  *
  * @template F - The type of the function to debounce.
  * @param {F} fn - The function to debounce.
- * @param {number} delay - The number of milliseconds to delay.
+ * @param {number} delay - The number of milliseconds to delay. Must be a non-negative finite number.
  * @returns {(...args: Parameters<F>) => void} - A debounced version of the provided function.
+ * @throws {Error} If delay is negative or not finite.
  */
 export const debounce = <F extends DebounceProcedure>(
   fn: F,
   delay: number
 ): ((...args: Parameters<F>) => void) => {
+  if (delay < 0 || !Number.isFinite(delay)) {
+    throw new Error('delay must be a non-negative finite number')
+  }
+
   let timeoutId: ReturnType<typeof setTimeout> | null = null
 
   return (...args: Parameters<F>) => {

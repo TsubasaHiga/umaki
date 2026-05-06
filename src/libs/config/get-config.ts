@@ -1,8 +1,5 @@
-import { defaultConfig } from './default-config'
+import { currentConfig } from './_internal'
 import type { UmakiConfig } from './types'
-
-// The current configuration, starting with the default values
-const currentConfig: UmakiConfig = { ...defaultConfig }
 
 /**
  * Get the current configuration
@@ -22,6 +19,3 @@ export const getConfigValue = <K extends keyof UmakiConfig>(
 ): UmakiConfig[K] => {
   return currentConfig[key]
 }
-
-// Export for internal use by setConfig
-export { currentConfig }
