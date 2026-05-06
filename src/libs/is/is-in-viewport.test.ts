@@ -225,4 +225,61 @@ describe('isInViewport', () => {
       expect(isInViewport(element, { threshold: 0.5 })).toBe(false)
     })
   })
+
+  describe('rootMargin percentage calculation (IntersectionObserver spec)', () => {
+    // Per W3C spec, percentage values use root width (innerWidth) for all directions
+    // @see https://www.w3.org/TR/intersection-observer/#parse-a-margin
+
+    it('should use innerWidth for vertical percentage per IntersectionObserver spec', () => {
+      // window.innerWidth = 1024 (set in beforeEach)
+      // rootMargin: "10%" means all directions use 1024 * 0.1 = 102.4px
+
+      // Element is 100px above viewport
+      vi.spyOn(element, 'getBoundingClientRect').mockReturnValue({
+        top: -100,
+        left: 100,
+        bottom: -50,
+        right: 200,
+        width: 100,
+        height: 50,
+        x: 100,
+        y: -100,
+        toJSON: () => {}
+      })
+
+      // Without margin: not visible (top: -100, bottom: -50, viewport top: 0)
+      expect(isInViewport(element)).toBe(false)
+
+      // With 10% margin (102.4px based on innerWidth), viewport top becomes -102.4
+      // Element bottom (-50) > viewport top (-102.4), so visible
+      expect(isInViewport(element, { rootMargin: '10%' })).toBe(true)
+    })
+
+    it('should use innerWidth for horizontal percentage in two-value syntax', () => {
+      // window.innerWidth = 1024
+      // rootMargin: "0px 10%" means:
+      // - top/bottom: 0px
+      // - left/right: 1024 * 0.1 = 102.4px
+
+      // Element is 80px to the left of viewport
+      vi.spyOn(element, 'getBoundingClientRect').mockReturnValue({
+        top: 100,
+        left: -80,
+        bottom: 200,
+        right: -30,
+        width: 50,
+        height: 100,
+        x: -80,
+        y: 100,
+        toJSON: () => {}
+      })
+
+      // Without margin: not visible (right: -30 < viewport left: 0)
+      expect(isInViewport(element)).toBe(false)
+
+      // With 10% horizontal margin (102.4px), viewport left becomes -102.4
+      // Element right (-30) > viewport left (-102.4), so visible
+      expect(isInViewport(element, { rootMargin: '0px 10%' })).toBe(true)
+    })
+  })
 })

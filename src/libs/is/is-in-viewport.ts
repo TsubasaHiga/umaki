@@ -22,13 +22,17 @@ interface Margins {
 
 /**
  * Parses a CSS-like margin string into margin values.
+ * For percentage values, all directions use window.innerWidth as the base,
+ * following the IntersectionObserver specification.
+ * @see https://www.w3.org/TR/intersection-observer/#parse-a-margin
  */
 const parseRootMargin = (rootMargin: string): Margins => {
   const parts = rootMargin.trim().split(/\s+/)
+
   const parseValue = (value: string): number => {
     if (value.endsWith('%')) {
       const percent = Number.parseFloat(value) / 100
-      return window.innerHeight * percent
+      return window.innerWidth * percent
     }
     return Number.parseFloat(value) || 0
   }
