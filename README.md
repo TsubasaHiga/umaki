@@ -89,6 +89,7 @@ console.log(breakpoint); // e.g. 768 (default) or custom value if set
   - [changeDateStringToSpecificFormat](#changedatestringtospecificformat)
   - [hexToRgb](#hextorgb)
   - [jsonStringToJsonObject](#jsonstringtojsonobject)
+  - [rgbToHex](#rgbtohex)
 - [EventControl](#eventcontrol)
   - [debounce](#debounce)
   - [throttle](#throttle)
@@ -361,6 +362,22 @@ console.log(jsonObject); // { name: 'John', age: 30 }
 ```
 
 [View file →](src/libs/convert/json-string-to-json-object.ts)
+
+### rgbToHex
+
+A function that converts RGB color components to a 6-digit hex color string with leading `#`. Each component is rounded to the nearest integer and clamped to `[0, 255]`. Non-finite values (`NaN`, `Infinity`, `-Infinity`) are treated as `0`.
+
+```ts
+import { rgbToHex } from "umaki";
+
+rgbToHex(255, 0, 0); // '#ff0000'
+rgbToHex(170, 187, 204); // '#aabbcc'
+rgbToHex(1, 2, 3); // '#010203'
+rgbToHex(300, -10, 128.5); // '#ff0081' (clamped & rounded)
+rgbToHex(NaN, NaN, NaN); // '#000000'
+```
+
+[View file →](src/libs/convert/rgb-to-hex.ts)
 
 ## EventControl
 
