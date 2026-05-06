@@ -87,7 +87,9 @@ console.log(breakpoint); // e.g. 768 (default) or custom value if set
   - [videoPlayControl](#videoplaycontrol)
 - [Convert](#convert)
   - [changeDateStringToSpecificFormat](#changedatestringtospecificformat)
+  - [hexToRgb](#hextorgb)
   - [jsonStringToJsonObject](#jsonstringtojsonobject)
+  - [rgbToHex](#rgbtohex)
 - [EventControl](#eventcontrol)
   - [debounce](#debounce)
   - [throttle](#throttle)
@@ -332,6 +334,21 @@ Note: This function focuses on timezone handling rather than locale-specific for
 
 [View file →](src/libs/convert/change-date-string-to-specific-format.ts)
 
+### hexToRgb
+
+A function that converts a hex color string to an RGB color object. Supports `#RGB` / `#RRGGBB` and the same forms without the leading `#`. Returns `undefined` for invalid input.
+
+```ts
+import { hexToRgb } from "umaki";
+
+hexToRgb("#ff0000"); // { r: 255, g: 0, b: 0 }
+hexToRgb("#fff"); // { r: 255, g: 255, b: 255 }
+hexToRgb("abc"); // { r: 170, g: 187, b: 204 }
+hexToRgb("#invalid"); // undefined
+```
+
+[View file →](src/libs/convert/hex-to-rgb.ts)
+
 ### jsonStringToJsonObject
 
 A function that converts a JSON string to a JSON object.
@@ -345,6 +362,22 @@ console.log(jsonObject); // { name: 'John', age: 30 }
 ```
 
 [View file →](src/libs/convert/json-string-to-json-object.ts)
+
+### rgbToHex
+
+A function that converts RGB color components to a 6-digit hex color string with leading `#`. Each component is rounded to the nearest integer and clamped to `[0, 255]`. Non-finite values (`NaN`, `Infinity`, `-Infinity`) are treated as `0`.
+
+```ts
+import { rgbToHex } from "umaki";
+
+rgbToHex(255, 0, 0); // '#ff0000'
+rgbToHex(170, 187, 204); // '#aabbcc'
+rgbToHex(1, 2, 3); // '#010203'
+rgbToHex(300, -10, 128.5); // '#ff0081' (clamped & rounded)
+rgbToHex(NaN, NaN, NaN); // '#000000'
+```
+
+[View file →](src/libs/convert/rgb-to-hex.ts)
 
 ## EventControl
 
@@ -1288,7 +1321,7 @@ import { getUaData, sanitizeHtml } from "umaki";
 | `umaki/callback` | Callback utilities (tap, tapAsync) |
 | `umaki/config` | Configuration (setConfig, getConfig) |
 | `umaki/control` | Scroll control, video playback, etc. |
-| `umaki/convert` | Data conversion (dates, JSON) |
+| `umaki/convert` | Data conversion (dates, JSON, colors) |
 | `umaki/eventControl` | debounce, throttle |
 | `umaki/get` | Value retrieval (DOM, UA, etc.) |
 | `umaki/is` | Boolean checks (device detection, etc.) |
