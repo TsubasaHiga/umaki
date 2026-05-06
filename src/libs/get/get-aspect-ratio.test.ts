@@ -25,4 +25,37 @@ describe('getAspectRatio', () => {
     const result = getAspectRatio(1, 1)
     expect(result).toEqual({ w: 1, h: 1 })
   })
+
+  it('should throw error for zero width', () => {
+    expect(() => getAspectRatio(0, 100)).toThrow(
+      'Width and height must be positive finite numbers'
+    )
+  })
+
+  it('should throw error for zero height', () => {
+    expect(() => getAspectRatio(100, 0)).toThrow(
+      'Width and height must be positive finite numbers'
+    )
+  })
+
+  it('should throw error for negative values', () => {
+    expect(() => getAspectRatio(-16, 9)).toThrow(
+      'Width and height must be positive finite numbers'
+    )
+    expect(() => getAspectRatio(16, -9)).toThrow(
+      'Width and height must be positive finite numbers'
+    )
+  })
+
+  it('should throw error for NaN', () => {
+    expect(() => getAspectRatio(NaN, 100)).toThrow(
+      'Width and height must be positive finite numbers'
+    )
+  })
+
+  it('should throw error for Infinity', () => {
+    expect(() => getAspectRatio(Infinity, 100)).toThrow(
+      'Width and height must be positive finite numbers'
+    )
+  })
 })
