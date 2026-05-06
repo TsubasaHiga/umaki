@@ -9,43 +9,37 @@ tag-template: 'v$RESOLVED_VERSION'
 categories:
   - title: '✨ New Features'
     labels:
-      - 'enhancement'
-      - 'feature'
-      - 'version: Minor'
+      - 'Type: Enhancement'
+      - 'release:minor'
   - title: '🐛 Bug Fixes'
     labels:
-      - 'bug'
-      - 'fix'
+      - 'Type: Bug'
   - title: '💥 Breaking Changes'
     labels:
-      - 'breaking-change'
-      - 'version: Major'
+      - 'release:major'
   - title: '📦 Dependencies'
     labels:
       - 'dependencies'
   - title: '🔧 Maintenance'
     labels:
-      - 'chore'
-      - 'maintenance'
-      - 'version: Patch'
+      - 'Type: Maintenance'
+      - 'Type: Improvement'
+      - 'release:patch'
   - title: '📝 Documentation'
     labels:
-      - 'documentation'
-      - 'docs'
+      - 'Type: Documents'
   - title: '🧪 Tests'
     labels:
-      - 'test'
-      - 'tests'
-  - title: '🎨 Styling'
-    labels:
-      - 'style'
+      - 'Type: Test'
   - title: '♻️ Refactoring'
     labels:
-      - 'refactor'
+      - 'Type: Refactoring'
   - title: '⚡ Performance'
     labels:
-      - 'performance'
-      - 'perf'
+      - 'Type: Performance'
+  - title: '♿ Accessibility'
+    labels:
+      - 'Type: Accessibility'
 
 # Exclude certain labels from release notes
 exclude-labels:
