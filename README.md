@@ -106,6 +106,7 @@ console.log(breakpoint); // e.g. 768 (default) or custom value if set
   - [getRandomInt](#getrandomint)
   - [getRelativeTime](#getrelativetime)
   - [getRem](#getrem)
+  - [getRenderedLineHeight](#getrenderedlineheight)
   - [getScrollbarWidth](#getscrollbarwidth)
   - [getSessionStorage](#getsessionstorage)
   - [getStringLength](#getstringlength)
@@ -618,6 +619,48 @@ console.log(remValue); // '1rem'
 ```
 
 [View file →](src/libs/get/get-rem.ts)
+
+### getRenderedLineHeight
+
+Measures the line-height **as it is actually rendered** (in CSS pixels) for a target element by inserting a hidden probe element with the same font-related styles and dividing its multi-line height by the sample line count.
+
+This works around an iOS Safari quirk ([WebKit Bug #225695](https://bugs.webkit.org/show_bug.cgi?id=225695)) where fractional `line-height` values are floored to integer pixels at paint time. Stacking-line UIs that rely on `1lh` (e.g. `mask-image: repeating-linear-gradient` rules) drift on iOS Safari but match `getRenderedLineHeight` output. Returns `NaN` in SSR environments or when the probe cannot be measured.
+
+The caller is responsible for awaiting `document.fonts.ready` before measuring when font-loaded accuracy matters.
+
+```ts
+import { getRenderedLineHeight } from "umaki";
+
+const textEl = document.querySelector<HTMLElement>(".text");
+if (!textEl) return;
+
+await document.fonts.ready;
+
+const lh = getRenderedLineHeight(textEl);
+if (Number.isFinite(lh)) {
+  textEl.style.setProperty("--text-line-height", `${lh}px`);
+}
+```
+
+```css
+.text {
+  mask-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent calc(var(--text-line-height, 1lh) - 0.5px),
+    #000 calc(var(--text-line-height, 1lh) - 0.5px),
+    #000 var(--text-line-height, 1lh)
+  );
+}
+```
+
+You can adjust the sampling resolution via `sampleLines` (default `20`, minimum `2`):
+
+```ts
+const lh = getRenderedLineHeight(textEl, { sampleLines: 40 });
+```
+
+[View file →](src/libs/get/get-rendered-line-height.ts)
 
 ### getScrollbarWidth
 
