@@ -1,3 +1,10 @@
 ignoredBuiltDependencies:
   - '@biomejs/biome'
   - esbuild
+
+# Reject npm releases newer than this many minutes to mitigate supply-chain
+# attacks. 1440 = 24 hours: long enough for malicious versions to typically be
+# detected and yanked, short enough not to block routine updates.
+# Requires pnpm >= 10.16.0.
+# Docs: https://pnpm.io/settings#minimumreleaseage
+minimumReleaseAge: 1440
