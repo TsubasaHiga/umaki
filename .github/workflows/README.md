@@ -2,29 +2,22 @@
 
 This directory contains GitHub Actions workflows for automating various tasks in the umaki repository.
 
-## Version Management Workflow
+## Release Please (`release-please.yml`)
 
-### Version Management (`version-management.yaml`)
+This workflow manages versioning, changelog, GitHub Releases, and npm publishing with [release-please](https://github.com/googleapis/release-please-action).
 
-This integrated workflow handles version labeling and package version bumping in pull requests targeting the `main` branch.
+1. On every push to `main`, release-please creates or updates a **release PR** when there are releasable commits (`feat`, `fix`, `deps`) since the last release. `docs` / `chore` / `ci` commits alone do not create a release PR.
+   - The release PR bumps the version in `package.json` and `.release-please-manifest.json`, and updates `CHANGELOG.md`.
+   - The version bump follows Conventional Commits: `feat!:` or `BREAKING CHANGE:` → major, `feat:` → minor, others → patch.
+2. When the release PR is merged, release-please creates the `vX.Y.Z` tag and the GitHub Release.
+3. In the same workflow, the `publish` job builds and publishes the package to npm using Trusted Publishing (OIDC) with provenance.
+   - Publishing runs in the same workflow because releases created with `GITHUB_TOKEN` do not trigger other workflows.
 
-The workflow consists of two sequential jobs:
+Configuration: [`release-please-config.json`](../../release-please-config.json) and [`.release-please-manifest.json`](../../.release-please-manifest.json).
 
-1. **Auto Version Label**: Analyzes commits in pull requests and applies the appropriate version label based on semantic versioning principles:
-   - **version: Major** - For breaking changes (commits with "BREAKING CHANGE:" or "!")
-   - **version: Minor** - For new features (commits starting with "feat:")
-   - **version: Patch** - For all other types of changes (fixes, documentation, etc.)
+## Build and Unit Tests (`test.yml`)
 
-2. **Bump Package Version**: Automatically bumps the package version in `package.json` based on the version label applied:
-   - **Major** - Increments the major version and resets minor and patch to 0 (e.g., 1.2.3 → 2.0.0)
-   - **Minor** - Increments the minor version and resets patch to 0 (e.g., 1.2.3 → 1.3.0)
-   - **Patch** - Increments the patch version (e.g., 1.2.3 → 1.2.4)
-
-The workflow runs when a PR is opened, reopened, synchronized, labeled, or unlabeled.
-
-## NPM Publish (`npm-publish.yaml`)
-
-This workflow publishes the package to npm when a new release is created.
+This workflow runs build and unit tests on pushes and pull requests to `main` and `develop`.
 
 ## Bundle Size Comment (`bundle-size-comment.yml`)
 
@@ -34,15 +27,5 @@ This workflow comments bundle size information on pull requests that are merged 
 - Builds the project and analyzes the bundle sizes
 - Posts a comment to the merged PR with detailed information about:
   - Main bundle file sizes (ES and CJS formats)
-  - Top 5 largest library files 
+  - Top 5 largest library files
   - Total bundle size (raw and gzipped)
-
-## Workflow Integration
-
-The workflows are designed to work together in sequence:
-
-1. When a PR is created or updated, the `version-management.yaml` workflow:
-   - First analyzes the commits and applies the appropriate version label
-   - Then updates the package version in `package.json` based on the applied label
-2. When the PR is merged, the `bundle-size-comment.yml` workflow comments with bundle size information
-3. When a release is created, `npm-publish.yaml` publishes the package to npm
