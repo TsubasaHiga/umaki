@@ -36,6 +36,14 @@ Umaki is your one-stop solution for web development utilities, bringing together
 import { foo } from "umaki";
 ```
 
+Category subpaths are also available to keep bundles small:
+
+```ts
+import { debounce } from "umaki/eventControl";
+```
+
+CommonJS (`require("umaki")`) is supported as well. Some dependencies are ESM-only, so loading umaki with `require` from Node.js needs a version that supports `require(esm)` (Node.js 20.19+ or 22.12+).
+
 ## Configuration
 
 ### setConfig

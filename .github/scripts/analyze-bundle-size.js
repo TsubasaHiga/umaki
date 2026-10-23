@@ -53,7 +53,7 @@ const packageJsonPath = path.join(process.cwd(), 'package.json')
 const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'))
 
 // Key files to analyze
-const mainFiles = ['index.es.js', 'index.cjs.js']
+const mainFiles = ['index.es.js', 'index.cjs']
 
 // Also collect information about top 5 largest individual lib files
 function getTopLibraryFiles(dirPath, extension, limit = 5) {

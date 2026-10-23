@@ -24,6 +24,9 @@ const categoryEntries = Object.fromEntries(
   ])
 )
 
+// Runtime dependencies (and their subpaths) are not bundled
+const dependencies = Object.keys(packageJson.dependencies)
+
 // isProduction
 const isProduction = process.env.NODE_ENV === 'production'
 
@@ -102,22 +105,15 @@ export default defineConfig(({ mode }) => {
             preserveModules: true,
             preserveModulesRoot: 'src',
             entryFileNames: ({ name: fileName }) => {
-              return `${fileName}.cjs.js`
+              return `${fileName}.cjs`
             },
             exports: 'named',
             banner
           }
         ],
-        external: [
-          'dayjs',
-          'image-size',
-          'isomorphic-dompurify',
-          'md5',
-          'query-string',
-          'runes2',
-          'store2',
-          'ua-parser-js'
-        ],
+        // 完全一致だと dayjs/plugin/* などのサブパスがバンドルされ dist/node_modules に出力される
+        external: (id) =>
+          dependencies.some((dep) => id === dep || id.startsWith(`${dep}/`)),
         plugins: [
           mode === 'analyze' &&
             visualizer({

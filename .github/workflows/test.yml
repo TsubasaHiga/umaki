@@ -53,6 +53,9 @@ jobs:
     - name: Build application
       run: pnpm run build
 
+    - name: Smoke test packed package (import / require)
+      run: node .github/scripts/smoke-test-package.mjs
+
     - name: Run unit tests
       run: pnpm run test:run
 
