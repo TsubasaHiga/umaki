@@ -5,12 +5,15 @@
  * @param isSmooth - Determines if the scroll behavior should be smooth. Defaults to true.
  * @param manualOffset - An optional manual offset to adjust the scroll position.
  * @returns A Promise that resolves to true if the scroll was successful, or false if the target element was not found or the scroll did not complete within the timeout.
+ * Resolves to false in SSR environments where window is undefined.
  */
 export const scrollToHash = async (
   hash: string,
   isSmooth = true,
   manualOffset?: number
 ): Promise<boolean> => {
+  if (typeof window === 'undefined') return false
+
   // hashに#がついている場合は削除
   const hashWithoutSharp = hash.replace('#', '')
   const targetElement = document.getElementById(hashWithoutSharp)

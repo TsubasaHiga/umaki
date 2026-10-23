@@ -31,3 +31,17 @@ describe('set100vh', () => {
     expect(styleValue).toBe(expectedValue)
   })
 })
+
+describe('set100vh (SSR)', () => {
+  it('should be safe in SSR environment (window undefined)', () => {
+    vi.stubGlobal('window', undefined)
+    try {
+      set100vh('--ssr-vh')
+      expect(document.documentElement.style.getPropertyValue('--ssr-vh')).toBe(
+        ''
+      )
+    } finally {
+      vi.unstubAllGlobals()
+    }
+  })
+})

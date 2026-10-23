@@ -31,3 +31,17 @@ describe('set100vw', () => {
     expect(styleValue).toBe(`${mockClientWidth}px`)
   })
 })
+
+describe('set100vw (SSR)', () => {
+  it('should be safe in SSR environment (window undefined)', () => {
+    vi.stubGlobal('window', undefined)
+    try {
+      set100vw('--ssr-vw')
+      expect(document.documentElement.style.getPropertyValue('--ssr-vw')).toBe(
+        ''
+      )
+    } finally {
+      vi.unstubAllGlobals()
+    }
+  })
+})

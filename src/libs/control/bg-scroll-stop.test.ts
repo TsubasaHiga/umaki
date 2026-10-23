@@ -52,3 +52,16 @@ describe('bgScrollStop', () => {
     expect(document.body.style.overflow).toBe('hidden')
   })
 })
+
+describe('bgScrollStop (SSR)', () => {
+  it('should be safe in SSR environment (window undefined)', () => {
+    vi.stubGlobal('window', undefined)
+    try {
+      document.body.style.overflow = ''
+      bgScrollStop(true)
+      expect(document.body.style.overflow).toBe('')
+    } finally {
+      vi.unstubAllGlobals()
+    }
+  })
+})

@@ -10,22 +10,6 @@ describe('waitForAllMediaLoaded', () => {
     expect(result).toBe(true)
   })
 
-  it('should resolve immediately if document.images is not available', async () => {
-    const originalImages = document.images
-    Object.defineProperty(document, 'images', {
-      value: null,
-      configurable: true
-    })
-
-    const result = await waitForAllMediaLoaded()
-    expect(result).toBe(true)
-
-    Object.defineProperty(document, 'images', {
-      value: originalImages,
-      configurable: true
-    })
-  })
-
   it('should resolve when all images are already loaded (complete=true)', async () => {
     const img = document.createElement('img')
     Object.defineProperty(img, 'complete', {
@@ -249,5 +233,40 @@ describe('waitForAllMediaLoaded', () => {
 
     const result = await waitForAllMediaLoaded(true)
     expect(result).toBe(true)
+  })
+})
+
+describe('waitForAllMediaLoaded (SSR)', () => {
+  it('should be safe in SSR environment (window undefined)', async () => {
+    vi.stubGlobal('window', undefined)
+    try {
+      await expect(waitForAllMediaLoaded()).resolves.toBe(true)
+    } finally {
+      vi.unstubAllGlobals()
+    }
+  })
+})
+
+describe('waitForAllMediaLoaded (videos without images)', () => {
+  beforeEach(() => {
+    document.body.innerHTML = ''
+  })
+
+  it('should wait for videos even when there are no images', async () => {
+    const video = document.createElement('video')
+    Object.defineProperty(video, 'readyState', { value: 0, configurable: true })
+    document.body.appendChild(video)
+
+    let settled = false
+    const promise = waitForAllMediaLoaded().then((result) => {
+      settled = true
+      return result
+    })
+
+    await Promise.resolve()
+    expect(settled).toBe(false)
+
+    video.dispatchEvent(new Event('loadeddata'))
+    await expect(promise).resolves.toBe(true)
   })
 })

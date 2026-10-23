@@ -194,3 +194,18 @@ describe('scrollToHash', () => {
     })
   })
 })
+
+describe('scrollToHash (SSR)', () => {
+  it('should be safe in SSR environment (window undefined)', async () => {
+    vi.stubGlobal('window', undefined)
+    try {
+      const target = document.createElement('div')
+      target.id = 'ssr-target'
+      document.body.appendChild(target)
+      await expect(scrollToHash('#ssr-target')).resolves.toBe(false)
+      target.remove()
+    } finally {
+      vi.unstubAllGlobals()
+    }
+  })
+})

@@ -38,3 +38,14 @@ describe('getRem', () => {
     expect(getRem(10)).toBe('0.5rem')
   })
 })
+
+describe('getRem (SSR)', () => {
+  it('should be safe in SSR environment (window undefined)', () => {
+    vi.stubGlobal('window', undefined)
+    try {
+      expect(getRem(24)).toBe('1.5rem')
+    } finally {
+      vi.unstubAllGlobals()
+    }
+  })
+})
