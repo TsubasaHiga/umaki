@@ -955,6 +955,9 @@ const output = removeAllHtmlTags(input);
 console.log(output); // 'Hello World!'
 ```
 
+> [!NOTE]
+> The result is an HTML string, not plain text. When the input contains `<`, special characters are escaped (e.g. `removeAllHtmlTags("Tom & Jerry <b>!</b>")` returns `'Tom &amp; Jerry !'`). It is safe to insert as HTML, but do not decode it and insert it as HTML. To keep safe markup instead, use [`sanitizeHtml`](#sanitizehtml).
+
 [View file →](src/libs/remove/remove-all-html-tags.ts)
 
 ### removeAttribute
@@ -1194,6 +1197,10 @@ This function uses `isomorphic-dompurify` and has the following features:
 - Removes dangerous HTML tags and attributes by default
 - Allows flexible control through custom configuration
 - Can be used on both server-side and client-side
+- Always returns a string (`RETURN_DOM`, `RETURN_DOM_FRAGMENT`, `RETURN_TRUSTED_TYPE` and `IN_PLACE` are ignored)
+
+> [!WARNING]
+> The result is safe only as HTML element content (e.g. `innerHTML`). Do not use it for attribute values, URLs, `<script>` or CSS. Options such as `ALLOWED_URI_REGEXP`, `ADD_TAGS` and `ALLOW_UNKNOWN_PROTOCOLS` can weaken the protection.
 
 [View file →](src/libs/security/html-sanitize.ts)
 
