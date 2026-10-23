@@ -1,4 +1,5 @@
-name: Release Please
+# npm の Trusted Publisher にこのファイル名で登録済みのため、リネームすると publish が失敗する
+name: Release
 
 on:
   push:

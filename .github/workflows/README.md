@@ -2,7 +2,7 @@
 
 This directory contains GitHub Actions workflows for automating various tasks in the umaki repository.
 
-## Release Please (`release-please.yml`)
+## Release (`npm-publish.yaml`)
 
 This workflow manages versioning, changelog, GitHub Releases, and npm publishing with [release-please](https://github.com/googleapis/release-please-action).
 
@@ -12,6 +12,7 @@ This workflow manages versioning, changelog, GitHub Releases, and npm publishing
 2. When the release PR is merged, release-please creates the `vX.Y.Z` tag and the GitHub Release.
 3. In the same workflow, the `publish` job builds and publishes the package to npm using Trusted Publishing (OIDC) with provenance.
    - Publishing runs in the same workflow because releases created with `GITHUB_TOKEN` do not trigger other workflows.
+   - The file name `npm-publish.yaml` is registered as the Trusted Publisher on npm. Do not rename it without updating the npm package settings.
 
 Configuration: [`release-please-config.json`](../../release-please-config.json) and [`.release-please-manifest.json`](../../.release-please-manifest.json).
 
