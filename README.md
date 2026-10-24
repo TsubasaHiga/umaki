@@ -127,11 +127,13 @@ console.log(breakpoint); // e.g. 768 (default) or custom value if set
 - [Is](#is)
   - [isAfterDateTime](#isafterdatetime)
   - [isBetweenDateTime](#isbetweendatetime)
+  - [isDarkMode](#isdarkmode)
   - [isExistAllElements](#isexistallelements)
   - [isInViewport](#isinviewport)
   - [isIpad](#isipad)
   - [isKeyExists](#iskeyexists)
   - [isOnline](#isonline)
+  - [isReducedMotion](#isreducedmotion)
   - [isSafari](#issafari)
   - [isScrollable](#isscrollable)
   - [isTouchSupport](#istouchsupport)
@@ -816,6 +818,20 @@ console.log(result); // true or false
 
 [View file →](src/libs/is/is-between-date-time.ts)
 
+### isDarkMode
+
+A function that checks whether the user prefers a dark color scheme (`prefers-color-scheme: dark`). Returns `false` in SSR environments.
+
+```ts
+import { isDarkMode } from "umaki";
+
+if (isDarkMode()) {
+  document.documentElement.dataset.theme = "dark";
+}
+```
+
+[View file →](src/libs/is/is-dark-mode.ts)
+
 ### isExistAllElements
 
 A function that checks if all elements exist.
@@ -910,6 +926,18 @@ window.addEventListener("online", () => {
 ```
 
 [View file →](src/libs/is/is-online.ts)
+
+### isReducedMotion
+
+A function that checks whether the user prefers reduced motion (`prefers-reduced-motion: reduce`). Returns `false` in SSR environments.
+
+```ts
+import { isReducedMotion } from "umaki";
+
+element.scrollIntoView({ behavior: isReducedMotion() ? "auto" : "smooth" });
+```
+
+[View file →](src/libs/is/is-reduced-motion.ts)
 
 ### isSafari
 
