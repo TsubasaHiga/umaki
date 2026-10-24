@@ -67,17 +67,14 @@ describe('getGravatarUrl', () => {
     expect(result).toBe(expectedUrl)
   })
 
-  it.each([
-    0,
-    -1,
-    1.5,
-    Number.NaN,
-    Number.POSITIVE_INFINITY
-  ])('should throw for invalid size (%s)', (size) => {
-    expect(() => getGravatarUrl('test@example.com', size)).toThrow(
-      'size must be a positive integer'
-    )
-  })
+  it.each([0, -1, 1.5, Number.NaN, Number.POSITIVE_INFINITY])(
+    'should throw for invalid size (%s)',
+    (size) => {
+      expect(() => getGravatarUrl('test@example.com', size)).toThrow(
+        'size must be a positive integer'
+      )
+    }
+  )
 
   it('should reject a non-number size that would inject URL parameters', () => {
     expect(() =>
