@@ -110,6 +110,7 @@ console.log(breakpoint); // e.g. 768 (default) or custom value if set
   - [getEventPaths](#geteventpaths)
   - [getGcd](#getgcd)
   - [getGravatarUrl](#getgravatarurl)
+  - [getLocalStorage](#getlocalstorage)
   - [getOrientation](#getorientation)
   - [getParentList](#getparentlist)
   - [getQueryParams](#getqueryparams)
@@ -138,12 +139,14 @@ console.log(breakpoint); // e.g. 768 (default) or custom value if set
 - [Remove](#remove)
   - [removeAllHtmlTags](#removeallhtmltags)
   - [removeAttribute](#removeattribute)
+  - [removeLocalStorage](#removelocalstorage)
   - [removeSessionStorage](#removesessionstorage)
   - [removeStylePropertyValue](#removestylepropertyvalue)
 - [Set](#set)
   - [set100vh](#set100vh)
   - [set100vw](#set100vw)
   - [setAttribute](#setattribute)
+  - [setLocalStorage](#setlocalstorage)
   - [setScrollPositionToCenter](#setscrollpositiontocenter)
   - [setSessionStorage](#setsessionstorage)
   - [setStylePropertyValue](#setstylepropertyvalue)
@@ -515,6 +518,19 @@ const normalizedAvatar = getGravatarUrl(' USER@EXAMPLE.COM ', 80);
 ```
 
 [View file →](src/libs/get/get-gravatar-url.ts)
+
+### getLocalStorage
+
+A function that retrieves a value from local storage. Values saved with `setLocalStorage` are restored from JSON, and `null` is returned if the key does not exist. In SSR environments, the localStorage functions do nothing and `getLocalStorage` returns `null`.
+
+```ts
+import { getLocalStorage } from "umaki";
+
+const settings = getLocalStorage<{ theme: string }>("settings");
+console.log(settings?.theme); // 'dark'
+```
+
+[View file →](src/libs/get/get-local-storage.ts)
 
 ### getOrientation
 
@@ -990,6 +1006,19 @@ console.log(element.hasAttribute("data-test")); // false
 
 [View file →](src/libs/remove/remove-attribute.ts)
 
+### removeLocalStorage
+
+A function that removes an item with the specified key from local storage.
+
+```ts
+import { removeLocalStorage } from "umaki";
+
+removeLocalStorage("settings");
+console.log(localStorage.getItem("settings")); // null
+```
+
+[View file →](src/libs/remove/remove-local-storage.ts)
+
 ### removeSessionStorage
 
 A function that removes an item with the specified key from session storage.
@@ -1057,6 +1086,19 @@ console.log(element.getAttribute("data-test")); // 'value'
 ```
 
 [View file →](src/libs/set/set-attribute.ts)
+
+### setLocalStorage
+
+A function that sets a value in local storage. The value is saved as JSON, so objects, arrays and numbers can be stored as well as strings.
+
+```ts
+import { setLocalStorage } from "umaki";
+
+setLocalStorage("settings", { theme: "dark" });
+console.log(localStorage.getItem("settings")); // '{"theme":"dark"}'
+```
+
+[View file →](src/libs/set/set-local-storage.ts)
 
 ### setScrollPositionToCenter
 
