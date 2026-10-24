@@ -58,3 +58,14 @@ describe('getScrollbarWidth', () => {
     expect(getScrollbarWidth()).toBe(0)
   })
 })
+
+describe('getScrollbarWidth (SSR)', () => {
+  it('should be safe in SSR environment (window undefined)', () => {
+    vi.stubGlobal('window', undefined)
+    try {
+      expect(getScrollbarWidth()).toBe(0)
+    } finally {
+      vi.unstubAllGlobals()
+    }
+  })
+})

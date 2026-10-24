@@ -23,12 +23,16 @@ export type GetQueryParamsOptions = {
  * @param query - The name of the query parameter to retrieve.
  * @param options - Optional. An object containing searchString and parseOptions.
  * @returns The value of the query parameter, which can be a string, number, array of strings or numbers, or null if the parameter is not found.
+ * In SSR environments where window is undefined, `searchString` defaults to an empty string.
  */
 export const getQueryParams = (
   query: string,
   options: GetQueryParamsOptions = {}
 ): GetQueryParamsReturnType => {
-  const { searchString = window.location.search, parseOptions } = options
+  const {
+    searchString = typeof window === 'undefined' ? '' : window.location.search,
+    parseOptions
+  } = options
   const queryOptions = {
     ...queryStringOptions,
     ...parseOptions

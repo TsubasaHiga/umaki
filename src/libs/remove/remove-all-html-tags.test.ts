@@ -1,3 +1,6 @@
+/**
+ * @vitest-environment jsdom
+ */
 import { removeAllHtmlTags } from './remove-all-html-tags'
 
 describe('removeAllHtmlTags', () => {
@@ -29,5 +32,25 @@ describe('removeAllHtmlTags', () => {
     const input = 'Hello <br/> World!'
     const output = 'Hello  World!'
     expect(removeAllHtmlTags(input)).toBe(output)
+  })
+
+  // DOMPurify returns input without '<' as is, so escaping depends on the input
+  it('should escape special characters when the input contains markup', () => {
+    expect(removeAllHtmlTags('Tom & Jerry <b>x</b>')).toBe('Tom &amp; Jerry x')
+    expect(removeAllHtmlTags('1 < 2')).toBe('1 &lt; 2')
+  })
+
+  it('should return the input as is when it contains no "<"', () => {
+    expect(removeAllHtmlTags('Tom & Jerry')).toBe('Tom & Jerry')
+  })
+
+  it('should not decode entities in the input', () => {
+    expect(removeAllHtmlTags('&lt;script&gt;alert(1)&lt;/script&gt;')).toBe(
+      '&lt;script&gt;alert(1)&lt;/script&gt;'
+    )
+  })
+
+  it('should remove script elements with their content', () => {
+    expect(removeAllHtmlTags('<script>alert(1)</script>Hello')).toBe('Hello')
   })
 })

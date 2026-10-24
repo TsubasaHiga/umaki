@@ -1,7 +1,23 @@
 import DOMPurify from 'isomorphic-dompurify'
 
+// Options that make DOMPurify return a non-string or mutate a node; always disabled to keep the string contract
+const STRING_OUTPUT_CONFIG = {
+  RETURN_DOM: false,
+  RETURN_DOM_FRAGMENT: false,
+  RETURN_TRUSTED_TYPE: false,
+  IN_PLACE: false
+} as const
+
 /**
  * Sanitizes the given HTML string to prevent XSS attacks.
+ *
+ * The result is safe to insert as HTML element content (e.g. `innerHTML`).
+ * It is NOT safe for other contexts such as attribute values, URLs, `<script>` or CSS.
+ *
+ * Options that weaken the default protection (e.g. `ALLOWED_URI_REGEXP`, `ADD_TAGS`,
+ * `ALLOW_UNKNOWN_PROTOCOLS`, `SAFE_FOR_TEMPLATES: false`) are passed through to DOMPurify as is.
+ * `RETURN_DOM`, `RETURN_DOM_FRAGMENT`, `RETURN_TRUSTED_TYPE` and `IN_PLACE` are ignored,
+ * so the return value is always a string.
  *
  * @param html - The HTML string to sanitize.
  * @param config - Optional configuration for DOMPurify.
@@ -11,7 +27,7 @@ export const htmlSanitize = (
   html: string,
   config: Parameters<typeof DOMPurify.sanitize>[1] = {}
 ): string => {
-  return DOMPurify.sanitize(html, config)
+  return DOMPurify.sanitize(html, { ...config, ...STRING_OUTPUT_CONFIG })
 }
 
 /**

@@ -46,3 +46,14 @@ describe('getDocumentHeight', () => {
     expect(height).toBe(-200)
   })
 })
+
+describe('getDocumentHeight (SSR)', () => {
+  it('should be safe in SSR environment (window undefined)', () => {
+    vi.stubGlobal('window', undefined)
+    try {
+      expect(getDocumentHeight()).toBe(0)
+    } finally {
+      vi.unstubAllGlobals()
+    }
+  })
+})

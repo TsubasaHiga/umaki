@@ -18,12 +18,14 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
-          node-version: '20.x'
+          node-version-file: .node-version
 
       - name: Enable corepack
         run: corepack enable
@@ -36,20 +38,19 @@ jobs:
 
       - name: Analyze bundle size
         id: analyze
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          PR_AUTHOR: ${{ github.event.pull_request.user.login }}
         run: |
           # Create tmp directory if it doesn't exist
           mkdir -p .github/tmp
-          
-          # Export PR information for the script
-          export PR_TITLE="${{ github.event.pull_request.title }}"
-          export PR_NUMBER="${{ github.event.pull_request.number }}"
-          export PR_AUTHOR="${{ github.event.pull_request.user.login }}"
-          
+
           # Run the analysis script
           node --experimental-json-modules .github/scripts/analyze-bundle-size.js
         
       - name: Comment on PR
-        uses: actions/github-script@v7
+        uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b # v7.1.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |

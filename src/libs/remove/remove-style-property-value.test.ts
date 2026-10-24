@@ -20,3 +20,19 @@ describe('removeStylePropertyValue', () => {
     ).not.toThrow()
   })
 })
+
+describe('removeStylePropertyValue (SSR)', () => {
+  it('should be safe in SSR environment (window undefined)', () => {
+    vi.stubGlobal('window', undefined)
+    try {
+      document.documentElement.style.setProperty('--ssr', '1px')
+      removeStylePropertyValue('--ssr')
+      expect(document.documentElement.style.getPropertyValue('--ssr')).toBe(
+        '1px'
+      )
+      document.documentElement.style.removeProperty('--ssr')
+    } finally {
+      vi.unstubAllGlobals()
+    }
+  })
+})

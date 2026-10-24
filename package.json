@@ -19,79 +19,79 @@
     "dist"
   ],
   "sideEffects": false,
-  "main": "./dist/index.cjs.js",
+  "main": "./dist/index.cjs",
   "module": "./dist/index.es.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.es.js",
-      "require": "./dist/index.cjs.js"
+      "require": "./dist/index.cjs"
     },
     "./callback": {
       "types": "./dist/libs/callback/index.d.ts",
       "import": "./dist/libs/callback/index.es.js",
-      "require": "./dist/libs/callback/index.cjs.js"
+      "require": "./dist/libs/callback/index.cjs"
     },
     "./config": {
       "types": "./dist/libs/config/index.d.ts",
       "import": "./dist/libs/config/index.es.js",
-      "require": "./dist/libs/config/index.cjs.js"
+      "require": "./dist/libs/config/index.cjs"
     },
     "./control": {
       "types": "./dist/libs/control/index.d.ts",
       "import": "./dist/libs/control/index.es.js",
-      "require": "./dist/libs/control/index.cjs.js"
+      "require": "./dist/libs/control/index.cjs"
     },
     "./convert": {
       "types": "./dist/libs/convert/index.d.ts",
       "import": "./dist/libs/convert/index.es.js",
-      "require": "./dist/libs/convert/index.cjs.js"
+      "require": "./dist/libs/convert/index.cjs"
     },
     "./eventControl": {
       "types": "./dist/libs/eventControl/index.d.ts",
       "import": "./dist/libs/eventControl/index.es.js",
-      "require": "./dist/libs/eventControl/index.cjs.js"
+      "require": "./dist/libs/eventControl/index.cjs"
     },
     "./get": {
       "types": "./dist/libs/get/index.d.ts",
       "import": "./dist/libs/get/index.es.js",
-      "require": "./dist/libs/get/index.cjs.js"
+      "require": "./dist/libs/get/index.cjs"
     },
     "./is": {
       "types": "./dist/libs/is/index.d.ts",
       "import": "./dist/libs/is/index.es.js",
-      "require": "./dist/libs/is/index.cjs.js"
+      "require": "./dist/libs/is/index.cjs"
     },
     "./remove": {
       "types": "./dist/libs/remove/index.d.ts",
       "import": "./dist/libs/remove/index.es.js",
-      "require": "./dist/libs/remove/index.cjs.js"
+      "require": "./dist/libs/remove/index.cjs"
     },
     "./security": {
       "types": "./dist/libs/security/index.d.ts",
       "import": "./dist/libs/security/index.es.js",
-      "require": "./dist/libs/security/index.cjs.js"
+      "require": "./dist/libs/security/index.cjs"
     },
     "./set": {
       "types": "./dist/libs/set/index.d.ts",
       "import": "./dist/libs/set/index.es.js",
-      "require": "./dist/libs/set/index.cjs.js"
+      "require": "./dist/libs/set/index.cjs"
     },
     "./to": {
       "types": "./dist/libs/to/index.d.ts",
       "import": "./dist/libs/to/index.es.js",
-      "require": "./dist/libs/to/index.cjs.js"
+      "require": "./dist/libs/to/index.cjs"
     },
     "./transform": {
       "types": "./dist/libs/transform/index.d.ts",
       "import": "./dist/libs/transform/index.es.js",
-      "require": "./dist/libs/transform/index.cjs.js"
+      "require": "./dist/libs/transform/index.cjs"
     },
     "./wait": {
       "types": "./dist/libs/wait/index.d.ts",
       "import": "./dist/libs/wait/index.es.js",
-      "require": "./dist/libs/wait/index.cjs.js"
+      "require": "./dist/libs/wait/index.cjs"
     }
   },
   "scripts": {
@@ -106,29 +106,28 @@
     "format": "biome format"
   },
   "dependencies": {
-    "@types/md5": "^2.3.6",
-    "dayjs": "^1.11.19",
-    "image-size": "^1.1.1",
-    "isomorphic-dompurify": "^2.33.0",
+    "dayjs": "^1.11.23",
+    "isomorphic-dompurify": "^2.36.0",
     "md5": "^2.3.0",
-    "query-string": "^9.3.1",
-    "runes2": "^1.1.4",
+    "query-string": "^9.5.1",
+    "runes2": "^1.1.10",
     "store2": "^2.14.4",
-    "ua-parser-js": "^1.0.39"
+    "ua-parser-js": "^1.0.41"
   },
   "devDependencies": {
     "@biomejs/biome": "2.3.8",
-    "@types/node": "^24.10.1",
+    "@types/md5": "^2.3.6",
+    "@types/node": "^24.19.2",
     "@types/ua-parser-js": "^0.7.39",
-    "@vitest/coverage-v8": "4.0.15",
-    "happy-dom": "^20.0.11",
-    "jsdom": "^26.0.0",
-    "rollup-plugin-license": "^3.6.0",
-    "rollup-plugin-visualizer": "^6.0.5",
+    "@vitest/coverage-v8": "^4.1.12",
+    "happy-dom": "^21.0.4",
+    "jsdom": "^26.1.0",
+    "rollup-plugin-license": "^3.7.1",
+    "rollup-plugin-visualizer": "^6.0.11",
     "typescript": "~5.9.3",
-    "vite": "^7.2.6",
+    "vite": "^7.3.7",
     "vite-plugin-dts": "^4.5.4",
     "vite-tsconfig-paths": "^5.1.4",
-    "vitest": "^4.0.15"
+    "vitest": "^4.1.12"
   }
 }
