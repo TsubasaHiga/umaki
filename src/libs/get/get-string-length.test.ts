@@ -30,4 +30,18 @@ describe('getStringLength', () => {
     const result = getStringLength('hello こんにちは 🌍')
     expect(result).toBe(13)
   })
+
+  it('should count composite emojis as one character', () => {
+    expect(getStringLength('👨‍👩‍👧‍👦👍🏻🇯🇵')).toBe(3)
+  })
+
+  it('should count combining characters as one character', () => {
+    expect(getStringLength('e\u0301')).toBe(1)
+    expect(getStringLength('か\u3099き\u3099')).toBe(2)
+    expect(getStringLength('अनुच्छेद')).toBe(4)
+  })
+
+  it('should count CRLF as one character', () => {
+    expect(getStringLength('a\r\nb')).toBe(3)
+  })
 })

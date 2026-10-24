@@ -190,4 +190,27 @@ describe('wrapTextWithSpans', () => {
     expect(div.childNodes[2].textContent).toBe('👨‍👩‍👧‍👦')
     expect(div.childNodes[3].textContent).toBe('!')
   })
+
+  it('should handle combining characters', () => {
+    const div = document.createElement('div')
+    div.textContent = 'e\u0301か\u3099'
+    wrapTextWithSpans(div)
+
+    // 'é' (e + U+0301) and 'が' (か + U+3099) should each stay in one span
+    expect(div.childNodes.length).toBe(2)
+    expect(div.childNodes[0].textContent).toBe('e\u0301')
+    expect(div.childNodes[1].textContent).toBe('か\u3099')
+  })
+
+  it('should keep CRLF in one span', () => {
+    const div = document.createElement('div')
+    div.textContent = 'a\r\nb'
+    wrapTextWithSpans(div)
+
+    expect(Array.from(div.childNodes, (node) => node.textContent)).toEqual([
+      'a',
+      '\r\n',
+      'b'
+    ])
+  })
 })

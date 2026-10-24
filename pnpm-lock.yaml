@@ -20,9 +20,6 @@ importers:
       query-string:
         specifier: ^10.0.0
         version: 10.0.0
-      runes2:
-        specifier: ^1.1.10
-        version: 1.1.10
       store2:
         specifier: ^2.14.4
         version: 2.14.4
@@ -1295,9 +1292,6 @@ packages:
   run-applescript@7.1.0:
     resolution: {integrity: sha512-DPe5pVFaAsinSaV6QjQ6gdiedWDcRCbUuiQfQa2wmWV7+xC9bGulGI8+TdRmoFkAPaBXk8CrAbnlY2ISniJ47Q==}
     engines: {node: '>=18'}
-
-  runes2@1.1.10:
-    resolution: {integrity: sha512-4Y1en7X+3i0pf9NDPMEerT1CkZlExpQJPnEPlrBXzXSIHO3etyZR6Wbpl+hHWVYRFnhPVCyPHaJks6GcCFgEiA==}
 
   saxes@6.0.0:
     resolution: {integrity: sha512-xAg7SOnEhrm5zI3puOOKyy1OMcMlIJZYNJY7xLBwSze0UjhPLnWfj2GF2EpT0jmzaJKIWKHLsaSSajf35bcYnA==}
@@ -2711,8 +2705,6 @@ snapshots:
       fsevents: 2.3.3
 
   run-applescript@7.1.0: {}
-
-  runes2@1.1.10: {}
 
   saxes@6.0.0:
     dependencies:

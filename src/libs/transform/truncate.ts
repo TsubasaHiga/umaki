@@ -1,7 +1,4 @@
-// runes2 splits combining marks (e.g. 'e\u0301'), so use Intl.Segmenter for grapheme clusters
-const segmenter = new Intl.Segmenter(undefined, { granularity: 'grapheme' })
-const splitGraphemes = (value: string): string[] =>
-  Array.from(segmenter.segment(value), ({ segment }) => segment)
+import { splitGraphemes } from './_split-graphemes'
 
 /**
  * Truncates a string to the given length and appends an omission string.
