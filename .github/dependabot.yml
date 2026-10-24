@@ -31,6 +31,10 @@ updates:
       - dependency-name: ua-parser-js
         versions:
           - '>=2'
+      # Keep the major in sync with .node-version (bump both together)
+      - dependency-name: '@types/node'
+        update-types:
+          - version-update:semver-major
 
   - package-ecosystem: github-actions
     directory: /

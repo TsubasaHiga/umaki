@@ -5,6 +5,9 @@ changelog:
     authors:
       - github-actions[bot]
   categories:
+    - title: 💥 Breaking Changes
+      labels:
+        - 'Type: Breaking'
     - title: ✨ New Features
       labels:
         - 'Type: Enhancement'

@@ -74,9 +74,14 @@ describe('getQueryParams', () => {
     expect(result).toBe('123')
   })
 
-  it('should keep malformed percent-encoding as is without throwing', () => {
+  it('should return all values of a repeated key as an array', () => {
+    expect(getQueryParams('a', { searchString: '?a=1&a=2' })).toEqual([1, 2])
+  })
+
+  it('should decode malformed percent-encoding without throwing', () => {
+    // Invalid UTF-8 bytes become U+FFFD, like URLSearchParams
     expect(getQueryParams('a', { searchString: '?a=%E0%A4%A' })).toBe(
-      '%E0%A4%A'
+      '\ufffd%A'
     )
     expect(getQueryParams('a', { searchString: '?a=%' })).toBe('%')
     expect(getQueryParams('a', { searchString: '?a=100%25' })).toBe('100%')
