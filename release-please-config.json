@@ -4,7 +4,8 @@
   "packages": {
     ".": {
       "release-type": "node",
-      "include-component-in-tag": false
+      "include-component-in-tag": false,
+      "changelog-type": "github"
     }
   }
 }
