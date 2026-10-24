@@ -23,3 +23,15 @@ describe('setStylePropertyValue', () => {
     expect(styleValue).toBe(newValue)
   })
 })
+
+describe('setStylePropertyValue (SSR)', () => {
+  it('should be safe in SSR environment (window undefined)', () => {
+    vi.stubGlobal('window', undefined)
+    try {
+      setStylePropertyValue('--ssr', '1px')
+      expect(document.documentElement.style.getPropertyValue('--ssr')).toBe('')
+    } finally {
+      vi.unstubAllGlobals()
+    }
+  })
+})

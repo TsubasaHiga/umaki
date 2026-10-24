@@ -13,8 +13,11 @@ import { getScrollbarWidth } from '@libs/get/get-scrollbar-width'
  * When `isStop` is false, the function:
  * - Resets the body's `paddingRight` style.
  * - Resets the body's `overflow` style to allow background scrolling.
+ * Does nothing in SSR environments where window is undefined.
  */
 export const bgScrollStop = (isStop = true): void => {
+  if (typeof window === 'undefined') return
+
   document.body.style.paddingRight = isStop ? `${getScrollbarWidth()}px` : ''
   document.body.style.overflow = isStop ? 'hidden' : ''
 }

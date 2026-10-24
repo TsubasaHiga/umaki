@@ -3,15 +3,14 @@
  *
  * @param firstViewOnly - If true, only considers media elements within the first view (viewport height).
  * @returns A promise that resolves to true when all media elements are loaded.
+ * Resolves to true immediately in SSR environments where window is undefined.
  */
 export const waitForAllMediaLoaded = async (
   firstViewOnly = false
 ): Promise<boolean> => {
-  if (!document.images) return true
+  if (typeof window === 'undefined') return true
 
-  if (document.images.length === 0) return true
-
-  const images = Array.from(document.images).filter(
+  const images = Array.from(document.getElementsByTagName('img')).filter(
     (img) => img.getAttribute('loading') !== 'lazy'
   ) as HTMLImageElement[]
 

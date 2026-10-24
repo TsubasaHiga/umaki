@@ -16,3 +16,16 @@ describe('getStylePropertyValue', () => {
     )
   })
 })
+
+describe('getStylePropertyValue (SSR)', () => {
+  it('should be safe in SSR environment (window undefined)', () => {
+    vi.stubGlobal('window', undefined)
+    try {
+      document.documentElement.style.setProperty('--ssr', '1px')
+      expect(getStylePropertyValue('--ssr')).toBe('')
+      document.documentElement.style.removeProperty('--ssr')
+    } finally {
+      vi.unstubAllGlobals()
+    }
+  })
+})

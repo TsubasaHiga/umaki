@@ -7,8 +7,11 @@
  * @param {string} [setProperty='--vh'] - The name of the CSS variable to set.
  *
  * @link https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
+ * Does nothing in SSR environments where window is undefined.
  */
 export const set100vh = (setProperty = '--vh'): void => {
+  if (typeof window === 'undefined') return
+
   const vh = window.innerHeight * 0.01
   document.documentElement.style.setProperty(setProperty, `${vh}px`)
 }

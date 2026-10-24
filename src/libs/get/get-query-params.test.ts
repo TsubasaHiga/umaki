@@ -74,3 +74,14 @@ describe('getQueryParams', () => {
     expect(result).toBe('123')
   })
 })
+
+describe('getQueryParams (SSR)', () => {
+  it('should be safe in SSR environment (window undefined)', () => {
+    vi.stubGlobal('window', undefined)
+    try {
+      expect(getQueryParams('a')).toBeNull()
+    } finally {
+      vi.unstubAllGlobals()
+    }
+  })
+})
