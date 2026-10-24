@@ -30,17 +30,23 @@ describe('isDarkMode', () => {
 
   it('should return false when matchMedia is not available', () => {
     const originalMatchMedia = window.matchMedia
-    // @ts-expect-error - Simulating an environment without matchMedia
-    delete window.matchMedia
-    expect(isDarkMode()).toBe(false)
-    window.matchMedia = originalMatchMedia
+    try {
+      // @ts-expect-error - Simulating an environment without matchMedia
+      delete window.matchMedia
+      expect(isDarkMode()).toBe(false)
+    } finally {
+      window.matchMedia = originalMatchMedia
+    }
   })
 
   it('should return false in SSR environment (window undefined)', () => {
     const originalWindow = global.window
-    // @ts-expect-error - Simulating SSR environment
-    delete global.window
-    expect(isDarkMode()).toBe(false)
-    global.window = originalWindow
+    try {
+      // @ts-expect-error - Simulating SSR environment
+      delete global.window
+      expect(isDarkMode()).toBe(false)
+    } finally {
+      global.window = originalWindow
+    }
   })
 })
