@@ -151,6 +151,7 @@ console.log(breakpoint); // e.g. 768 (default) or custom value if set
   - [toBoolean](#toboolean)
   - [toPositiveNumber](#topositivenumber)
 - [Transform](#transform)
+  - [truncate](#truncate)
   - [wrapTextWithSpans](#wraptextwithspans)
 - [Wait](#wait)
   - [sleep](#sleep-promise)
@@ -1135,6 +1136,20 @@ console.log(toPositiveNumber(3.14)); // 3.14
 [View file →](src/libs/to/to-positive-number.ts)
 
 ## Transform
+
+### truncate
+
+A function that truncates a string to the given length and appends an omission string (default `...`). Lengths are counted in grapheme clusters, so emojis are never split. The result, including the omission, is at most `maxLength` characters long.
+
+```ts
+import { truncate } from "umaki";
+
+truncate("Hello, world!", 8); // 'Hello...'
+truncate("Hello, world!", 8, "…"); // 'Hello, …'
+truncate("Hello", 10); // 'Hello'
+```
+
+[View file →](src/libs/transform/truncate.ts)
 
 ### wrapTextWithSpans
 
