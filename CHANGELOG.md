@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.14.0 (2026-10-24)
+
+<!-- Release notes generated using configuration in .github/release.yml at main -->
+
+## What's Changed
+### 💥 Breaking Changes
+* feat!: 💥 Node.js 20 のサポートを終了し query-string 10 / isomorphic-dompurify 4 へ更新 (#214) by @TsubasaHiga in https://github.com/TsubasaHiga/umaki/pull/215
+### 📦 Dependencies
+* ci: bump the github-actions group with 6 updates by @dependabot[bot] in https://github.com/TsubasaHiga/umaki/pull/206
+* chore: bump @biomejs/biome from 2.5.15 to 2.6.2 in the development-dependencies group by @dependabot[bot] in https://github.com/TsubasaHiga/umaki/pull/207
+* chore: bump typescript from 5.9.3 to 6.0.3 by @dependabot[bot] in https://github.com/TsubasaHiga/umaki/pull/208
+### 🔧 Maintenance
+* chore: 🔧 @types/node のメジャー更新を dependabot の対象外にする (#212) by @TsubasaHiga in https://github.com/TsubasaHiga/umaki/pull/213
+
+## New Contributors
+* @dependabot[bot] made their first contribution in https://github.com/TsubasaHiga/umaki/pull/206
+
+**Full Changelog**: https://github.com/TsubasaHiga/umaki/compare/v0.13.2...v0.14.0
+
 ## 0.13.2 (2026-10-24)
 
 <!-- Release notes generated using configuration in .github/release.yml at main -->
