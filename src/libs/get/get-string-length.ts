@@ -1,12 +1,12 @@
-import { runes } from 'runes2'
+import { splitGraphemes } from '../transform/_split-graphemes'
 
 /**
- * Returns the length of the given string, accounting for Unicode characters.
+ * Returns the length of the given string in grapheme clusters (user-perceived characters).
  *
- * This function uses the `runes` library to correctly handle strings with
- * Unicode characters, ensuring that each character is counted accurately.
+ * Emojis (e.g. 👨‍👩‍👧‍👦, 🇯🇵) and combining characters (e.g. é written as e + U+0301) are counted as one character.
  *
  * @param str - The string whose length is to be calculated.
  * @returns The length of the string.
  */
-export const getStringLength = (str: string): number => runes(str).length
+export const getStringLength = (str: string): number =>
+  splitGraphemes(str).length
