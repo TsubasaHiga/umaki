@@ -73,6 +73,21 @@ describe('getQueryParams', () => {
     })
     expect(result).toBe('123')
   })
+
+  it('should keep malformed percent-encoding as is without throwing', () => {
+    expect(getQueryParams('a', { searchString: '?a=%E0%A4%A' })).toBe(
+      '%E0%A4%A'
+    )
+    expect(getQueryParams('a', { searchString: '?a=%' })).toBe('%')
+    expect(getQueryParams('a', { searchString: '?a=100%25' })).toBe('100%')
+  })
+
+  it('should parse long malformed input in reasonable time', () => {
+    const searchString = `?a=${'%E0%A4%A'.repeat(3000)}`
+    const start = performance.now()
+    getQueryParams('a', { searchString })
+    expect(performance.now() - start).toBeLessThan(1000)
+  })
 })
 
 describe('getQueryParams (SSR)', () => {
