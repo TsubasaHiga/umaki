@@ -521,7 +521,7 @@ const normalizedAvatar = getGravatarUrl(' USER@EXAMPLE.COM ', 80);
 
 ### getLocalStorage
 
-A function that retrieves a value from local storage. Values saved with `setLocalStorage` are restored from JSON, and `null` is returned if the key does not exist.
+A function that retrieves a value from local storage. Values saved with `setLocalStorage` are restored from JSON, and `null` is returned if the key does not exist. In SSR environments, the localStorage functions do nothing and `getLocalStorage` returns `null`.
 
 ```ts
 import { getLocalStorage } from "umaki";
