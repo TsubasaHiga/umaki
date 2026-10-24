@@ -1,9 +1,12 @@
-import { runes } from 'runes2'
+// runes2 splits combining marks (e.g. 'e\u0301'), so use Intl.Segmenter for grapheme clusters
+const segmenter = new Intl.Segmenter(undefined, { granularity: 'grapheme' })
+const splitGraphemes = (value: string): string[] =>
+  Array.from(segmenter.segment(value), ({ segment }) => segment)
 
 /**
  * Truncates a string to the given length and appends an omission string.
  *
- * Lengths are counted in grapheme clusters (like `getStringLength`), so emojis and combined characters are never split.
+ * Lengths are counted in grapheme clusters (`Intl.Segmenter`), so emojis and combining characters are never split.
  * The result, including the omission, is at most `maxLength` characters long.
  * If `maxLength` is shorter than the omission, the omission itself is cut to `maxLength`.
  *
@@ -29,10 +32,10 @@ export const truncate = (
     throw new Error('maxLength must be a non-negative integer')
   }
 
-  const chars = runes(str)
+  const chars = splitGraphemes(str)
   if (chars.length <= maxLength) return str
 
-  const omissionChars = runes(omission)
+  const omissionChars = splitGraphemes(omission)
   if (omissionChars.length >= maxLength) {
     return omissionChars.slice(0, maxLength).join('')
   }

@@ -1139,7 +1139,7 @@ console.log(toPositiveNumber(3.14)); // 3.14
 
 ### truncate
 
-A function that truncates a string to the given length and appends an omission string (default `...`). Lengths are counted in grapheme clusters, so emojis are never split. The result, including the omission, is at most `maxLength` characters long.
+A function that truncates a string to the given length and appends an omission string (default `...`). Lengths are counted in grapheme clusters (`Intl.Segmenter`), so emojis and combining characters are never split. The result, including the omission, is at most `maxLength` characters long.
 
 ```ts
 import { truncate } from "umaki";

@@ -25,6 +25,12 @@ describe('truncate', () => {
     expect(truncate('がぎぐげご', 3, '…')).toBe('がぎ…')
   })
 
+  it('should not split combining characters', () => {
+    expect(truncate('e\u0301abc', 2, '…')).toBe('e\u0301…')
+    expect(truncate('か\u3099き\u3099く\u3099', 2, '…')).toBe('か\u3099…')
+    expect(truncate('abcdef', 2, 'e\u0301')).toBe('ae\u0301')
+  })
+
   it('should count the omission in grapheme clusters', () => {
     expect(truncate('abcdefgh', 5, '👉🏻')).toBe('abcd👉🏻')
   })
