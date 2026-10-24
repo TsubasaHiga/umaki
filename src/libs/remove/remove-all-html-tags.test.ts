@@ -1,3 +1,6 @@
+/**
+ * @vitest-environment jsdom
+ */
 import { removeAllHtmlTags } from './remove-all-html-tags'
 
 describe('removeAllHtmlTags', () => {
