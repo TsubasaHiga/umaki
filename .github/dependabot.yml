@@ -1,0 +1,49 @@
+# Version update PRs target develop. Security update PRs always target the default branch (main).
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    target-branch: develop
+    schedule:
+      interval: weekly
+    # Same as minimumReleaseAge (1440 minutes) in pnpm-workspace.yaml
+    cooldown:
+      default-days: 1
+    labels:
+      - dependencies
+    commit-message:
+      # "deps" is a releasable type in release-please, "chore" is not
+      prefix: deps
+      prefix-development: chore
+    groups:
+      production-dependencies:
+        dependency-type: production
+        update-types:
+          - minor
+          - patch
+      development-dependencies:
+        dependency-type: development
+        update-types:
+          - minor
+          - patch
+    ignore:
+      # ua-parser-js 2.x is licensed under AGPL-3.0
+      - dependency-name: ua-parser-js
+        versions:
+          - '>=2'
+
+  - package-ecosystem: github-actions
+    directory: /
+    target-branch: develop
+    schedule:
+      interval: weekly
+    cooldown:
+      default-days: 1
+    labels:
+      - dependencies
+    commit-message:
+      prefix: ci
+    groups:
+      github-actions:
+        patterns:
+          - '*'

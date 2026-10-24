@@ -1,0 +1,31 @@
+# GitHub の自動リリースノート（release-please の changelog-type: github）の分類設定
+# どのカテゴリにも当てはまらない PR（develop → main など、Type ラベルの無い PR）は載らない
+changelog:
+  exclude:
+    authors:
+      - github-actions[bot]
+  categories:
+    - title: ✨ New Features
+      labels:
+        - 'Type: Enhancement'
+    - title: 🐛 Bug Fixes
+      labels:
+        - 'Type: Bug'
+    - title: ⚡ Performance
+      labels:
+        - 'Type: Performance'
+    - title: ♿ Accessibility
+      labels:
+        - 'Type: Accessibility'
+    - title: 📦 Dependencies
+      labels:
+        - dependencies
+    - title: 🔧 Maintenance
+      labels:
+        - 'Type: Maintenance'
+        - 'Type: Improvement'
+        - 'Type: Refactoring'
+        - 'Type: Test'
+    - title: 📝 Documentation
+      labels:
+        - 'Type: Documents'

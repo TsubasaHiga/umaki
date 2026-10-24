@@ -6,11 +6,10 @@ import license from 'rollup-plugin-license'
 import { visualizer } from 'rollup-plugin-visualizer'
 import { defineConfig } from 'vite'
 import dts from 'vite-plugin-dts'
-import tsconfigPaths from 'vite-tsconfig-paths'
-import packageJson from './package.json'
+import packageJson from './package.json' with { type: 'json' }
 
 // Get all library category directories
-const libsDir = path.resolve(__dirname, 'src/libs')
+const libsDir = path.resolve(import.meta.dirname, 'src/libs')
 const categoryDirs = fs
   .readdirSync(libsDir, { withFileTypes: true })
   .filter((dirent) => dirent.isDirectory())
@@ -26,9 +25,6 @@ const categoryEntries = Object.fromEntries(
 
 // Runtime dependencies (and their subpaths) are not bundled
 const dependencies = Object.keys(packageJson.dependencies)
-
-// isProduction
-const isProduction = process.env.NODE_ENV === 'production'
 
 // banner
 const banner = `/*!
@@ -46,38 +42,23 @@ const banner = `/*!
 
 export default defineConfig(({ mode }) => {
   return {
+    resolve: {
+      tsconfigPaths: true
+    },
     plugins: [
       dts(),
-      tsconfigPaths(),
       license({
         sourcemap: true,
         thirdParty: {
-          output: path.join(__dirname, 'dist/LICENSE.txt')
+          output: path.join(import.meta.dirname, 'dist/LICENSE.txt')
         }
       })
     ],
     test: {
       globals: true,
       environment: 'happy-dom',
-      include: ['src/libs/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
-      alias: {
-        '@': path.resolve(__dirname, './src'),
-        '@libs': path.resolve(__dirname, './src/libs')
-      }
+      include: ['src/libs/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}']
     },
-    esbuild: isProduction
-      ? {
-          drop: ['debugger'],
-          pure: [
-            'console.log',
-            'console.info',
-            'console.table',
-            'console.time',
-            'console.timeEnd',
-            'console.trace'
-          ]
-        }
-      : {},
     build: {
       minify: false,
       lib: {
@@ -88,7 +69,7 @@ export default defineConfig(({ mode }) => {
         name: 'umaki',
         fileName: (format) => `index.${format}.js`
       },
-      rollupOptions: {
+      rolldownOptions: {
         output: [
           {
             format: 'es',
@@ -98,7 +79,10 @@ export default defineConfig(({ mode }) => {
               return `${fileName}.es.js`
             },
             exports: 'named',
-            banner
+            // Only on entry files; per-module banners would add ~400 bytes to every file
+            banner: (chunk) => (chunk.isEntry ? banner : ''),
+            // Keep the banner (legal) and @__PURE__ annotations for tree shaking, drop JSDoc
+            comments: { legal: true, annotation: true, jsdoc: false }
           },
           {
             format: 'cjs',
@@ -108,7 +92,10 @@ export default defineConfig(({ mode }) => {
               return `${fileName}.cjs`
             },
             exports: 'named',
-            banner
+            // Only on entry files; per-module banners would add ~400 bytes to every file
+            banner: (chunk) => (chunk.isEntry ? banner : ''),
+            // Keep the banner (legal) and @__PURE__ annotations for tree shaking, drop JSDoc
+            comments: { legal: true, annotation: true, jsdoc: false }
           }
         ],
         // 完全一致だと dayjs/plugin/* などのサブパスがバンドルされ dist/node_modules に出力される

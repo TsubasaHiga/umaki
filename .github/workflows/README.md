@@ -9,6 +9,7 @@ This workflow manages versioning, changelog, GitHub Releases, and npm publishing
 1. On every push to `main`, release-please creates or updates a **release PR** when there are releasable commits (`feat`, `fix`, `deps`) since the last release. `docs` / `chore` / `ci` commits alone do not create a release PR.
    - The release PR bumps the version in `package.json` and `.release-please-manifest.json`, and updates `CHANGELOG.md`.
    - The version bump follows Conventional Commits: `feat!:` or `BREAKING CHANGE:` → major, `feat:` → minor, others → patch.
+   - The changelog is generated per pull request by GitHub's release notes (`changelog-type: github`), grouped by the `Type:` labels defined in [`.github/release.yml`](../release.yml). Pull requests without a matching label (e.g. `develop` → `main`) are not listed.
 2. When the release PR is merged, release-please creates the `vX.Y.Z` tag and the GitHub Release.
 3. In the same workflow, the `publish` job builds and publishes the package to npm using Trusted Publishing (OIDC) with provenance.
    - Publishing runs in the same workflow because releases created with `GITHUB_TOKEN` do not trigger other workflows.

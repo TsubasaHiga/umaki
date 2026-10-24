@@ -60,27 +60,33 @@ jobs:
     - name: Smoke test packed package (import / require)
       run: node .github/scripts/smoke-test-package.mjs
 
-    - name: Run unit tests
-      run: pnpm run test:run
+    - name: Lint (Biome)
+      run: pnpm run lint
 
     - name: Run unit tests with coverage
-      run: pnpm run test:coverage
+      run: |
+        set -o pipefail
+        pnpm run test:coverage 2>&1 | tee test-output.txt
 
     - name: Extract Test Results Summary
       id: test-summary
+      if: always()
       run: |
-        # Run tests to get output for parsing
-        TEST_OUTPUT=$(pnpm run test:run 2>&1 || true)
-        echo "$TEST_OUTPUT" > test-output.txt
+        # Strip ANSI escape codes and pick the vitest summary lines
+        CLEAN_OUTPUT=$(sed 's/\x1b\[[0-9;]*m//g' test-output.txt 2>/dev/null || true)
+        TESTS_LINE=$(echo "$CLEAN_OUTPUT" | grep -E '^ *Tests ' | tail -1 || true)
+        FILES_LINE=$(echo "$CLEAN_OUTPUT" | grep -E '^ *Test Files ' | tail -1 || true)
 
-        # Strip ANSI escape codes and extract test statistics
-        CLEAN_OUTPUT=$(echo "$TEST_OUTPUT" | sed 's/\x1b\[[0-9;]*m//g')
-
-        # Extract numbers from summary lines
-        TOTAL_TESTS=$(echo "$CLEAN_OUTPUT" | grep 'Tests.*passed' | awk '{print $2}' || echo "0")
-        FAILED_TESTS=$(echo "$CLEAN_OUTPUT" | grep 'Tests.*failed' | awk '{for(i=1;i<=NF;i++) if($i=="failed") print $(i-1)}' || echo "0")
-        SKIPPED_TESTS=$(echo "$CLEAN_OUTPUT" | grep 'Tests.*skipped' | awk '{for(i=1;i<=NF;i++) if($i=="skipped") print $(i-1)}' || echo "0")
-        TEST_FILES=$(echo "$CLEAN_OUTPUT" | grep 'Test Files.*passed' | awk '{for(i=1;i<=NF;i++) if($i=="Files") print $(i+1)}' || echo "0")
+        # Prints the number before the given word (e.g. "3 failed" -> 3), or 0 if absent
+        count() { echo "$1" | grep -oE "[0-9]+ $2" | grep -oE '[0-9]+' | head -1 || true; }
+        TOTAL_TESTS=$(count "$TESTS_LINE" passed)
+        FAILED_TESTS=$(count "$TESTS_LINE" failed)
+        SKIPPED_TESTS=$(count "$TESTS_LINE" skipped)
+        TEST_FILES=$(count "$FILES_LINE" passed)
+        TOTAL_TESTS=${TOTAL_TESTS:-0}
+        FAILED_TESTS=${FAILED_TESTS:-0}
+        SKIPPED_TESTS=${SKIPPED_TESTS:-0}
+        TEST_FILES=${TEST_FILES:-0}
 
         echo "total-tests=$TOTAL_TESTS" >> $GITHUB_OUTPUT
         echo "failed-tests=$FAILED_TESTS" >> $GITHUB_OUTPUT
@@ -167,10 +173,9 @@ jobs:
           <details>
           <summary>ℹ️ About this report</summary>
 
-          - Unit tests run with Vitest and React Testing Library
-          - Tests cover utilities, hooks, contexts, and components
+          - Unit tests run with Vitest (happy-dom, and jsdom for DOMPurify-based functions)
+          - Tests cover all utilities under src/libs
           - Coverage report includes line, branch, and function coverage
-          - shadcn/ui components are excluded from testing as per project requirements
           </details>`;
 
           // Try to find existing comment to update
