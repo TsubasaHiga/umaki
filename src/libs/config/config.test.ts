@@ -41,4 +41,18 @@ describe('config', () => {
     const value = getConfigValue('BREAKPOINT')
     expect(value).toEqual(newBreakpoint)
   })
+
+  it('should ignore __proto__, constructor and prototype keys', () => {
+    const malicious = JSON.parse(
+      '{"__proto__": {"polluted": true}, "constructor": 1, "prototype": 2, "BREAKPOINT": 999}'
+    )
+    const result = setConfig(malicious)
+
+    expect(result.BREAKPOINT).toBe(999)
+    expect(Object.getPrototypeOf(getConfig())).toBe(Object.prototype)
+    expect((getConfig() as Record<string, unknown>).polluted).toBeUndefined()
+    expect(Object.hasOwn(getConfig(), 'constructor')).toBe(false)
+    expect(Object.hasOwn(getConfig(), 'prototype')).toBe(false)
+    expect(({} as Record<string, unknown>).polluted).toBeUndefined()
+  })
 })

@@ -25,4 +25,17 @@ describe('getGcd', () => {
     expect(getGcd(48, -18)).toBe(6)
     expect(getGcd(-56, 98)).toBe(14)
   })
+
+  it.each([
+    [Number.NaN, 1],
+    [1, Number.NaN],
+    [Number.POSITIVE_INFINITY, 1],
+    [1, Number.NEGATIVE_INFINITY]
+  ])('should throw for non-finite input (%s, %s)', (a, b) => {
+    expect(() => getGcd(a, b)).toThrow('Arguments must be finite numbers')
+  })
+
+  it('should handle decimal numbers without infinite recursion', () => {
+    expect(getGcd(1.5, 0.5)).toBe(0.5)
+  })
 })

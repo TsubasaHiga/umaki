@@ -48,4 +48,27 @@ describe('getRandomInt', () => {
       expect(Number.isInteger(result)).toBe(true)
     }
   })
+
+  it('should throw when no integer exists between min and max', () => {
+    expect(() => getRandomInt(1.2, 1.8)).toThrow(
+      'No integer exists between min and max'
+    )
+  })
+
+  it('should return the only integer in a decimal range', () => {
+    for (let i = 0; i < 20; i++) {
+      expect(getRandomInt(0.5, 1.5)).toBe(1)
+    }
+  })
+
+  it.each([
+    [Number.NaN, 1],
+    [1, Number.NaN],
+    [0, Number.POSITIVE_INFINITY],
+    [Number.NEGATIVE_INFINITY, 0]
+  ])('should throw for non-finite input (%s, %s)', (min, max) => {
+    expect(() => getRandomInt(min, max)).toThrow(
+      'min and max must be finite numbers'
+    )
+  })
 })

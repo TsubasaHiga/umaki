@@ -66,4 +66,22 @@ describe('getGravatarUrl', () => {
       'https://www.gravatar.com/avatar/55502f40dc8b7c769880b10874abc9d0?s=80&d=404'
     expect(result).toBe(expectedUrl)
   })
+
+  it.each([
+    0,
+    -1,
+    1.5,
+    Number.NaN,
+    Number.POSITIVE_INFINITY
+  ])('should throw for invalid size (%s)', (size) => {
+    expect(() => getGravatarUrl('test@example.com', size)).toThrow(
+      'size must be a positive integer'
+    )
+  })
+
+  it('should reject a non-number size that would inject URL parameters', () => {
+    expect(() =>
+      getGravatarUrl('test@example.com', '1&d=mp' as unknown as number)
+    ).toThrow('size must be a positive integer')
+  })
 })
