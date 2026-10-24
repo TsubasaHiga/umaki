@@ -10,27 +10,31 @@ on:
 
 permissions:
   contents: read
-  issues: write
-  pull-requests: write
 
 jobs:
   test:
     timeout-minutes: 15
     runs-on: ubuntu-latest
+    outputs:
+      total-tests: ${{ steps.test-summary.outputs.total-tests }}
+      failed-tests: ${{ steps.test-summary.outputs.failed-tests }}
+      skipped-tests: ${{ steps.test-summary.outputs.skipped-tests }}
+      test-files: ${{ steps.test-summary.outputs.test-files }}
     steps:
-    - uses: actions/checkout@v4
-
-    - name: Install pnpm
-      uses: pnpm/action-setup@v4
+    - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
       with:
-        version: 10.24.0
+        persist-credentials: false
 
-    - uses: actions/setup-node@v4
+    # Uses the version from packageManager in package.json
+    - name: Install pnpm
+      uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4.4.0
+
+    - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
       with:
         node-version-file: .node-version
 
     - name: Cache pnpm store
-      uses: actions/cache@v4
+      uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
       with:
         path: ~/.pnpm-store
         key: ${{ runner.os }}-pnpm-store-${{ hashFiles('pnpm-lock.yaml') }}
@@ -38,7 +42,7 @@ jobs:
           ${{ runner.os }}-pnpm-store-
 
     - name: Cache node_modules
-      uses: actions/cache@v4
+      uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
       id: node-modules-cache
       with:
         path: node_modules
@@ -101,7 +105,7 @@ jobs:
 
     - name: Upload coverage reports
       if: always()
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
       with:
         name: coverage-report
         path: coverage/
@@ -109,22 +113,34 @@ jobs:
 
     - name: Upload test output
       if: always()
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
       with:
         name: test-output
         path: test-output.txt
         retention-days: 7
 
+  # Runs separately so that install / build / test steps do not hold a write token
+  comment:
+    needs: test
+    # GITHUB_TOKEN is read-only on pull requests from forks
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
     - name: Comment PR with Test Results
-      if: github.event_name == 'pull_request'
-      uses: actions/github-script@v7
+      uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b # v7.1.0
+      env:
+        TOTAL_TESTS: ${{ needs.test.outputs.total-tests }}
+        FAILED_TESTS: ${{ needs.test.outputs.failed-tests }}
+        SKIPPED_TESTS: ${{ needs.test.outputs.skipped-tests }}
+        TEST_FILES: ${{ needs.test.outputs.test-files }}
       with:
         script: |
-          const fs = require('fs');
-          const totalTests = '${{ steps.test-summary.outputs.total-tests }}';
-          const failedTests = '${{ steps.test-summary.outputs.failed-tests }}';
-          const skippedTests = '${{ steps.test-summary.outputs.skipped-tests }}';
-          const testFiles = '${{ steps.test-summary.outputs.test-files }}';
+          const totalTests = process.env.TOTAL_TESTS;
+          const failedTests = process.env.FAILED_TESTS;
+          const skippedTests = process.env.SKIPPED_TESTS;
+          const testFiles = process.env.TEST_FILES;
 
           const runUrl = `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
 
@@ -133,7 +149,7 @@ jobs:
             status = `❌ ${failedTests} test(s) failed`;
           }
 
-          const coverageInfo = fs.existsSync('coverage') ? '📊 **[Coverage Report](coverage/index.html)** | ' : '';
+          const coverageInfo = '📊 Coverage report is in the artifacts | ';
 
           const body = `## 🧪 Unit Test Results
 
