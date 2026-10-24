@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.13.2 (2026-10-24)
+
+<!-- Release notes generated using configuration in .github/release.yml at main -->
+
+## What's Changed
+### 🐛 Bug Fixes
+* fix: 🐛 CommonJS から getQueryParams を呼ぶと失敗する問題を修正 (#202) by @TsubasaHiga in https://github.com/TsubasaHiga/umaki/pull/203
+### 📦 Dependencies
+* build: ⬆️ 開発ツールチェーンのメジャー更新（Vite 8 / Vitest 5 / Biome 2.5 等）(#181) by @TsubasaHiga in https://github.com/TsubasaHiga/umaki/pull/201
+### 🔧 Maintenance
+* ci: 📝 release-please の CHANGELOG を PR 単位で生成し重複を解消 (#198) by @TsubasaHiga in https://github.com/TsubasaHiga/umaki/pull/199
+* chore: 🔧 dependabot 導入・package-lock.json 削除・lint を biome check に統一 (#177) by @TsubasaHiga in https://github.com/TsubasaHiga/umaki/pull/200
+
+
+**Full Changelog**: https://github.com/TsubasaHiga/umaki/compare/v0.13.1...v0.13.2
+
 ## [0.13.1](https://github.com/TsubasaHiga/umaki/compare/v0.13.0...v0.13.1) (2026-10-24)
 
 
