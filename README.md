@@ -711,7 +711,7 @@ console.log(scrollbarWidth); // 15
 
 ### getSessionStorage
 
-A function that retrieves a value from session storage.
+A function that retrieves a value from session storage. In SSR environments, the sessionStorage functions do nothing and `getSessionStorage` returns `null`.
 
 ```ts
 import { getSessionStorage } from "umaki";
