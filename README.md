@@ -42,7 +42,9 @@ Category subpaths are also available to keep bundles small:
 import { debounce } from "umaki/eventControl";
 ```
 
-CommonJS (`require("umaki")`) is supported as well. Some dependencies are ESM-only, so loading umaki with `require` from Node.js needs a version that supports `require(esm)` (Node.js 20.19+ or 22.12+).
+CommonJS (`require("umaki")`) is supported as well. Some dependencies are ESM-only, so loading umaki with `require` from Node.js needs a version that supports `require(esm)`.
+
+umaki requires Node.js `^22.22.2 || ^24.15.0 || >=26.0.0`. Node.js 20 users should stay on umaki 0.13.x.
 
 ## Configuration
 
@@ -564,7 +566,12 @@ const customParamWithOptions = getQueryParams("id", {
   searchString: "?id=123",
   parseOptions: { arrayFormat: "bracket" },
 });
+
+// A repeated key returns an array
+getQueryParams("a", { searchString: "?a=1&a=2" }); // [1, 2]
 ```
+
+Percent-encoded bytes that are not valid UTF-8 are decoded to `U+FFFD`, like `URLSearchParams`.
 
 [View file →](src/libs/get/get-query-params.ts)
 
