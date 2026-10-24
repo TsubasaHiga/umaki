@@ -44,10 +44,20 @@ try {
   })
   const tarball = fs.readdirSync(workDir).find((file) => file.endsWith('.tgz'))
   fs.writeFileSync(path.join(workDir, 'package.json'), '{"private":true}')
-  execFileSync('npm', ['install', '--no-audit', '--no-fund', `./${tarball}`], {
-    cwd: workDir,
-    stdio: 'ignore'
-  })
+  // No lockfile here, so mirror minimumReleaseAge (24h) in pnpm-workspace.yaml and skip install scripts
+  const before = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString()
+  execFileSync(
+    'npm',
+    [
+      'install',
+      '--no-audit',
+      '--no-fund',
+      '--ignore-scripts',
+      `--before=${before}`,
+      `./${tarball}`
+    ],
+    { cwd: workDir, stdio: 'ignore' }
+  )
 
   let failed = false
   const run = (label, mode, specifier, body = '') => {
