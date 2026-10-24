@@ -1,4 +1,12 @@
-import queryString, { type ParseOptions } from 'query-string'
+import queryStringImport, { type ParseOptions } from 'query-string'
+
+type QueryString = typeof queryStringImport
+
+// query-string is ESM-only: when the CJS build loads it via require(esm), the default export is nested one level deeper
+const queryString: QueryString =
+  'parse' in queryStringImport
+    ? queryStringImport
+    : (queryStringImport as unknown as { default: QueryString }).default
 
 // Default parsing options for query-string.
 const queryStringOptions: ParseOptions = {
