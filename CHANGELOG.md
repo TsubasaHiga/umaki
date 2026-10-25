@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.16.0 (2026-10-25)
+
+<!-- Release notes generated using configuration in .github/release.yml at main -->
+
+## What's Changed
+### 💥 Breaking Changes
+* feat!: 💥 getQueryParams の戻り値の型を parseOptions に追従させ、htmlSanitize の無視される設定を型から除く (#237) by @TsubasaHiga in https://github.com/TsubasaHiga/umaki/pull/238
+### ✨ New Features
+* feat: ✨ setSessionStorage / getSessionStorage の型を localStorage 版とそろえる (#235) by @TsubasaHiga in https://github.com/TsubasaHiga/umaki/pull/236
+### 📝 Documentation
+* docs: 📝 docs/semver.md のバージョン決定の説明を release-please の運用に合わせる (#239) by @TsubasaHiga in https://github.com/TsubasaHiga/umaki/pull/240
+
+
+**Full Changelog**: https://github.com/TsubasaHiga/umaki/compare/v0.15.0...v0.16.0
+
 ## 0.15.0 (2026-10-25)
 
 <!-- Release notes generated using configuration in .github/release.yml at main -->
