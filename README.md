@@ -588,7 +588,15 @@ const customParamWithOptions = getQueryParams("id", {
 
 // A repeated key returns an array
 getQueryParams("a", { searchString: "?a=1&a=2" }); // [1, 2]
+
+// The return type follows parseOptions
+const flag = getQueryParams("flag", {
+  searchString: "?flag=true",
+  parseOptions: { parseBooleans: true },
+}); // true, typed as string | number | boolean | (string | number | boolean | null)[] | null
 ```
+
+The return type follows `parseOptions`: `parseBooleans: true` adds `boolean`, `parseNumbers: false` removes `number`, and `types` adds the types it converts to. Pass `parseOptions` as an object literal to get these types; a variable typed as `ParseOptions` gives `unknown`.
 
 Percent-encoded bytes that are not valid UTF-8 are decoded to `U+FFFD`, like `URLSearchParams`.
 
@@ -711,13 +719,13 @@ console.log(scrollbarWidth); // 15
 
 ### getSessionStorage
 
-A function that retrieves a value from session storage. In SSR environments, the sessionStorage functions do nothing and `getSessionStorage` returns `null`.
+A function that retrieves a value from session storage. Values saved with `setSessionStorage` are restored from JSON, and `null` is returned if the key does not exist. In SSR environments, the sessionStorage functions do nothing and `getSessionStorage` returns `null`.
 
 ```ts
 import { getSessionStorage } from "umaki";
 
-const value = getSessionStorage("testKey");
-console.log(value); // 'testValue'
+const form = getSessionStorage<{ step: number }>("form");
+console.log(form?.step); // 2
 ```
 
 [View file →](src/libs/get/get-session-storage.ts)
@@ -1145,15 +1153,13 @@ setScrollPositionToCenter(rootElement, targetElement);
 
 ### setSessionStorage
 
-A function that sets a value in session storage.
+A function that sets a value in session storage. The value is saved as JSON, so objects, arrays and numbers can be stored as well as strings.
 
 ```ts
 import { setSessionStorage } from "umaki";
 
-const key = "testKey";
-const value = "testValue";
-setSessionStorage(key, value);
-console.log(sessionStorage.getItem(key)); // 'testValue'
+setSessionStorage("form", { step: 2 });
+console.log(sessionStorage.getItem("form")); // '{"step":2}'
 ```
 
 [View file →](src/libs/set/set-session-storage.ts)
@@ -1297,7 +1303,7 @@ This function uses `isomorphic-dompurify` and has the following features:
 - Removes dangerous HTML tags and attributes by default
 - Allows flexible control through custom configuration
 - Can be used on both server-side and client-side
-- Always returns a string (`RETURN_DOM`, `RETURN_DOM_FRAGMENT`, `RETURN_TRUSTED_TYPE` and `IN_PLACE` are ignored)
+- Always returns a string (`RETURN_DOM`, `RETURN_DOM_FRAGMENT`, `RETURN_TRUSTED_TYPE` and `IN_PLACE` are not accepted by the `HtmlSanitizeConfig` type, and are ignored at runtime)
 
 > [!WARNING]
 > The result is safe only as HTML element content (e.g. `innerHTML`). Do not use it for attribute values, URLs, `<script>` or CSS. Options such as `ALLOWED_URI_REGEXP`, `ADD_TAGS` and `ALLOW_UNKNOWN_PROTOCOLS` can weaken the protection.

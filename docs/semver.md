@@ -1,7 +1,7 @@
 # About Versioning
 
 We apply the following rules based on [Semantic Versioning](https://semver.org/).
-When tagging, please follow these rules.
+Versions and tags are not set by hand; release-please decides them from commit messages (see below).
 
 ## Major Version Update
 
@@ -37,12 +37,15 @@ When it's not yet ready for a release version.
 Ver1.0.0-beta.x
 ```
 
-## Automated Version Labeling
+## How the Version Is Decided
 
-Pull requests targeting the `main` branch are automatically labeled with the appropriate version bump level:
+[release-please](https://github.com/googleapis/release-please) reads the [Conventional Commits](https://www.conventionalcommits.org/) messages merged into `main` and opens a release PR with the next version. Merging the release PR creates the tag and the GitHub Release, and publishes the package to npm.
 
-- **version: Major** - Applied when commits include breaking changes (indicated by "BREAKING CHANGE:" or "!" in the commit message)
-- **version: Minor** - Applied when commits include new features (indicated by "feat:" commit type) without breaking changes
-- **version: Patch** - Applied for all other types of changes (fixes, documentation, etc.)
+| Commits since the last release | Version bump |
+| --- | --- |
+| `BREAKING CHANGE:` in the body, or `!` after the type (e.g. `feat!:`) | Major (minor while the version is `0.x`) |
+| `feat:` | Minor |
+| `fix:`, `perf:`, `deps:` | Patch |
+| Only `docs:`, `chore:`, `ci:`, `test:` and so on | No release |
 
-The package version will be automatically bumped according to the applied label.
+While the version is `0.x`, `bump-minor-pre-major` in `release-please-config.json` turns breaking changes into a minor bump. To release `1.0.0`, add `Release-As: 1.0.0` to a commit body or remove that setting.

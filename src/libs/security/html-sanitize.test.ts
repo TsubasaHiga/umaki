@@ -1,7 +1,11 @@
 /**
  * @vitest-environment jsdom
  */
-import { htmlSanitize, sanitizeHtml } from './html-sanitize'
+import {
+  type HtmlSanitizeConfig,
+  htmlSanitize,
+  sanitizeHtml
+} from './html-sanitize'
 
 describe('htmlSanitize', () => {
   it('should sanitize HTML string', () => {
@@ -41,7 +45,8 @@ describe('htmlSanitize', () => {
     ['IN_PLACE', { IN_PLACE: true }]
   ])('should always return a string even if %s is set', (_, config) => {
     const html = '<script>alert("xss")</script><p>Hello World</p>'
-    const sanitized = htmlSanitize(html, config)
+    // Rejected by the type, but JavaScript callers can still pass it
+    const sanitized = htmlSanitize(html, config as HtmlSanitizeConfig)
     expect(typeof sanitized).toBe('string')
     expect(sanitized).toBe('<p>Hello World</p>')
   })
@@ -50,9 +55,18 @@ describe('htmlSanitize', () => {
     const html = '<p>Hello <b>World</b></p>'
     const sanitized = htmlSanitize(html, {
       ALLOWED_TAGS: ['p'],
+      // @ts-expect-error RETURN_DOM is not accepted by the type
       RETURN_DOM: true
     })
     expect(sanitized).toBe('<p>Hello World</p>')
+  })
+
+  it('should reject options that are ignored at the type level', () => {
+    expectTypeOf<HtmlSanitizeConfig>().not.toHaveProperty('RETURN_DOM')
+    expectTypeOf<HtmlSanitizeConfig>().not.toHaveProperty('RETURN_DOM_FRAGMENT')
+    expectTypeOf<HtmlSanitizeConfig>().not.toHaveProperty('RETURN_TRUSTED_TYPE')
+    expectTypeOf<HtmlSanitizeConfig>().not.toHaveProperty('IN_PLACE')
+    expectTypeOf<HtmlSanitizeConfig>().toHaveProperty('ALLOWED_TAGS')
   })
 })
 

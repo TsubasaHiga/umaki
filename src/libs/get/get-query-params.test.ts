@@ -1,3 +1,4 @@
+import type { ParseOptions } from 'query-string'
 import { getQueryParams } from './get-query-params'
 
 describe('getQueryParams', () => {
@@ -103,5 +104,60 @@ describe('getQueryParams (SSR)', () => {
     } finally {
       vi.unstubAllGlobals()
     }
+  })
+})
+
+describe('getQueryParams (types)', () => {
+  const searchString = '?a=1'
+
+  it('should keep the default return type when parseOptions is omitted', () => {
+    expectTypeOf(getQueryParams('a', { searchString })).toEqualTypeOf<
+      string | number | (string | number | null)[] | null
+    >()
+  })
+
+  it('should follow parseNumbers / parseBooleans / types in parseOptions', () => {
+    expectTypeOf(
+      getQueryParams('a', {
+        searchString,
+        parseOptions: { parseNumbers: false }
+      })
+    ).toEqualTypeOf<string | (string | null)[] | null>()
+    expectTypeOf(
+      getQueryParams('a', {
+        searchString,
+        parseOptions: { parseBooleans: true }
+      })
+    ).toEqualTypeOf<
+      string | number | boolean | (string | number | boolean | null)[] | null
+    >()
+    expectTypeOf(
+      getQueryParams('a', {
+        searchString,
+        parseOptions: { parseNumbers: false, types: { a: 'boolean' } }
+      })
+    ).toEqualTypeOf<string | boolean | (string | boolean | null)[] | null>()
+  })
+
+  it('should include boolean and number for a non-literal ParseOptions', () => {
+    const parseOptions: ParseOptions = { parseBooleans: true }
+    expectTypeOf(
+      getQueryParams('a', { searchString, parseOptions })
+    ).toEqualTypeOf<unknown>()
+    const flags: Pick<ParseOptions, 'parseBooleans'> = {}
+    expectTypeOf(
+      getQueryParams('a', { searchString, parseOptions: flags })
+    ).toEqualTypeOf<
+      string | number | boolean | (string | number | boolean | null)[] | null
+    >()
+  })
+
+  it('should return booleans at runtime with parseBooleans', () => {
+    expect(
+      getQueryParams('a', {
+        searchString: '?a=true',
+        parseOptions: { parseBooleans: true }
+      })
+    ).toBe(true)
   })
 })

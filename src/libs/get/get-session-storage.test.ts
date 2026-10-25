@@ -22,4 +22,21 @@ describe('getSessionStorage', () => {
     const result = getSessionStorage('undefinedKey')
     expect(result).toBe('undefined')
   })
+
+  it('should restore objects, arrays and numbers', () => {
+    store.session.set('object', { a: 1, b: [1, 2] })
+    store.session.set('number', 42)
+    expect(getSessionStorage<{ a: number; b: number[] }>('object')).toEqual({
+      a: 1,
+      b: [1, 2]
+    })
+    expect(getSessionStorage<number>('number')).toBe(42)
+  })
+
+  it('should type the result as unknown by default and as T | null with a type argument', () => {
+    expectTypeOf(getSessionStorage('key')).toEqualTypeOf<unknown>()
+    expectTypeOf(getSessionStorage<number>('key')).toEqualTypeOf<
+      number | null
+    >()
+  })
 })
