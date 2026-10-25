@@ -46,7 +46,14 @@ export default defineConfig(({ mode }) => {
       tsconfigPaths: true
     },
     plugins: [
-      dts(),
+      // Separate .d.mts / .d.cts with extensions in relative imports, so node16 / nodenext can resolve the types
+      dts({
+        exclude: ['src/**/*.test.ts'],
+        outDirs: [
+          { dir: 'dist', moduleFormat: 'esm' },
+          { dir: 'dist', moduleFormat: 'cjs' }
+        ]
+      }),
       license({
         sourcemap: true,
         thirdParty: {
