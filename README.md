@@ -110,6 +110,7 @@ console.log(breakpoint); // e.g. 768 (default) or custom value if set
   - [getEventPaths](#geteventpaths)
   - [getGcd](#getgcd)
   - [getGravatarUrl](#getgravatarurl)
+  - [getLocalStorage](#getlocalstorage)
   - [getOrientation](#getorientation)
   - [getParentList](#getparentlist)
   - [getQueryParams](#getqueryparams)
@@ -126,11 +127,13 @@ console.log(breakpoint); // e.g. 768 (default) or custom value if set
 - [Is](#is)
   - [isAfterDateTime](#isafterdatetime)
   - [isBetweenDateTime](#isbetweendatetime)
+  - [isDarkMode](#isdarkmode)
   - [isExistAllElements](#isexistallelements)
   - [isInViewport](#isinviewport)
   - [isIpad](#isipad)
   - [isKeyExists](#iskeyexists)
   - [isOnline](#isonline)
+  - [isReducedMotion](#isreducedmotion)
   - [isSafari](#issafari)
   - [isScrollable](#isscrollable)
   - [isTouchSupport](#istouchsupport)
@@ -138,12 +141,14 @@ console.log(breakpoint); // e.g. 768 (default) or custom value if set
 - [Remove](#remove)
   - [removeAllHtmlTags](#removeallhtmltags)
   - [removeAttribute](#removeattribute)
+  - [removeLocalStorage](#removelocalstorage)
   - [removeSessionStorage](#removesessionstorage)
   - [removeStylePropertyValue](#removestylepropertyvalue)
 - [Set](#set)
   - [set100vh](#set100vh)
   - [set100vw](#set100vw)
   - [setAttribute](#setattribute)
+  - [setLocalStorage](#setlocalstorage)
   - [setScrollPositionToCenter](#setscrollpositiontocenter)
   - [setSessionStorage](#setsessionstorage)
   - [setStylePropertyValue](#setstylepropertyvalue)
@@ -151,6 +156,7 @@ console.log(breakpoint); // e.g. 768 (default) or custom value if set
   - [toBoolean](#toboolean)
   - [toPositiveNumber](#topositivenumber)
 - [Transform](#transform)
+  - [truncate](#truncate)
   - [wrapTextWithSpans](#wraptextwithspans)
 - [Wait](#wait)
   - [sleep](#sleep-promise)
@@ -516,6 +522,19 @@ const normalizedAvatar = getGravatarUrl(' USER@EXAMPLE.COM ', 80);
 
 [View file →](src/libs/get/get-gravatar-url.ts)
 
+### getLocalStorage
+
+A function that retrieves a value from local storage. Values saved with `setLocalStorage` are restored from JSON, and `null` is returned if the key does not exist. In SSR environments, the localStorage functions do nothing and `getLocalStorage` returns `null`.
+
+```ts
+import { getLocalStorage } from "umaki";
+
+const settings = getLocalStorage<{ theme: string }>("settings");
+console.log(settings?.theme); // 'dark'
+```
+
+[View file →](src/libs/get/get-local-storage.ts)
+
 ### getOrientation
 
 A function that retrieves the current orientation of the device.
@@ -692,7 +711,7 @@ console.log(scrollbarWidth); // 15
 
 ### getSessionStorage
 
-A function that retrieves a value from session storage.
+A function that retrieves a value from session storage. In SSR environments, the sessionStorage functions do nothing and `getSessionStorage` returns `null`.
 
 ```ts
 import { getSessionStorage } from "umaki";
@@ -800,6 +819,20 @@ console.log(result); // true or false
 
 [View file →](src/libs/is/is-between-date-time.ts)
 
+### isDarkMode
+
+A function that checks whether the user prefers a dark color scheme (`prefers-color-scheme: dark`). Returns `false` in SSR environments.
+
+```ts
+import { isDarkMode } from "umaki";
+
+if (isDarkMode()) {
+  document.documentElement.dataset.theme = "dark";
+}
+```
+
+[View file →](src/libs/is/is-dark-mode.ts)
+
 ### isExistAllElements
 
 A function that checks if all elements exist.
@@ -894,6 +927,18 @@ window.addEventListener("online", () => {
 ```
 
 [View file →](src/libs/is/is-online.ts)
+
+### isReducedMotion
+
+A function that checks whether the user prefers reduced motion (`prefers-reduced-motion: reduce`). Returns `false` in SSR environments.
+
+```ts
+import { isReducedMotion } from "umaki";
+
+element.scrollIntoView({ behavior: isReducedMotion() ? "auto" : "smooth" });
+```
+
+[View file →](src/libs/is/is-reduced-motion.ts)
 
 ### isSafari
 
@@ -990,6 +1035,19 @@ console.log(element.hasAttribute("data-test")); // false
 
 [View file →](src/libs/remove/remove-attribute.ts)
 
+### removeLocalStorage
+
+A function that removes an item with the specified key from local storage.
+
+```ts
+import { removeLocalStorage } from "umaki";
+
+removeLocalStorage("settings");
+console.log(localStorage.getItem("settings")); // null
+```
+
+[View file →](src/libs/remove/remove-local-storage.ts)
+
 ### removeSessionStorage
 
 A function that removes an item with the specified key from session storage.
@@ -1057,6 +1115,19 @@ console.log(element.getAttribute("data-test")); // 'value'
 ```
 
 [View file →](src/libs/set/set-attribute.ts)
+
+### setLocalStorage
+
+A function that sets a value in local storage. The value is saved as JSON, so objects, arrays and numbers can be stored as well as strings.
+
+```ts
+import { setLocalStorage } from "umaki";
+
+setLocalStorage("settings", { theme: "dark" });
+console.log(localStorage.getItem("settings")); // '{"theme":"dark"}'
+```
+
+[View file →](src/libs/set/set-local-storage.ts)
 
 ### setScrollPositionToCenter
 
@@ -1135,6 +1206,20 @@ console.log(toPositiveNumber(3.14)); // 3.14
 [View file →](src/libs/to/to-positive-number.ts)
 
 ## Transform
+
+### truncate
+
+A function that truncates a string to the given length and appends an omission string (default `...`). Lengths are counted in grapheme clusters (`Intl.Segmenter`), so emojis and combining characters are never split. The result, including the omission, is at most `maxLength` characters long.
+
+```ts
+import { truncate } from "umaki";
+
+truncate("Hello, world!", 8); // 'Hello...'
+truncate("Hello, world!", 8, "…"); // 'Hello, …'
+truncate("Hello", 10); // 'Hello'
+```
+
+[View file →](src/libs/transform/truncate.ts)
 
 ### wrapTextWithSpans
 

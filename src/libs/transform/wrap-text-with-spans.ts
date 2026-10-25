@@ -1,4 +1,4 @@
-import { runes } from 'runes2'
+import { splitGraphemes } from './_split-graphemes'
 
 /**
  * Wraps each grapheme cluster (visual character) of the text content of an HTML element with individual <span> elements.
@@ -12,7 +12,7 @@ import { runes } from 'runes2'
  * This function correctly handles:
  * - Composite emojis (e.g., 👨‍👩‍👧‍👦, 👍🏻)
  * - Flag emojis (e.g., 🇯🇵)
- * - Combined characters
+ * - Combining characters (e.g., é written as e + U+0301, が written as か + U+3099)
  */
 export const wrapTextWithSpans = (element: HTMLElement): void => {
   if (!element) return
@@ -20,8 +20,7 @@ export const wrapTextWithSpans = (element: HTMLElement): void => {
   if (element.nodeType === Node.TEXT_NODE) {
     const textContent = (element.textContent || '').trim()
     const fragment = document.createDocumentFragment()
-    // Use runes to properly split text into grapheme clusters
-    const graphemes = runes(textContent)
+    const graphemes = splitGraphemes(textContent)
     for (const grapheme of graphemes) {
       const span = document.createElement('span')
       span.textContent = grapheme
