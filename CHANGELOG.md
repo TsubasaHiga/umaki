@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.16.1 (2026-10-25)
+
+<!-- Release notes generated using configuration in .github/release.yml at main -->
+
+## What's Changed
+### 🐛 Bug Fixes
+* fix: 🐛 moduleResolution が node16 / nodenext の TypeScript から型を読めるようにする (#243) by @TsubasaHiga in https://github.com/TsubasaHiga/umaki/pull/244
+
+
+**Full Changelog**: https://github.com/TsubasaHiga/umaki/compare/v0.16.0...v0.16.1
+
 ## 0.16.0 (2026-10-25)
 
 <!-- Release notes generated using configuration in .github/release.yml at main -->
