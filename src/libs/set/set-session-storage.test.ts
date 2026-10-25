@@ -47,4 +47,13 @@ describe('setSessionStorage', () => {
     const storedValue = store.session.get(key)
     expect(storedValue).toBe(value)
   })
+
+  it('should store objects, arrays and numbers as JSON', () => {
+    setSessionStorage('object', { a: 1, b: [1, 2] })
+    setSessionStorage('number', 42)
+
+    expect(sessionStorage.getItem('object')).toBe('{"a":1,"b":[1,2]}')
+    expect(store.session.get('object')).toEqual({ a: 1, b: [1, 2] })
+    expect(store.session.get('number')).toBe(42)
+  })
 })

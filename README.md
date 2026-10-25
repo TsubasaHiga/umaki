@@ -711,13 +711,13 @@ console.log(scrollbarWidth); // 15
 
 ### getSessionStorage
 
-A function that retrieves a value from session storage. In SSR environments, the sessionStorage functions do nothing and `getSessionStorage` returns `null`.
+A function that retrieves a value from session storage. Values saved with `setSessionStorage` are restored from JSON, and `null` is returned if the key does not exist. In SSR environments, the sessionStorage functions do nothing and `getSessionStorage` returns `null`.
 
 ```ts
 import { getSessionStorage } from "umaki";
 
-const value = getSessionStorage("testKey");
-console.log(value); // 'testValue'
+const form = getSessionStorage<{ step: number }>("form");
+console.log(form?.step); // 2
 ```
 
 [View file →](src/libs/get/get-session-storage.ts)
@@ -1145,15 +1145,13 @@ setScrollPositionToCenter(rootElement, targetElement);
 
 ### setSessionStorage
 
-A function that sets a value in session storage.
+A function that sets a value in session storage. The value is saved as JSON, so objects, arrays and numbers can be stored as well as strings.
 
 ```ts
 import { setSessionStorage } from "umaki";
 
-const key = "testKey";
-const value = "testValue";
-setSessionStorage(key, value);
-console.log(sessionStorage.getItem(key)); // 'testValue'
+setSessionStorage("form", { step: 2 });
+console.log(sessionStorage.getItem("form")); // '{"step":2}'
 ```
 
 [View file →](src/libs/set/set-session-storage.ts)
