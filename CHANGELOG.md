@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.15.0 (2026-10-25)
+
+<!-- Release notes generated using configuration in .github/release.yml at main -->
+
+## What's Changed
+### ✨ New Features
+* feat: ✨ getLocalStorage / setLocalStorage / removeLocalStorage を追加 (#221) by @TsubasaHiga in https://github.com/TsubasaHiga/umaki/pull/224
+* feat: ✨ isDarkMode / isReducedMotion を追加 (#222) by @TsubasaHiga in https://github.com/TsubasaHiga/umaki/pull/225
+* feat: ✨ truncate を追加 (#223) by @TsubasaHiga in https://github.com/TsubasaHiga/umaki/pull/226
+### 🐛 Bug Fixes
+* fix: 🔒 sessionStorage 関数を SSR で何もしないようにする (#227) by @TsubasaHiga in https://github.com/TsubasaHiga/umaki/pull/229
+* fix: 🐛 getStringLength / wrapTextWithSpans で結合文字を 1 文字として扱う (#228) by @TsubasaHiga in https://github.com/TsubasaHiga/umaki/pull/230
+### 🔧 Maintenance
+* ci: 🔒 npm publish ジョブの権限分離とスモークテストのサプライチェーン対策 (#219) by @TsubasaHiga in https://github.com/TsubasaHiga/umaki/pull/220
+* test: ✅ sleep のテストを fake timers にして実時間への依存をなくす (#232) by @TsubasaHiga in https://github.com/TsubasaHiga/umaki/pull/233
+
+
+**Full Changelog**: https://github.com/TsubasaHiga/umaki/compare/v0.14.0...v0.15.0
+
 ## 0.14.0 (2026-10-24)
 
 <!-- Release notes generated using configuration in .github/release.yml at main -->
