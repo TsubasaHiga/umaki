@@ -588,7 +588,15 @@ const customParamWithOptions = getQueryParams("id", {
 
 // A repeated key returns an array
 getQueryParams("a", { searchString: "?a=1&a=2" }); // [1, 2]
+
+// The return type follows parseOptions
+const flag = getQueryParams("flag", {
+  searchString: "?flag=true",
+  parseOptions: { parseBooleans: true },
+}); // true, typed as string | number | boolean | (string | number | boolean | null)[] | null
 ```
+
+The return type follows `parseOptions`: `parseBooleans: true` adds `boolean`, `parseNumbers: false` removes `number`, and `types` adds the types it converts to. Pass `parseOptions` as an object literal to get these types; a variable typed as `ParseOptions` gives `unknown`.
 
 Percent-encoded bytes that are not valid UTF-8 are decoded to `U+FFFD`, like `URLSearchParams`.
 
@@ -1295,7 +1303,7 @@ This function uses `isomorphic-dompurify` and has the following features:
 - Removes dangerous HTML tags and attributes by default
 - Allows flexible control through custom configuration
 - Can be used on both server-side and client-side
-- Always returns a string (`RETURN_DOM`, `RETURN_DOM_FRAGMENT`, `RETURN_TRUSTED_TYPE` and `IN_PLACE` are ignored)
+- Always returns a string (`RETURN_DOM`, `RETURN_DOM_FRAGMENT`, `RETURN_TRUSTED_TYPE` and `IN_PLACE` are not accepted by the `HtmlSanitizeConfig` type, and are ignored at runtime)
 
 > [!WARNING]
 > The result is safe only as HTML element content (e.g. `innerHTML`). Do not use it for attribute values, URLs, `<script>` or CSS. Options such as `ALLOWED_URI_REGEXP`, `ADD_TAGS` and `ALLOW_UNKNOWN_PROTOCOLS` can weaken the protection.
