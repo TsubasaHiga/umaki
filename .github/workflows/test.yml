@@ -60,6 +60,9 @@ jobs:
     - name: Smoke test packed package (import / require)
       run: node .github/scripts/smoke-test-package.mjs
 
+    - name: Check type declarations resolve (node16 / bundler, ESM / CJS)
+      run: pnpm run check:types
+
     - name: Lint (Biome)
       run: pnpm run lint
 

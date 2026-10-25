@@ -24,77 +24,147 @@
   "sideEffects": false,
   "main": "./dist/index.cjs",
   "module": "./dist/index.es.js",
-  "types": "./dist/index.d.ts",
+  "types": "./dist/index.d.cts",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.es.js",
-      "require": "./dist/index.cjs"
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.es.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
     },
     "./callback": {
-      "types": "./dist/libs/callback/index.d.ts",
-      "import": "./dist/libs/callback/index.es.js",
-      "require": "./dist/libs/callback/index.cjs"
+      "import": {
+        "types": "./dist/libs/callback/index.d.mts",
+        "default": "./dist/libs/callback/index.es.js"
+      },
+      "require": {
+        "types": "./dist/libs/callback/index.d.cts",
+        "default": "./dist/libs/callback/index.cjs"
+      }
     },
     "./config": {
-      "types": "./dist/libs/config/index.d.ts",
-      "import": "./dist/libs/config/index.es.js",
-      "require": "./dist/libs/config/index.cjs"
+      "import": {
+        "types": "./dist/libs/config/index.d.mts",
+        "default": "./dist/libs/config/index.es.js"
+      },
+      "require": {
+        "types": "./dist/libs/config/index.d.cts",
+        "default": "./dist/libs/config/index.cjs"
+      }
     },
     "./control": {
-      "types": "./dist/libs/control/index.d.ts",
-      "import": "./dist/libs/control/index.es.js",
-      "require": "./dist/libs/control/index.cjs"
+      "import": {
+        "types": "./dist/libs/control/index.d.mts",
+        "default": "./dist/libs/control/index.es.js"
+      },
+      "require": {
+        "types": "./dist/libs/control/index.d.cts",
+        "default": "./dist/libs/control/index.cjs"
+      }
     },
     "./convert": {
-      "types": "./dist/libs/convert/index.d.ts",
-      "import": "./dist/libs/convert/index.es.js",
-      "require": "./dist/libs/convert/index.cjs"
+      "import": {
+        "types": "./dist/libs/convert/index.d.mts",
+        "default": "./dist/libs/convert/index.es.js"
+      },
+      "require": {
+        "types": "./dist/libs/convert/index.d.cts",
+        "default": "./dist/libs/convert/index.cjs"
+      }
     },
     "./eventControl": {
-      "types": "./dist/libs/eventControl/index.d.ts",
-      "import": "./dist/libs/eventControl/index.es.js",
-      "require": "./dist/libs/eventControl/index.cjs"
+      "import": {
+        "types": "./dist/libs/eventControl/index.d.mts",
+        "default": "./dist/libs/eventControl/index.es.js"
+      },
+      "require": {
+        "types": "./dist/libs/eventControl/index.d.cts",
+        "default": "./dist/libs/eventControl/index.cjs"
+      }
     },
     "./get": {
-      "types": "./dist/libs/get/index.d.ts",
-      "import": "./dist/libs/get/index.es.js",
-      "require": "./dist/libs/get/index.cjs"
+      "import": {
+        "types": "./dist/libs/get/index.d.mts",
+        "default": "./dist/libs/get/index.es.js"
+      },
+      "require": {
+        "types": "./dist/libs/get/index.d.cts",
+        "default": "./dist/libs/get/index.cjs"
+      }
     },
     "./is": {
-      "types": "./dist/libs/is/index.d.ts",
-      "import": "./dist/libs/is/index.es.js",
-      "require": "./dist/libs/is/index.cjs"
+      "import": {
+        "types": "./dist/libs/is/index.d.mts",
+        "default": "./dist/libs/is/index.es.js"
+      },
+      "require": {
+        "types": "./dist/libs/is/index.d.cts",
+        "default": "./dist/libs/is/index.cjs"
+      }
     },
     "./remove": {
-      "types": "./dist/libs/remove/index.d.ts",
-      "import": "./dist/libs/remove/index.es.js",
-      "require": "./dist/libs/remove/index.cjs"
+      "import": {
+        "types": "./dist/libs/remove/index.d.mts",
+        "default": "./dist/libs/remove/index.es.js"
+      },
+      "require": {
+        "types": "./dist/libs/remove/index.d.cts",
+        "default": "./dist/libs/remove/index.cjs"
+      }
     },
     "./security": {
-      "types": "./dist/libs/security/index.d.ts",
-      "import": "./dist/libs/security/index.es.js",
-      "require": "./dist/libs/security/index.cjs"
+      "import": {
+        "types": "./dist/libs/security/index.d.mts",
+        "default": "./dist/libs/security/index.es.js"
+      },
+      "require": {
+        "types": "./dist/libs/security/index.d.cts",
+        "default": "./dist/libs/security/index.cjs"
+      }
     },
     "./set": {
-      "types": "./dist/libs/set/index.d.ts",
-      "import": "./dist/libs/set/index.es.js",
-      "require": "./dist/libs/set/index.cjs"
+      "import": {
+        "types": "./dist/libs/set/index.d.mts",
+        "default": "./dist/libs/set/index.es.js"
+      },
+      "require": {
+        "types": "./dist/libs/set/index.d.cts",
+        "default": "./dist/libs/set/index.cjs"
+      }
     },
     "./to": {
-      "types": "./dist/libs/to/index.d.ts",
-      "import": "./dist/libs/to/index.es.js",
-      "require": "./dist/libs/to/index.cjs"
+      "import": {
+        "types": "./dist/libs/to/index.d.mts",
+        "default": "./dist/libs/to/index.es.js"
+      },
+      "require": {
+        "types": "./dist/libs/to/index.d.cts",
+        "default": "./dist/libs/to/index.cjs"
+      }
     },
     "./transform": {
-      "types": "./dist/libs/transform/index.d.ts",
-      "import": "./dist/libs/transform/index.es.js",
-      "require": "./dist/libs/transform/index.cjs"
+      "import": {
+        "types": "./dist/libs/transform/index.d.mts",
+        "default": "./dist/libs/transform/index.es.js"
+      },
+      "require": {
+        "types": "./dist/libs/transform/index.d.cts",
+        "default": "./dist/libs/transform/index.cjs"
+      }
     },
     "./wait": {
-      "types": "./dist/libs/wait/index.d.ts",
-      "import": "./dist/libs/wait/index.es.js",
-      "require": "./dist/libs/wait/index.cjs"
+      "import": {
+        "types": "./dist/libs/wait/index.d.mts",
+        "default": "./dist/libs/wait/index.es.js"
+      },
+      "require": {
+        "types": "./dist/libs/wait/index.d.cts",
+        "default": "./dist/libs/wait/index.cjs"
+      }
     }
   },
   "scripts": {
@@ -107,7 +177,8 @@
     "coverage": "vitest run --coverage",
     "lint": "biome check",
     "lint:fix": "biome check --write",
-    "format": "biome format --write"
+    "format": "biome format --write",
+    "check:types": "attw --pack . --profile node16"
   },
   "dependencies": {
     "dayjs": "^1.11.23",
@@ -118,6 +189,7 @@
     "ua-parser-js": "^1.0.41"
   },
   "devDependencies": {
+    "@arethetypeswrong/cli": "^0.18.5",
     "@biomejs/biome": "2.6.2",
     "@types/md5": "^2.3.6",
     "@types/node": "^24.19.2",
